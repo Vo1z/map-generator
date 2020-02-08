@@ -7,11 +7,11 @@ using config;
 
 public class Storage : MonoBehaviour
 {
-    float[] variables;
+    public float[] variables;
     
     void Start()
     {
-        Config cfg = new Config("Assets\\Configs\\Cfg.txt"); // has to be changed to local path
+        Config cfg = new Config("Assets\\Configs\\Cfg.txt", 100);
         this.variables = cfg.variables;
 
         //for test

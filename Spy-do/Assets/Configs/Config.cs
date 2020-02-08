@@ -17,13 +17,13 @@ namespace config
         public string address; //path to config.txt
         private FileReader fileReader;
 
-        public Config(string address) //constructor
+        public Config(string address, int numberOfVariables) //constructor
         {
             this.address = address;
-            this.fileReader = new FileReader(address);
+            this.fileReader = new FileReader(address, numberOfVariables);
             this.lengthOfArray = fileReader.replaceOdd().Length;
             this.strVariables = fileReader.replaceOdd();
-            this.variables = getConvertedVariables();
+            this.variables = getConvertedVariables(); // number of variables that are stored in config
         }
 
         private float[] getConvertedVariables() //method that converts string varibales,
@@ -40,10 +40,12 @@ namespace config
         class FileReader
         {
             private string address; //path to config.txt
+            private int numberOfVariables;
 
-            protected internal FileReader(string address) //constructor
+            protected internal FileReader(string address, int numberOfVariables) //constructor
             {
                 this.address = address;
+                this.numberOfVariables = numberOfVariables;
             }
 
             protected internal string readWords() //method that copies content of config.txt file
@@ -65,7 +67,7 @@ namespace config
 
                 Regex regex = new Regex("((= .?\\d+\\.\\d+)(?m))|((= .?\\d+)(?m))"); //THE MAIN REGULAR EXPRESSION
                 MatchCollection matches = regex.Matches(readWords());
-                string[] commonText = new string[100]; //NUMBER OF VARIABLES of elements in config
+                string[] commonText = new string[this.numberOfVariables]; //NUMBER OF VARIABLES of elements in config
                 int count = 0;
 
                 foreach (Match match in matches)
