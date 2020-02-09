@@ -1,4 +1,4 @@
-1.mainHeroSpeed = 22.4
+1.mainHeroSpeed = 34
 2.jumpForce = 3
 3.eee = 3.3
 4.retard = -322

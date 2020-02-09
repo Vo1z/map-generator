@@ -7,12 +7,12 @@ using config;
 
 public class Storage : MonoBehaviour
 {
-    public float[] variables;
+    public static float[] variables;
     
     void Start()
     {
         Config cfg = new Config("Assets\\Configs\\Cfg.txt", 100);
-        this.variables = cfg.variables;
+        variables = cfg.variables;
 
         //for test
         foreach (float d in variables)

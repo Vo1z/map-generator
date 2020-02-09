@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 
 namespace config
 {
-
     class Config
     {
         public float[] variables; //array that collects variables in float
