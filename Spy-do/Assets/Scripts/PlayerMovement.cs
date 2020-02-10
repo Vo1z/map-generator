@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 direction_;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         movementSpeed_ = Storage.variables[0];
         Debug.Log("movementSpeed_: " + movementSpeed_);        
