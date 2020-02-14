@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee189f6f01f3035428e010b5361bf805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftCorner: {fileID: 3932006674230612580, guid: 1bc1ae0f82673404183a197775f190f5,
+  leftCorner: {fileID: 7123125657675823938, guid: a1c8b8c4408de024da9408747aa526c7,
     type: 3}
   rightCorner: {fileID: 7123125657675823938, guid: a1c8b8c4408de024da9408747aa526c7,
     type: 3}

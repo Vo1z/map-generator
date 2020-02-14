@@ -74,7 +74,7 @@ namespace MapGeneration
         }
 
         private void setRoomCorners() 
-        {                                                              //Left corner - 3; Right corner 4; 
+        {                                                              
             for (int y = 0; y < roomHightY; y++)
             {
                 for (int x = 0; x < roomLengthX; x++)
@@ -101,8 +101,9 @@ namespace MapGeneration
 
 /*
             TO DO LIST
-1. add corners left, right, top and down wals
-2. add doors
-3. add inner objects
-4. add random (not sure)
+1. add corners - done
+2. left, right, top and down walls;
+3. add doors
+4. add inner objects
+5. add random (not sure)
 */
