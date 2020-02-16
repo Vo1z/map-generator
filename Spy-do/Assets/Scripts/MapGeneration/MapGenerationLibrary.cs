@@ -124,7 +124,7 @@ namespace MapGeneration
 /*
             TO DO LIST
 1. add corners - done
-2. left, right, top and down walls;
+2. left, right, top and down walls - done;
 3. add doors
 4. add inner objects
 5. add random (not sure)

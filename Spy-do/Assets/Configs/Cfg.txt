@@ -8,3 +8,4 @@
 7.soup = -3.1
 8.dot = 0
 9.smthInp = 12.2
+10.fuckThisConfig = 234.333
