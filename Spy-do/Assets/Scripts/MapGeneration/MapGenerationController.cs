@@ -18,21 +18,51 @@ class MapGenerationController : MonoBehaviour
     public int roomLenght;
     public int roomHight;
 
-    private RoomGeneratorClass roomGeneratorClass;
+    private Room room;
 
     void Awake()
     {
-        roomGeneratorClass = new RoomGeneratorClass(roomLenght, roomHight);  
+        room = new Room(roomLenght, roomHight);  
     }
 
     void Start()
     {
-        createRoomFloor();
-        createRoomWalls();
-        roomGeneratorClass.Test();
+        createRoom();
+        room.Test();
     }
 
-    private void createRoomFloor() 
+    private void createRoom() 
+    {
+        for (int y = 0; y < room.GetRoomHeightY(); y++) 
+        {
+            for (int x = 0; x < room.GetRoomLengthX(); x++) 
+            {
+                switch (room.GetObjectId()[y, x]) 
+                {
+                    case "floor":
+                        Instantiate(floor, new Vector2(x, y), Quaternion.identity);
+                        break;
+                    case "wall":
+                        Instantiate(wall, new Vector2(x, y), Quaternion.identity);
+                        break;
+                    case "leftWall":
+                        Instantiate(leftWall, new Vector2(x, y), Quaternion.identity);
+                        break;
+                    case "rightWall":
+                        Instantiate(rightWall, new Vector2(x, y), Quaternion.identity);
+                        break;
+                    case "leftCorner":
+                        Instantiate(leftCorner, new Vector2(x, y), Quaternion.identity);
+                        break;
+                    case "rightCorner":
+                        Instantiate(rightCorner, new Vector2(x, y), Quaternion.identity);
+                        break;
+                }
+            }
+        }
+    }
+
+    /*private void createRoomFloor() 
     {
         for (int y = 0; y < roomGeneratorClass.GetRoomHeightY(); y++) 
         {
@@ -74,5 +104,5 @@ class MapGenerationController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }
