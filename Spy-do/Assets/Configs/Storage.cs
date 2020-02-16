@@ -3,19 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using config;
 
-public class Storage : MonoBehaviour
+namespace config 
 {
-    public static float[] variables;
-    Config cfg = new Config("Assets\\Configs\\Cfg.txt", 100);
-    
-    void Awake()
+    public class Storage : MonoBehaviour
     {
-        variables = cfg.variables;
+        public static float[] variables;
+        Config cfg = new Config("Assets\\Configs\\Cfg.txt", 100);
 
-        //for test
-        //for (int i = 0; i < variables.Length; i++)
-        //Debug.Log(variables[i]);
+        void Awake()
+        {
+            variables = cfg.variables;
+
+            //for test
+            //for (int i = 0; i < variables.Length; i++)
+            //    Debug.Log(variables[i]);
+        }
     }
 }

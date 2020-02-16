@@ -16,26 +16,31 @@ namespace MapGeneration
     {
         private int roomHightY;                                         //Variable that stores width of the room of Y dimension
         private int roomLengthX;                                        //Variable that stores width of the room of X dimension
-        private int[,] roomCoordinates;                                 //Array that stores coordinates of location blocks(floor, walls, enviroment and so on) of a room
-        private int[,] roomObjectId;                                    // floor - 0 wals - 1; left corner - 2;  right corner - 3; object4 - 5 and so on;
+        private int[,] roomObjectId;                                    // floor - 0 wals - 1; left corner - 2;  right corner - 3; left wall - 4; right wall 5 and so on;
+        private Layer layer1;
 
         public RoomGeneratorClass(int roomHightY, int roomLengthX)      //Constructor
         {
             this.roomHightY = roomHightY;
             this.roomLengthX = roomLengthX;
-            roomCoordinates = new int[roomHightY, roomLengthX];
-            roomObjectId = new int[roomHightY, roomLengthX];
-            setRoomCoordinates();
+            this.roomObjectId = new int[roomHightY, roomLengthX];
+            this.layer1 = new Layer(roomHightY, roomLengthX);
             setRoomWalls();
-            setRoomCorners();
+            setleftAndRightRoomWalls();
+            setRoomCorners();            
         }
 
-        public int[,] getRoom()                                         //Method which returns array that stores coordinates of location blocks of a room
+        public int GetRoomHeightY()
         {
-            return roomCoordinates;
+            return roomHightY;
         }
 
-        public int[,] getObjectId()                                     //Method which returns array that stores an ID of an object that is located on universal coordinate 
+        public int GetRoomLengthX() 
+        {
+            return roomLengthX;
+        }
+
+        public int[,] GetObjectId()                                     //Method which returns array that stores an ID of an object that is located on universal coordinate 
         {
             return roomObjectId;
         }
@@ -45,17 +50,6 @@ namespace MapGeneration
             foreach (int num in roomObjectId)
             {
                 Debug.Log(num);
-            }
-        }
-
-        private void setRoomCoordinates()                         //Sets coordinates for each block
-        {
-            for (int y = 0; y < roomHightY; y++)
-            {
-                for (int x = 0; x < roomLengthX; x++)
-                {
-                    roomCoordinates[y, x] = x;
-                }
             }
         }
 
@@ -69,6 +63,23 @@ namespace MapGeneration
                         roomObjectId[y, x] = 1;
                     if (x == 0 || x == roomLengthX - 1)
                         roomObjectId[y, x] = 1;
+                }
+            }
+        }
+        // 4 - left; 5 - right;
+        private void setleftAndRightRoomWalls() //shit is here
+        {
+            for (int y = 0; y < roomHightY; y++) 
+            {
+                for (int x = 0; x < roomLengthX; x++) 
+                {
+                    if (y != 0 || y != roomHightY - 1) 
+                    {
+                        if (x == 0)
+                            roomObjectId[y, x] = 4;
+                        else if (x == roomLengthX - 1)
+                            roomObjectId[y, x] = 5;
+                    }
                 }
             }
         }
@@ -93,9 +104,14 @@ namespace MapGeneration
         }
     }
 
-    public class LocationGenerator 
+    public class Layer
     {
+        public char[,] objectMap;
 
+        public Layer(int heightY, int lengthX) 
+        {
+            this.objectMap = new char[heightY, lengthX];
+        }
     }
 }
 
