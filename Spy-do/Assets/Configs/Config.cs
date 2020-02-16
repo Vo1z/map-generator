@@ -14,14 +14,14 @@ namespace config
         private string[] strVariables; //array that collects variables but in string (for runtime optimization)
         private int lengthOfArray; //variable that collects number of avaliable elements in config
         public string address; //path to config.txt
-        private FileReader fileReader;
+        private File fileReader;
 
         public Config(string address, int numberOfVariables) //constructor
         {
             this.address = address;
-            this.fileReader = new FileReader(address, numberOfVariables);
-            this.lengthOfArray = fileReader.replaceOdd().Length;
-            this.strVariables = fileReader.replaceOdd();
+            this.fileReader = new File(address, numberOfVariables);
+            this.lengthOfArray = fileReader.GetContent().Length;
+            this.strVariables = fileReader.GetContent();
             this.variables = getConvertedVariables(); // number of variables that are stored in config
         }
 
@@ -35,72 +35,79 @@ namespace config
             }
 
             return convertedVariables;
-        }
-        class FileReader
+        }        
+    }
+
+    class File
+    {
+        private string address; //path to config.txt
+        private int numberOfVariables;
+        private string[] content;
+
+        internal File(string address, int numberOfVariables) //constructor
         {
-            private string address; //path to config.txt
-            private int numberOfVariables;
+            this.address = address;
+            this.numberOfVariables = numberOfVariables;
+            this.content = replaceOdd();
+        }
 
-            protected internal FileReader(string address, int numberOfVariables) //constructor
+        private string readWords() //method that copies content of config.txt file
+        {
+            string text = ""; // string that collects copy of the text file
+            StreamReader sr = new StreamReader(this.address);
+            int charCode;
+
+            while ((charCode = sr.Read()) != -1)
             {
-                this.address = address;
-                this.numberOfVariables = numberOfVariables;
+                text += (char)charCode;
             }
 
-            protected internal string readWords() //method that copies content of config.txt file
+            return text;
+        }
+
+        private string[] findCommonWords()//method that finds and takes variables from
+        {                                            //confic which was converted in string with readWords()        
+
+            Regex regex = new Regex("((= .?\\d+\\.\\d+)(?m))|((= .?\\d+)(?m))"); //THE MAIN REGULAR EXPRESSION
+            MatchCollection matches = regex.Matches(readWords());
+            string[] commonText = new string[this.numberOfVariables]; //NUMBER OF VARIABLES of elements in config
+            int count = 0;
+
+            foreach (Match match in matches)
             {
-                string text = ""; // string that collects copy of the text file
-                StreamReader sr = new StreamReader(this.address);
-                int charCode;
-
-                while ((charCode = sr.Read()) != -1)
+                if (match.Value == null)
                 {
-                    text += (char)charCode;
+                    commonText[count] = "0";
                 }
-
-                return text;
+                commonText[count] = match.Value;
+                count++;
             }
 
-            protected internal string[] findCommonWords()//method that finds and takes variables from
-            {                                            //confic which was converted in string with readWords()        
+            return commonText;
+        }
 
-                Regex regex = new Regex("((= .?\\d+\\.\\d+)(?m))|((= .?\\d+)(?m))"); //THE MAIN REGULAR EXPRESSION
-                MatchCollection matches = regex.Matches(readWords());
-                string[] commonText = new string[this.numberOfVariables]; //NUMBER OF VARIABLES of elements in config
-                int count = 0;
+        internal string[] replaceOdd() // method that clears all odd symbols from variables 
+        {                                        // that were found in findCommonWords() method
 
-                foreach (Match match in matches)
+            string[] replacedOdd = findCommonWords(); //string which is to become with replaced odd symbols
+            for (int i = 0; i < findCommonWords().Length; i++)
+            {
+                if (replacedOdd[i] == null)
                 {
-                    if (match.Value == null)
-                    {
-                        commonText[count] = "0";
-                    }
-                    commonText[count] = match.Value;
-                    count++;
+                    replacedOdd[i] = "0";
                 }
-
-                return commonText;
+                else
+                {
+                    replacedOdd[i] = replacedOdd[i].Remove(0, 2);
+                }
             }
 
-            protected internal string[] replaceOdd() // method that clears all odd symbols from variables 
-            {                                        // that were found in findCommonWords() method
+            return replacedOdd;
+        }
 
-                string[] replacedOdd = findCommonWords(); //string which is to become with replaced odd symbols
-                for (int i = 0; i < findCommonWords().Length; i++)
-                {
-                    if (replacedOdd[i] == null)
-                    {
-                        replacedOdd[i] = "0";
-                    }
-                    else
-                    {
-                        replacedOdd[i] = replacedOdd[i].Remove(0, 2);
-                    }
-                }
-
-                return replacedOdd;
-
-            }
+        public string[] GetContent() //retuns content of the file
+        {
+            return this.content;
         }
     }
 }
