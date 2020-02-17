@@ -8,19 +8,20 @@ namespace MapGeneration
     {
         private int roomHightY;                                         //Variable that stores width of the room of Y dimension
         private int roomLengthX;                                        //Variable that stores width of the room of X dimension
-        private string[,] roomObjectId;                                    // floor - 0 wals - 1; left corner - 2;  right corner - 3; left wall - 4; right wall 5 and so on;
+        private string[,] roomObjectMap;                                    // floor - 0 wals - 1; left corner - 2;  right corner - 3; left wall - 4; right wall 5 and so on;
         private Layer layer1;
 
         public Room(int roomHightY, int roomLengthX)      //Constructor
         {
             this.roomHightY = roomHightY;
             this.roomLengthX = roomLengthX;
-            this.roomObjectId = new string[roomHightY, roomLengthX];
-            this.layer1 = new Layer(roomHightY, roomLengthX);
+            this.roomObjectMap = new string[roomHightY, roomLengthX];
+            this.layer1 = new Layer(roomHightY, roomLengthX);      
             setRoomFloor();
             setRoomWalls();            
         }
 
+        // Room methods ================================================================
         public int GetRoomHeightY()
         {
             return roomHightY;
@@ -31,14 +32,19 @@ namespace MapGeneration
             return roomLengthX;
         }
 
-        public string[,] GetObjectId()                                     //Method which returns array that stores an ID of an object that is located on universal coordinate 
+        public string[,] GetRoomObjectMap()                                     //Method which returns array that stores an ID of an object that is located on universal coordinate 
         {
-            return roomObjectId;
+            return roomObjectMap;
+        }
+
+        public Layer GetRoomLayer() 
+        {
+            return layer1;
         }
 
         public void Test()
         {
-            foreach (string objectid in roomObjectId)
+            foreach (string objectid in roomObjectMap)
             {
                 Debug.Log(objectid);
             }
@@ -50,22 +56,19 @@ namespace MapGeneration
             {
                 for (int x = 0; x < roomLengthX; x++) 
                 {
-                    roomObjectId[y, x] = "floor";
+                    roomObjectMap[y, x] = "floor";
                 }
             }
         }
 
-        //walls ===========================================================================================================
         private void setRoomWalls()                                   //Sets coordinates for each block
         {
             for (int y = 0; y < roomHightY; y++) 
             {
                 for (int x = 0; x < roomLengthX; x++) 
                 {
-                    if (y == 0 || y == roomHightY - 1)
-                        roomObjectId[y, x] = "wall";
-                    if (x == 0 || x == roomLengthX - 1)
-                        roomObjectId[y, x] = "wall";
+                    if (y == roomHightY - 1)
+                        roomObjectMap[y, x] = "wall";                   
                 }
                 setleftAndRightRoomWalls();
                 setRoomCorners();
@@ -81,9 +84,9 @@ namespace MapGeneration
                     if (y != 0 || y != roomHightY - 1) 
                     {
                         if (x == 0)
-                            roomObjectId[y, x] = "leftWall";
+                            roomObjectMap[y, x] = "leftWall";
                         else if (x == roomLengthX - 1)
-                            roomObjectId[y, x] = "rightWall";
+                            roomObjectMap[y, x] = "rightWall";
                     }
                 }
             }
@@ -97,26 +100,98 @@ namespace MapGeneration
                 {
                     if (y == 0 && x == 0)
                     {
-                        roomObjectId[y, x] = "leftCorner"; // sets left corners                   
+                        roomObjectMap[y, x] = "leftCorner"; // sets left corners                   
                     }
 
                     if (y == 0 && x == roomLengthX - 1) 
                     {
-                        roomObjectId[y, x] = "rightCorner"; // sets right corner
+                        roomObjectMap[y, x] = "rightCorner"; // sets right corner
                     }                    
                 }
             } 
-        }
-        //walls ===========================================================================================================
+        }        
     }
 
     public class Layer
     {
-        public char[,] objectMap;
+        private string[,] layerObjectMap;
+        private int layerHeightY;
+        private int layerLengthX;
 
-        public Layer(int heightY, int lengthX) 
+        internal Layer(int heightY, int lengthX) 
         {
-            this.objectMap = new char[heightY, lengthX];
+            this.layerObjectMap = new string[heightY + 1, lengthX];
+            this.layerHeightY = heightY + 1;
+            this.layerLengthX = lengthX;
+            setLayerObjects();
+        }
+
+        public string[,] getLayerObjectMap() 
+        {
+            return layerObjectMap;
+        }
+
+        public int GetLayerLengthX() 
+        {
+            return layerLengthX;
+        }
+
+        public int GetLayerHeightY() 
+        {
+            return layerHeightY;
+        }
+
+        private void setLayerObjects() 
+        {
+            setRoomBrinks();
+            setBottomWalls();
+            setTopBrinckCorners();
+        }
+
+        private void setRoomBrinks() 
+        {
+            for (int y = 0; y < layerHeightY; y++)
+            {
+                for (int x = 0; x < layerLengthX; x++)
+                {
+                    if ((y == layerHeightY - 1 || y == 1) && (x != 0 && x != layerLengthX - 1))
+                    {
+                        layerObjectMap[y, x] = "topWallBrink";
+                    }
+                }
+            }
+        }
+
+        private void setBottomWalls() 
+        {
+            for (int y = 0; y < layerHeightY; y++)
+            {
+                for (int x = 0; x < layerLengthX; x++)
+                {
+                    if (y == 0 && x != 0 && x!= layerLengthX - 1)
+                    {
+                        layerObjectMap[y, x] = "wall";
+                    }
+                }
+            }
+        }
+
+        private void setTopBrinckCorners() 
+        {
+            for (int y = 0; y < layerHeightY; y++)
+            {
+                for (int x = 0; x < layerLengthX; x++)
+                {
+                    if (y == layerHeightY - 1 && x == 0)
+                    {
+                        layerObjectMap[y, x] = "leftTopBrinkCorner";
+                    }
+                    if (y == layerHeightY - 1 && x == layerLengthX - 1) 
+                    {
+                        layerObjectMap[y, x] = "rightTopBrinkCorner";
+                    }
+                }
+            }
         }
     }
 }
@@ -125,7 +200,8 @@ namespace MapGeneration
             TO DO LIST
 1. add corners - done
 2. left, right, top and down walls - done;
-3. add doors
-4. add inner objects
-5. add random (not sure)
+3. add layers
+4. add doors
+5. add inner objects
+6. add top side of the wall
 */

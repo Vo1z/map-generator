@@ -43,11 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee189f6f01f3035428e010b5361bf805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftCorner: {fileID: 7123125657675823938, guid: a1c8b8c4408de024da9408747aa526c7,
-    type: 3}
-  rightCorner: {fileID: 7123125657675823938, guid: a1c8b8c4408de024da9408747aa526c7,
-    type: 3}
-  floor: {fileID: 3938433848932042991, guid: f903e16fb45685548add404160f4e5e1, type: 3}
-  wall: {fileID: 3742439687717138062, guid: ca4a9dd872be0d7469d33f512f257744, type: 3}
-  roomLenght: 4
-  roomHight: 6
+  floor: {fileID: 0}
+  wall: {fileID: 0}
+  leftWall: {fileID: 0}
+  rightWall: {fileID: 0}
+  leftCorner: {fileID: 0}
+  rightCorner: {fileID: 0}
+  leftTopBrinkCorner: {fileID: 0}
+  rightTopBrinkCorner: {fileID: 0}
+  roomLenght: 0
+  roomHight: 0
