@@ -2,197 +2,178 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapGeneration 
+namespace MapGeneration
 {
     public class Room                                     //Class which is responsible for collecting data for creating room 
     {
-        private int roomHightY;                                         //Variable that stores width of the room of Y dimension
-        private int roomLengthX;                                        //Variable that stores width of the room of X dimension
-        private string[,] roomObjectMap;                                    // floor - 0 wals - 1; left corner - 2;  right corner - 3; left wall - 4; right wall 5 and so on;
-        private Layer layer1;
 
-        public Room(int roomHightY, int roomLengthX)      //Constructor
+        public readonly int RoomHeightY;                                         //Variable that stores width of the room of Y dimension
+        public readonly int RoomLengthX;                                        //Variable that stores width of the room of X dimension
+
+        private List<Layer> layers = new List<Layer>();
+
+        public Room(int roomHeightY, int roomLengthX)      //Constructor
         {
-            this.roomHightY = roomHightY;
-            this.roomLengthX = roomLengthX;
-            this.roomObjectMap = new string[roomHightY, roomLengthX];
-            this.layer1 = new Layer(roomHightY, roomLengthX);      
-            setRoomFloor();
-            setRoomWalls();            
+            this.RoomHeightY = roomHeightY - 1;
+            this.RoomLengthX = roomLengthX;
+            instRoom();
         }
 
-        // Room methods ================================================================
-        public int GetRoomHeightY()
+        public void AddRoomLayer(int layerHeightY, int layerLenghtX)
         {
-            return roomHightY;
-        }
-
-        public int GetRoomLengthX() 
-        {
-            return roomLengthX;
-        }
-
-        public string[,] GetRoomObjectMap()                                     //Method which returns array that stores an ID of an object that is located on universal coordinate 
-        {
-            return roomObjectMap;
-        }
-
-        public Layer GetRoomLayer() 
-        {
-            return layer1;
-        }
-
-        public void Test()
-        {
-            foreach (string objectid in roomObjectMap)
+            if (layerHeightY > RoomHeightY)
             {
-                Debug.Log(objectid);
+                throw new LayerIsBiggerThanRoomException(RoomHeightY);                       //Exceptions
+            }
+            else if (layerLenghtX > RoomLengthX)
+            {
+                throw new LayerIsBiggerThanRoomException(RoomLengthX);
+            }
+            else if (layerHeightY > RoomHeightY && layerLenghtX > RoomLengthX)
+            {
+                throw new LayerIsBiggerThanRoomException(RoomLengthX, RoomHeightY);
+            }
+            else
+            {
+                layers.Add(new Layer(layerHeightY, layerLenghtX)); // not sure
             }
         }
 
-        private void setRoomFloor()
+        public void RemoveRoomLayer(int numberOfLayer)
         {
-            for (int y = 0; y < roomHightY; y++) 
-            {
-                for (int x = 0; x < roomLengthX; x++) 
-                {
-                    roomObjectMap[y, x] = "floor";
-                }
-            }
+            layers.RemoveAt(numberOfLayer); //not sure
         }
 
-        private void setRoomWalls()                                   //Sets coordinates for each block
+        public Layer GetRoomLayer(int layerNumber)
         {
-            for (int y = 0; y < roomHightY; y++) 
-            {
-                for (int x = 0; x < roomLengthX; x++) 
-                {
-                    if (y == roomHightY - 1)
-                        roomObjectMap[y, x] = "wall";                   
-                }
-                setleftAndRightRoomWalls();
-                setRoomCorners();
-            }
-        }
-        // 4 - left; 5 - right;
-        private void setleftAndRightRoomWalls() //shit is here
-        {
-            for (int y = 0; y < roomHightY; y++) 
-            {
-                for (int x = 0; x < roomLengthX; x++) 
-                {
-                    if (y != 0 || y != roomHightY - 1) 
-                    {
-                        if (x == 0)
-                            roomObjectMap[y, x] = "leftWall";
-                        else if (x == roomLengthX - 1)
-                            roomObjectMap[y, x] = "rightWall";
-                    }
-                }
-            }
+            return layers[layerNumber];
         }
 
-        private void setRoomCorners() 
-        {                                                              
-            for (int y = 0; y < roomHightY; y++)
-            {
-                for (int x = 0; x < roomLengthX; x++)
-                {
-                    if (y == 0 && x == 0)
-                    {
-                        roomObjectMap[y, x] = "leftCorner"; // sets left corners                   
-                    }
+        private void instRoom() //shit is here 
+        {
+            //======================Layer 0======================
+            AddRoomLayer(RoomHeightY - 1, RoomLengthX - 1);
+            layers[0].FillWholeLayerMap("floor");
+            layers[0].SetHorizontalLayerLine(layers[0].LayerHeightY - 1, "wall");
+            layers[0].SetVerticalLayerLine(0, "leftWall");
+            layers[0].SetVerticalLayerLine(layers[0].LayerLengthX - 1, "rightWall");
 
-                    if (y == 0 && x == roomLengthX - 1) 
-                    {
-                        roomObjectMap[y, x] = "rightCorner"; // sets right corner
-                    }                    
-                }
-            } 
-        }        
+            //======================Layer 1======================
+            AddRoomLayer(RoomHeightY - 1, RoomLengthX - 1);
+            
+
+            //======================Layer 2======================
+            AddRoomLayer(RoomHeightY, RoomLengthX - 1);
+            //Sets top side of the room
+            layers[2].SetHorizontalLayerLine(layers[2].LayerHeightY - 1, "topWallBrink");
+            layers[2].SetOnUniqueLayerID(layers[2].LayerHeightY - 1, 0, "leftTopBrinkCorner");
+            layers[2].SetOnUniqueLayerID(layers[2].LayerHeightY - 1, layers[2].LayerLengthX - 1, "rightTopBrinkCorner");
+            //Sets bottom sides
+            layers[2].SetHorizontalLayerLine(0, "wall");
+            layers[2].SetHorizontalLayerLine(1, "topWallBrink");
+            layers[2].SetOnUniqueLayerID(1, 0, "0");
+            layers[2].SetOnUniqueLayerID(1, layers[2].LayerLengthX - 1, "0");
+            layers[2].SetOnUniqueLayerID(0, 0, "leftCorner");
+            layers[2].SetOnUniqueLayerID(0, layers[2].LayerLengthX - 1, "rightCorner");
+        }       
     }
+
+    // Layer ============================================================================================================================
 
     public class Layer
     {
-        private string[,] layerObjectMap;
-        private int layerHeightY;
-        private int layerLengthX;
+        public readonly string[,] LayerObjectMap;
+        public readonly int LayerHeightY;
+        public readonly int LayerLengthX;
 
-        internal Layer(int heightY, int lengthX) 
+        internal Layer(int heightY, int lengthX)
         {
-            this.layerObjectMap = new string[heightY + 1, lengthX];
-            this.layerHeightY = heightY + 1;
-            this.layerLengthX = lengthX;
-            setLayerObjects();
+            this.LayerObjectMap = new string[heightY + 1, lengthX];
+            this.LayerHeightY = heightY;
+            this.LayerLengthX = lengthX;
         }
 
-        public string[,] getLayerObjectMap() 
+        public void FillWholeLayerMap(string objectName) 
         {
-            return layerObjectMap;
-        }
-
-        public int GetLayerLengthX() 
-        {
-            return layerLengthX;
-        }
-
-        public int GetLayerHeightY() 
-        {
-            return layerHeightY;
-        }
-
-        private void setLayerObjects() 
-        {
-            setRoomBrinks();
-            setBottomWalls();
-            setTopBrinckCorners();
-        }
-
-        private void setRoomBrinks() 
-        {
-            for (int y = 0; y < layerHeightY; y++)
+            for (int y = 0; y < LayerHeightY; y++)
             {
-                for (int x = 0; x < layerLengthX; x++)
+                for (int x = 0; x < LayerLengthX; x++)
                 {
-                    if ((y == layerHeightY - 1 || y == 1) && (x != 0 && x != layerLengthX - 1))
+                    LayerObjectMap[y, x] = objectName;
+                }
+            }
+        }                
+
+        public void SetLayerEdges(int numberOfInnerCircle, string objectName) 
+        {
+            for (int y = 0; y < LayerHeightY; y++) 
+            {
+                for (int x = 0; x < LayerLengthX; x++) 
+                {
+                    if ((y == numberOfInnerCircle || y == (LayerHeightY - 1) - numberOfInnerCircle) && (x >= numberOfInnerCircle && x <= (LayerLengthX - 1) - numberOfInnerCircle))
+                        LayerObjectMap[y, x] = objectName;                                           
+
+                    if ((x == numberOfInnerCircle || x == (LayerLengthX - 1) - numberOfInnerCircle) && (y >= numberOfInnerCircle && y <= (LayerHeightY - 1) - numberOfInnerCircle))
+                        LayerObjectMap[y, x] = objectName;                    
+                }
+            }
+        }
+
+        public void SetVerticalLayerLine(int Xindex, string objectName) 
+        {
+            for (int y = 0; y < LayerHeightY; y++)
+            {
+                for (int x = 0; x < LayerLengthX; x++)
+                {
+                    if (x == Xindex)
                     {
-                        layerObjectMap[y, x] = "topWallBrink";
+                        LayerObjectMap[y, x] = objectName;
                     }
                 }
             }
         }
 
-        private void setBottomWalls() 
+        public void SetHorizontalLayerLine(int Yindex, string objectName) 
         {
-            for (int y = 0; y < layerHeightY; y++)
+            for (int y = 0; y < LayerHeightY; y++)
             {
-                for (int x = 0; x < layerLengthX; x++)
+                for (int x = 0; x < LayerLengthX; x++)
                 {
-                    if (y == 0 && x != 0 && x!= layerLengthX - 1)
+                    if (y == Yindex)
                     {
-                        layerObjectMap[y, x] = "wall";
+                        LayerObjectMap[y, x] = objectName;
                     }
                 }
             }
         }
 
-        private void setTopBrinckCorners() 
+        public void SetBottomLayerCorners(string objectName)
         {
-            for (int y = 0; y < layerHeightY; y++)
-            {
-                for (int x = 0; x < layerLengthX; x++)
-                {
-                    if (y == layerHeightY - 1 && x == 0)
-                    {
-                        layerObjectMap[y, x] = "leftTopBrinkCorner";
-                    }
-                    if (y == layerHeightY - 1 && x == layerLengthX - 1) 
-                    {
-                        layerObjectMap[y, x] = "rightTopBrinkCorner";
-                    }
-                }
-            }
+            LayerObjectMap[0, 0] = objectName;
+            LayerObjectMap[0, LayerLengthX - 1] = objectName;
         }
+
+        public void SetTopLayerCorners(string objectName)
+        {
+            LayerObjectMap[LayerHeightY - 1, 0] = objectName;
+            LayerObjectMap[LayerHeightY - 1, LayerLengthX - 1] = objectName;
+        }
+
+        public void SetOnUniqueLayerID(int y, int x, string objectName) 
+        {
+            LayerObjectMap[y, x] = objectName;
+        }        
+    }
+
+    class LayerIsBiggerThanRoomException : System.Exception
+    {
+        public LayerIsBiggerThanRoomException(int coordinate)
+            : base("Layer is bigger than room: " + "[" + coordinate + "]")
+        { }
+
+        public LayerIsBiggerThanRoomException(int coordinateX, int coordinateY)
+            : base("Layer is bigger than room: " + "[" +coordinateX + ", " + coordinateY+ "]")
+        { }
     }
 }
 

@@ -131,7 +131,6 @@ GameObject:
   m_Component:
   - component: {fileID: 280408592}
   - component: {fileID: 280408591}
-  - component: {fileID: 280408593}
   - component: {fileID: 280408590}
   m_Layer: 0
   m_Name: Main Camera
@@ -205,19 +204,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &280408593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 280408589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30b767ab5df8f1a45af00463373df836, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toShow: 0
 --- !u!1001 &2661859215108582609
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -307,7 +293,7 @@ PrefabInstance:
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: roomHight
-      value: 7
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
@@ -333,6 +319,46 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5324872209762640997, guid: b3a01b55d65a48c4ebf6fc67610ef19e,
         type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: floor
+      value: 
+      objectReference: {fileID: 3938433848932042991, guid: f903e16fb45685548add404160f4e5e1,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: wall
+      value: 
+      objectReference: {fileID: 3742439687717138062, guid: ca4a9dd872be0d7469d33f512f257744,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: leftTopBrinkCorner
+      value: 
+      objectReference: {fileID: 7277480639943038649, guid: 888abe4c239eff7489ed51c84e709be5,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: rightTopBrinkCorner
+      value: 
+      objectReference: {fileID: 1636533765688425933, guid: 37c343413a4e28344a18c18dc71e002e,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: topWallBrink
+      value: 
+      objectReference: {fileID: 8590504561338760493, guid: c74235e50dfcbb342b29b3a798a3049e,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: roomHeight
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: roomLength
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6964672586421334284, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: m_LocalPosition.x
