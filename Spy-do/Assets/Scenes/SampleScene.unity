@@ -174,7 +174,7 @@ Camera:
   far clip plane: 1000
   field of view: 177
   orthographic: 1
-  orthographic size: 6.6072273
+  orthographic size: 14.46
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -204,75 +204,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2661859215108582609
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.73508584
-      objectReference: {fileID: 0}
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.15181619
-      objectReference: {fileID: 0}
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -14.178397
-      objectReference: {fileID: 0}
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 44354461329859692, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330028810494006699, guid: 549811793f6aa7c4dbedb2947ed51fed,
-        type: 3}
-      propertyPath: m_Name
-      value: Storage
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 549811793f6aa7c4dbedb2947ed51fed, type: 3}
 --- !u!1001 &4350695178033919080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -284,6 +215,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MapGenerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: Gym.Array.size
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
@@ -352,12 +288,53 @@ PrefabInstance:
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: roomHeight
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: roomLength
-      value: 8
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: innerObject
+      value: 
+      objectReference: {fileID: 3435220243951682523, guid: 93cc0b4b710174f4d9f7ea69a0571eb9,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: numberOfRooms
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: spaceBetweenRooms
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: minRoomHeightY
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: maxRoomHeightY
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: minRoomLengthX
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: maxRoomLengthX
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: Gym
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6964672586421334284, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
@@ -397,7 +374,7 @@ PrefabInstance:
     - target: {fileID: 6964672586421334284, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6964672586421334284, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}

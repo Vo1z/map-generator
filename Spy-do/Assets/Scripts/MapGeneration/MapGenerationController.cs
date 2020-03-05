@@ -1,6 +1,7 @@
 ﻿/*
  * Sirex production code:
- * Written by Voiz (Viktor Lishchuk)
+ * Project: Spy-Do
+ * Author: Voiz (Viktor Lishchuk)
  * Email: vitya.voody@gmail.com
  * Twitter: @V0IZ_
  */
@@ -9,7 +10,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MapGeneration;
 
-//inner class that creates floor for room
+//Inner class that creates floor for room
 class MapGenerationController : MonoBehaviour
 {   
     public GameObject floor;
@@ -33,6 +34,8 @@ class MapGenerationController : MonoBehaviour
     public int maxRoomHeightY;
     public int minRoomLengthX;
     public int maxRoomLengthX;
+
+    public bool Gym;
 
     private Room room;
     private Location location;
