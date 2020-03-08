@@ -122,7 +122,7 @@ namespace MapGeneration
 
 
     //Class which is responsible for collecting data for creating room 
-    public class Room
+    public abstract class Room
     {
 
         public readonly int RoomHeightY;                                        //Variable that stores width of the room of Y dimension
@@ -162,134 +162,134 @@ namespace MapGeneration
             Layers.RemoveAt(numberOfLayer);
         }
 
-        private protected virtual void instRoom() { }
+        abstract private protected void instRoom();
     }
 
 
     // Class that is responible for sorting all data about rooms on game level
     class Location
     {
-        public readonly string[,,] LocationObjectMap;
+        
         public readonly int NumberOfRooms;
-        public readonly int SpaceBetweenRooms;
+        public readonly int MinRoomHeightY;
+        public readonly int MaxRoomHeightY;
+        public readonly int MinRoomLengthX;
+        public readonly int MaxRoomLengthX;
+
+        public readonly string[,,] LocationObjectMap;
+        public readonly Room[] LocationRooms;
+
+        public readonly int MaxLocationNumberOfLayers;
         public readonly int LocationHeightY;
-        public readonly int LocationLengthX;
-        public readonly int LocationLevelZ;
-        public readonly List<Layer> LocationLayers;
+        public readonly int LocationLengthX;      
 
-        private Room[] rooms;
-        private int minRoomHeightY;
-        private int minRoomLengthX;
-        private int maxRoomHeightY;
-        private int maxRoomLengthX;
-
-        public Location(int numberOfRooms, int spaceBetweenRooms, int minRoomHeightY, int maxRoomHeightY, int minRoomLengthX, int maxRoomLengthX)
+        public Location(int NumberOfRooms,int MinRoomHeightY, int MaxRoomHeightY, int MinRoomLengthX, int MaxRoomLengthX) 
         {
-            this.minRoomHeightY = minRoomHeightY;
-            this.maxRoomHeightY = maxRoomHeightY;
-            this.minRoomLengthX = minRoomLengthX;
-            this.maxRoomLengthX = maxRoomLengthX;
-            NumberOfRooms = numberOfRooms;
-            SpaceBetweenRooms = spaceBetweenRooms;
-            rooms = new Room[numberOfRooms];
+            this.MinRoomHeightY = MinRoomHeightY;
+            this.MaxRoomHeightY = MaxRoomHeightY;
+            this.MinRoomLengthX = MinRoomLengthX;
+            this.MaxRoomLengthX = MaxRoomLengthX;
+            this.NumberOfRooms = NumberOfRooms;
 
-            generateRooms();
-
-            LocationLevelZ = getMaxNumberOfLayersLevelsZ();
-            LocationHeightY = getLocationHeightY();
-            LocationLengthX = getLocationLengthX();
-            LocationObjectMap = new string[LocationLevelZ, LocationHeightY, LocationLengthX];
-
-            createLayerObjectMap();
+            this.LocationRooms = generateLocationRooms();
+            
+            this.MaxLocationNumberOfLayers = calculateMaxNumberOfLayers();
+            this.LocationHeightY = calculateLocationHeightY();
+            this.LocationLengthX = calculateLocationLenghtX();
+            
+            this.LocationObjectMap = createLocationObjectMap();
         }
 
-        public void createLayerObjectMap() //Shit is here
+        //Generates all types of room in the location
+        private Room[] generateLocationRooms()                                                                 
         {
-            int spacingY = 0;
-            int spacingX = 0;
-
-            for (int roomNumber = 0; roomNumber < NumberOfRooms; roomNumber++)
+            Room[] generatedRooms = new Room[NumberOfRooms];
+            
+            for (int i = 0; i < NumberOfRooms; i++) 
             {
-                if (roomNumber != 0)
-                {
-                    spacingX += rooms[roomNumber].RoomLengthX;
-                    spacingY += rooms[roomNumber].RoomHeightY;
-                }
-
-                for (int layerNumber = 0; layerNumber < rooms[roomNumber].Layers.Count; layerNumber++)
-                {
-                    for (int y = 0; y < rooms[roomNumber].Layers[layerNumber].LayerHeightY; y++)
-                    {
-                        for (int x = 0; x < rooms[roomNumber].Layers[layerNumber].LayerLengthX; x++)
-                        {
-                            LocationObjectMap[layerNumber, y + spacingY, x + spacingX] = rooms[roomNumber].Layers[layerNumber].LayerObjectMap[y, x];
-                        }
-                    }
-                }
+                int randomRoom = Random.Range(0, 2);
+                
+                if (randomRoom == 0)
+                    generatedRooms[i] = new Gym(Random.Range(MinRoomHeightY,MaxRoomHeightY), Random.Range(MinRoomLengthX, MaxRoomLengthX));
+                else if (randomRoom == 1)
+                    generatedRooms[i] = new EmtyRoom(Random.Range(MinRoomHeightY, MaxRoomHeightY), Random.Range(MinRoomLengthX, MaxRoomLengthX));
             }
+
+            return generatedRooms;
         }
 
-        private void generateRooms() //Shit is here
+        private int calculateMaxNumberOfLayers()
         {
-            for (int i = 0; i < NumberOfRooms; i++)
-            {      
-                    rooms[i] = new Gym(Random.Range(minRoomHeightY, maxRoomHeightY), Random.Range(minRoomLengthX, maxRoomLengthX)); 
+            int count = 0;
+            int maxNumberLayers = 0;
+
+            for (int room = 0; room < NumberOfRooms; room++) 
+            {
+                if (maxNumberLayers < count) 
+                {
+                    maxNumberLayers = count;
+                }
+
+                count = 0;
+
+                for (int layer = 0; layer < LocationRooms[room].Layers.Count; layer++) 
+                {
+                    count++;
+                }
             }
+
+            return maxNumberLayers;
         }
 
-        private int getLocationHeightY()
+        private int calculateLocationHeightY() 
         {
             int locationHeightY = 0;
-
-            for (int i = 0; i < NumberOfRooms; i++)
-            {
-                locationHeightY += rooms[i].RoomHeightY;
-                locationHeightY += SpaceBetweenRooms;
+            for (int room = 0; room < NumberOfRooms; room++)
+            {                
+                locationHeightY += LocationRooms[room].RoomHeightY;                
             }
 
             return locationHeightY;
         }
 
-        private int getLocationLengthX()
+        private int calculateLocationLenghtX()
         {
             int locationLengthX = 0;
-
-            for (int i = 0; i < NumberOfRooms; i++)
+            for (int room = 0; room < NumberOfRooms; room++)
             {
-                locationLengthX += rooms[i].RoomLengthX;
-                locationLengthX += SpaceBetweenRooms;
+                locationLengthX += LocationRooms[room].RoomLengthX;
             }
 
             return locationLengthX;
         }
 
-        private int getMaxNumberOfLayersLevelsZ()
+        private string[,,] createLocationObjectMap() 
         {
-            int layersCount = 0;                                                                                //Variable that is responsible for counting layers in rooms
+            string[,,] objectMap = new string[MaxLocationNumberOfLayers, LocationHeightY, LocationLengthX];
+            int spacingY = 0;
+            int spacingX = 0;
 
-            for (int roomNumber = 0; roomNumber < NumberOfRooms; roomNumber++)                                  //Looks through all rooms in map 
+            for (int room = 0; room < NumberOfRooms; room++) 
             {
-                for (int layerInRoom = 0; layerInRoom < rooms[roomNumber].Layers.Count; layerInRoom++)          //Looks through each layer in room and counts number if room layers
+                for (int layer = 0; layer < LocationRooms[room].Layers.Count; layer++) 
                 {
-                    layersCount++;
+                    for (int y = 0; y < LocationRooms[room].Layers[layer].LayerHeightY; y++) 
+                    {
+                        for (int x = 0; x < LocationRooms[room].Layers[layer].LayerLengthX; x++) 
+                        {
+                            objectMap[layer, y + spacingY, x + spacingX] = LocationRooms[room].Layers[layer].LayerObjectMap[y, x];
+                        }
+                    }
                 }
+
+                spacingY += LocationRooms[room].RoomHeightY;
+                spacingX += LocationRooms[room].RoomLengthX;
             }
 
-            return layersCount;
-        }
-
-        private int generateRandomDirection() 
-        {
-            if (Random.Range(1, 2) == 1)
-            {
-                return 1;
-            }
-            else 
-            {
-                return -1;
-            }
+            return objectMap;
         }
     }
+
 
     //Exceptions 
     class LayerIsBiggerThanRoomException : System.Exception

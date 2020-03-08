@@ -29,26 +29,23 @@ class MapGenerationController : MonoBehaviour
     public GameObject innerObject;
 
     public int numberOfRooms;
-    public int spaceBetweenRooms;
     public int minRoomHeightY;
     public int maxRoomHeightY;
     public int minRoomLengthX;
     public int maxRoomLengthX;
-
-    public bool Gym;
 
     private Room room;
     private Location location;
 
     void Awake()
     {
-        room = new Room(Random.Range(minRoomHeightY, maxRoomHeightY), Random.Range(minRoomLengthX, maxRoomLengthX));
-        location = new Location(numberOfRooms, spaceBetweenRooms, minRoomHeightY, maxRoomHeightY, minRoomLengthX, maxRoomLengthX);
+        room = new Gym(Random.Range(minRoomHeightY, maxRoomHeightY), Random.Range(minRoomLengthX, maxRoomLengthX));
+        location = new Location(numberOfRooms, minRoomHeightY, maxRoomHeightY, minRoomLengthX, maxRoomLengthX);
     }
 
     void Start()
     {
-        createMap(location, location.LocationLevelZ, location.LocationHeightY, location.LocationLengthX);
+        createMap(location, location.MaxLocationNumberOfLayers, location.LocationHeightY, location.LocationLengthX);
 
         //createRoom(room);
 
@@ -143,9 +140,9 @@ class MapGenerationController : MonoBehaviour
         }
     }
 
-    private void createMap(Location location, int levelZ, int heightY, int lengthX)
+    private void createMap(Location location, int layersZ, int heightY, int lengthX)
     {
-        for (int z = 0; z < levelZ; z++) 
+        for (int z = 0; z < layersZ; z++) 
         {
             for (int y = 0; y < heightY; y++)
             {
