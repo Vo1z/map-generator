@@ -304,12 +304,12 @@ PrefabInstance:
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: numberOfRooms
-      value: 46
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: spaceBetweenRooms
-      value: 13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
@@ -335,6 +335,31 @@ PrefabInstance:
         type: 3}
       propertyPath: Gym
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: AnotherRoom
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: minLocationHeightY
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: maxLocationHeightY
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: minLocationLengthX
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: maxLocationLengthX
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6964672586421334284, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}

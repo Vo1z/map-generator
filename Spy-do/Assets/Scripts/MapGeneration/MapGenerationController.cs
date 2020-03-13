@@ -34,18 +34,28 @@ class MapGenerationController : MonoBehaviour
     public int minRoomLengthX;
     public int maxRoomLengthX;
 
+    public int minLocationHeightY;
+    public int maxLocationHeightY;
+    public int minLocationLengthX;
+    public int maxLocationLengthX;
+
     private Room room;
     private Location location;
+    private SLocationOfRoomsInformation slori;
 
     void Awake()
     {
+        setStruct(); //constructor for sLocationOfRoomsInformation struct
+
         room = new Gym(Random.Range(minRoomHeightY, maxRoomHeightY), Random.Range(minRoomLengthX, maxRoomLengthX));
-        location = new Location(numberOfRooms, minRoomHeightY, maxRoomHeightY, minRoomLengthX, maxRoomLengthX);
+        location = new Location(slori, numberOfRooms, minRoomHeightY, maxRoomHeightY, minRoomLengthX, maxRoomLengthX);
+
     }
 
     void Start()
     {
-        createMap(location, location.MaxLocationNumberOfLayers, location.LocationHeightY, location.LocationLengthX);
+        //location.Test(slori);
+        createMap(location);
 
         //createRoom(room);
 
@@ -140,13 +150,13 @@ class MapGenerationController : MonoBehaviour
         }
     }
 
-    private void createMap(Location location, int layersZ, int heightY, int lengthX)
+    private void createMap(Location location)
     {
-        for (int z = 0; z < layersZ; z++) 
+        for (int z = 0; z < location.MaxLocationNumberOfLayers; z++) 
         {
-            for (int y = 0; y < heightY; y++)
+            for (int y = 0; y < location.LocationHeightY; y++)
             {
-                for (int x = 0; x < lengthX; x++)
+                for (int x = 0; x < location.LocationLengthX; x++)
                 {
                     switch (location.LocationObjectMap[z, y, x])
                     {
@@ -184,5 +194,13 @@ class MapGenerationController : MonoBehaviour
                 }
             }
         }
-    }        
+    }
+
+    private void setStruct() 
+    {
+        slori.minHeightY = this.minLocationHeightY;
+        slori.maxHeightY = this.maxLocationHeightY;
+        slori.minLengthX = this.minLocationLengthX;
+        slori.maxLengthX = this.maxLocationLengthX;
+    }
 }
