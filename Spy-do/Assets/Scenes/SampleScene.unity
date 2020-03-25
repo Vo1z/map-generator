@@ -304,7 +304,7 @@ PrefabInstance:
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: numberOfRooms
-      value: 30
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
@@ -344,22 +344,92 @@ PrefabInstance:
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: minLocationHeightY
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: maxLocationHeightY
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: minLocationLengthX
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: maxLocationLengthX
-      value: 5
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymFloor
+      value: 
+      objectReference: {fileID: 3938433848932042991, guid: f903e16fb45685548add404160f4e5e1,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymWall
+      value: 
+      objectReference: {fileID: 3742439687717138062, guid: ca4a9dd872be0d7469d33f512f257744,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymLeftWall
+      value: 
+      objectReference: {fileID: 2479602682666764946, guid: d855af04570b9ad4cb51ffce30a0330a,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymRightWall
+      value: 
+      objectReference: {fileID: 5324872209762640997, guid: b3a01b55d65a48c4ebf6fc67610ef19e,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymLeftCorner
+      value: 
+      objectReference: {fileID: 3932006674230612580, guid: 1bc1ae0f82673404183a197775f190f5,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymRightCorner
+      value: 
+      objectReference: {fileID: 7123125657675823938, guid: a1c8b8c4408de024da9408747aa526c7,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymTopWallBrink
+      value: 
+      objectReference: {fileID: 8590504561338760493, guid: c74235e50dfcbb342b29b3a798a3049e,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymLeftTopBrinkCorner
+      value: 
+      objectReference: {fileID: 7277480639943038649, guid: 888abe4c239eff7489ed51c84e709be5,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymRightTopBrinkCorner
+      value: 
+      objectReference: {fileID: 1636533765688425933, guid: 37c343413a4e28344a18c18dc71e002e,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymInnerObject
+      value: 
+      objectReference: {fileID: 3435220243951682523, guid: 93cc0b4b710174f4d9f7ea69a0571eb9,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: IsGym
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: IsEmptyRoom
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6964672586421334284, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
