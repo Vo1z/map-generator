@@ -14,12 +14,6 @@ using MapGeneration;
 class MapGenerationController : MonoBehaviour
 {
     [Header("Location Propertirties")]
-    public int numberOfRooms;
-    public int minRoomHeightY;
-    public int maxRoomHeightY;
-    public int minRoomLengthX;
-    public int maxRoomLengthX;
-
     public int minLocationHeightY;
     public int maxLocationHeightY;
     public int minLocationLengthX;
@@ -27,26 +21,39 @@ class MapGenerationController : MonoBehaviour
 
     [Header("Office Objects")]
     public bool isOffice;
-    public GameObject OfficeFloor;
+    public int officeQuantity;
 
+    public int officeMinHeightY;
+    public int officeMaxHeightY;
+    public int officeMinLengthX;
+    public int officeMaxLengthX;
+
+    public GameObject OfficeFloor;
     public GameObject OfficeTopWallBrink;
     public GameObject OfficeWall;
     public GameObject OfficeLeftWall;
     public GameObject OfficeRightWall;
-
     public GameObject OfficeTable;
     public GameObject OfficeComputer;
 
     [Header("Gym Objects")]
-    public bool IsGym;
+    public bool isGym;
+    public int gymQuantity;
+
+    public int gymMinHeightY;
+    public int gymMaxHeightY;
+    public int gymMinLengthX;
+    public int gymMaxLengthX;
 
     public GameObject GymFloor;
-
     public GameObject GymTopWallBrink;
     public GameObject GymWall;
     public GameObject GymLeftWall;
     public GameObject GymRightWall;
     public GameObject GymInnerObject;
+
+    //[Header("<ROOM> Objects")]
+    //<ROOM> GAME OBJECTS
 
     private Room room;
     private Location location;
@@ -56,14 +63,16 @@ class MapGenerationController : MonoBehaviour
     {
         setStruct(); //constructor for sLocationOfRoomsInformation struct
 
-        //room = new Gym(Random.Range(minRoomHeightY, maxRoomHeightY), Random.Range(minRoomLengthX, maxRoomLengthX));
-        location = new Location(slori, numberOfRooms, minRoomHeightY, maxRoomHeightY, minRoomLengthX, maxRoomLengthX);
+        //room = new Gym(Random.Range(gymMinHeightY, gymMaxHeightY), Random.Range(gymMinLengthX, gymMaxLengthX));        
+        //room = new Office(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
 
+        location = new Location(slori);
     }
 
     void Start()
     {
-        location.Test(slori);
+        //location.Test(slori);
+        
         createMap(location);
 
         //createRoom(room);
@@ -113,7 +122,7 @@ class MapGenerationController : MonoBehaviour
         }
     }*/
 
-    private void createRoom(Room room)
+    private void createRoom(Room room)//ADD ROOM CONDITION
     {
         for (int layerNumber = 0; layerNumber < room.Layers.Count; layerNumber++)
         {
@@ -171,7 +180,7 @@ class MapGenerationController : MonoBehaviour
         }
     }
 
-    private void createMap(Location location)
+    private void createMap(Location location)//ADD ROOM CONDITION
     {
         for (int z = 0; z < location.MaxLocationNumberOfLayers; z++) 
         {
@@ -223,29 +232,74 @@ class MapGenerationController : MonoBehaviour
                         case "GymInnerObject":
                             Instantiate(GymInnerObject, new Vector2(x, y), Quaternion.identity);
                             break;
+
+                        //-------------<ROOM>-------------
+                        //<SWITCH OF <ROOM>>
                     }
                 }
             }
         }
     }
 
-    private void setStruct() 
+    private int findSumOfAllLocationRooms()//ADD ROOM CONDITION
     {
-        slori.minHeightY = this.minLocationHeightY;
-        slori.maxHeightY = this.maxLocationHeightY;
-        slori.minLengthX = this.minLocationLengthX;
-        slori.maxLengthX = this.maxLocationLengthX;
+        int sumOfAllLocationRooms = 0;
+
+        if (isGym == true)
+        {
+            sumOfAllLocationRooms += gymQuantity;
+        }
+        if (isOffice == true) 
+        {
+            sumOfAllLocationRooms += officeQuantity;
+        }
+        /*if (is<ROOM> == true)
+        {
+            sumOfAllLocationRooms += <ROOM>Quantity;
+        }*/
+
+
+        return sumOfAllLocationRooms;
+    }
+
+    private void setStruct()//ADD ROOM CONDITION
+    {
+        slori.sumOfAllLocationRooms = findSumOfAllLocationRooms(); //responsible for sum of all rooms in the location
+        slori.minLocationHeightY = this.minLocationHeightY;
+        slori.maxLocationHeightY = this.maxLocationHeightY;
+        slori.minLocationLengthX = this.minLocationLengthX;
+        slori.maxLocationLengthX = this.maxLocationLengthX;
+
+        //=====Gym======
+        slori.gymQuantity = this.gymQuantity;
+
+        slori.gymMinHeightY = this.gymMinHeightY;
+        slori.gymMaxHeightY = this.gymMaxHeightY;
+        slori.gymMinLengthX = this.gymMinLengthX;
+        slori.gymMaxLengthX = this.gymMaxLengthX;
+
+        //=====Office======
+        slori.officeQuantity = this.officeQuantity;
+        
+        slori.officeMinHeightY = this.officeMinHeightY;
+        slori.officeMaxHeightY = this.officeMaxHeightY;
+        slori.officeMinLengthX = this.officeMinLengthX;
+        slori.officeMaxLengthX = this.officeMaxLengthX;
+
+        //=====<ROOM>======
+        //<OBJECTS OF <ROOM>>
 
         slori.numberOfRoomTypes = 2; //Depends on number of rooms
 
-        if (!IsGym && !isOffice)
+        if (!isGym && !isOffice /*&& !is<ROOM>*/)
         {
             throw new AnyRoomsWereNotChoosenException();
         }
         else
         {
-            slori.isGym = this.IsGym;
+            slori.isGym = this.isGym;
             slori.isOffice = this.isOffice;
+            /*slori.is<ROOM> = this.is<ROOM>;*/
         }
     }
 }
