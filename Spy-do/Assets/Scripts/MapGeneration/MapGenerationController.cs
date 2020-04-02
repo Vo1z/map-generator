@@ -12,22 +12,8 @@ using MapGeneration;
 
 //Inner class that creates floor for room
 class MapGenerationController : MonoBehaviour
-{   
-    public GameObject floor;
-    public GameObject wall;
-
-    public GameObject leftWall;
-    public GameObject rightWall;
-
-    public GameObject leftCorner;
-    public GameObject rightCorner;
-
-    public GameObject topWallBrink;
-    public GameObject leftTopBrinkCorner;
-    public GameObject rightTopBrinkCorner;
-
-    public GameObject innerObject;
-
+{
+    [Header("Location Propertirties")]
     public int numberOfRooms;
     public int minRoomHeightY;
     public int maxRoomHeightY;
@@ -39,6 +25,29 @@ class MapGenerationController : MonoBehaviour
     public int minLocationLengthX;
     public int maxLocationLengthX;
 
+    [Header("Office Objects")]
+    public bool isOffice;
+    public GameObject OfficeFloor;
+
+    public GameObject OfficeTopWallBrink;
+    public GameObject OfficeWall;
+    public GameObject OfficeLeftWall;
+    public GameObject OfficeRightWall;
+
+    public GameObject OfficeTable;
+    public GameObject OfficeComputer;
+
+    [Header("Gym Objects")]
+    public bool IsGym;
+
+    public GameObject GymFloor;
+
+    public GameObject GymTopWallBrink;
+    public GameObject GymWall;
+    public GameObject GymLeftWall;
+    public GameObject GymRightWall;
+    public GameObject GymInnerObject;
+
     private Room room;
     private Location location;
     private SLocationOfRoomsInformation slori;
@@ -47,21 +56,21 @@ class MapGenerationController : MonoBehaviour
     {
         setStruct(); //constructor for sLocationOfRoomsInformation struct
 
-        room = new Gym(Random.Range(minRoomHeightY, maxRoomHeightY), Random.Range(minRoomLengthX, maxRoomLengthX));
+        //room = new Gym(Random.Range(minRoomHeightY, maxRoomHeightY), Random.Range(minRoomLengthX, maxRoomLengthX));
         location = new Location(slori, numberOfRooms, minRoomHeightY, maxRoomHeightY, minRoomLengthX, maxRoomLengthX);
 
     }
 
     void Start()
     {
-        //location.Test(slori);
+        location.Test(slori);
         createMap(location);
 
         //createRoom(room);
 
     }
 
-    private void createLayer(string[,] objectMap, int heightY, int lengthX) 
+/*    private void createLayer(string[,] objectMap, int heightY, int lengthX) 
     {
         for (int y = 0; y < heightY; y++) 
         {
@@ -102,7 +111,7 @@ class MapGenerationController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     private void createRoom(Room room)
     {
@@ -114,35 +123,47 @@ class MapGenerationController : MonoBehaviour
                 {
                     switch (room.Layers[layerNumber].LayerObjectMap[y, x])
                     {
-                        case "floor":
-                            Instantiate(floor, new Vector2(x, y), Quaternion.identity);
+                        //-------------Office-------------
+                        case "OfficeFloor":
+                            Instantiate(OfficeFloor, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "wall":
-                            Instantiate(wall, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeWall":
+                            Instantiate(OfficeWall, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "leftWall":
-                            Instantiate(leftWall, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeTopWallBrink":
+                            Instantiate(OfficeTopWallBrink, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "rightWall":
-                            Instantiate(rightWall, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeLeftWall":
+                            Instantiate(OfficeLeftWall, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "leftCorner":
-                            Instantiate(leftCorner, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeRightWall":
+                            Instantiate(OfficeRightWall, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "rightCorner":
-                            Instantiate(rightCorner, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeTable":
+                            Instantiate(OfficeTable, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "leftTopBrinkCorner":
-                            Instantiate(leftTopBrinkCorner, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeComputer":
+                            Instantiate(OfficeComputer, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "rightTopBrinkCorner":
-                            Instantiate(rightTopBrinkCorner, new Vector2(x, y), Quaternion.identity);
+
+                        //-------------Gym-------------
+                        case "GymFloor":
+                            Instantiate(GymFloor, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "topWallBrink":
-                            Instantiate(topWallBrink, new Vector2(x, y), Quaternion.identity);
+                        case "GymWall":
+                            Instantiate(GymWall, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "innerObject":
-                            Instantiate(innerObject, new Vector2(x, y), Quaternion.identity);
+                        case "GymLeftWall":
+                            Instantiate(GymLeftWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GymRightWall":
+                            Instantiate(GymRightWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GymTopWallBrink":
+                            Instantiate(GymTopWallBrink, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GymInnerObject":
+                            Instantiate(GymInnerObject, new Vector2(x, y), Quaternion.identity);
                             break;
                     }
                 }
@@ -160,35 +181,47 @@ class MapGenerationController : MonoBehaviour
                 {
                     switch (location.LocationObjectMap[z, y, x])
                     {
-                        case "floor":
-                            Instantiate(floor, new Vector2(x, y), Quaternion.identity);
+                        //-------------Office-------------
+                        case "OfficeFloor":
+                            Instantiate(OfficeFloor, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "wall":
-                            Instantiate(wall, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeWall":
+                            Instantiate(OfficeWall, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "leftWall":
-                            Instantiate(leftWall, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeTopWallBrink":
+                            Instantiate(OfficeTopWallBrink, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "rightWall":
-                            Instantiate(rightWall, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeLeftWall":
+                            Instantiate(OfficeLeftWall, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "leftCorner":
-                            Instantiate(leftCorner, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeRightWall":
+                            Instantiate(OfficeRightWall, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "rightCorner":
-                            Instantiate(rightCorner, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeTable":
+                            Instantiate(OfficeTable, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "leftTopBrinkCorner":
-                            Instantiate(leftTopBrinkCorner, new Vector2(x, y), Quaternion.identity);
+                        case "OfficeComputer":
+                            Instantiate(OfficeComputer, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "rightTopBrinkCorner":
-                            Instantiate(rightTopBrinkCorner, new Vector2(x, y), Quaternion.identity);
+
+                        //-------------Gym-------------
+                        case "GymFloor":
+                            Instantiate(GymFloor, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "topWallBrink":
-                            Instantiate(topWallBrink, new Vector2(x, y), Quaternion.identity);
+                        case "GymWall":
+                            Instantiate(GymWall, new Vector2(x, y), Quaternion.identity);
                             break;
-                        case "innerObject":
-                            Instantiate(innerObject, new Vector2(x, y), Quaternion.identity);
+                        case "GymLeftWall":
+                            Instantiate(GymLeftWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GymRightWall":
+                            Instantiate(GymRightWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GymTopWallBrink":
+                            Instantiate(GymTopWallBrink, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GymInnerObject":
+                            Instantiate(GymInnerObject, new Vector2(x, y), Quaternion.identity);
                             break;
                     }
                 }
@@ -202,5 +235,25 @@ class MapGenerationController : MonoBehaviour
         slori.maxHeightY = this.maxLocationHeightY;
         slori.minLengthX = this.minLocationLengthX;
         slori.maxLengthX = this.maxLocationLengthX;
+
+        slori.numberOfRoomTypes = 2; //Depends on number of rooms
+
+        if (!IsGym && !isOffice)
+        {
+            throw new AnyRoomsWereNotChoosenException();
+        }
+        else
+        {
+            slori.isGym = this.IsGym;
+            slori.isOffice = this.isOffice;
+        }
     }
 }
+
+/* How to add new room:
+ * 1) Create room inside Rooms.cs as inherited class from Room
+ * 2) Add objets of the room to the field
+ * 3) Adjust createMap() method with objects of your room
+ * 4) Increase numberOfRoomTypes in setStruct() method
+ * 5) Add else if structure to  MapGenerationLibrary.generateLocationRooms()
+ */

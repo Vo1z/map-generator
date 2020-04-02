@@ -13,7 +13,7 @@ namespace MapGeneration
 {
     
     //Class that describes layers (Is used in Room class)
-    public class Layer                                                          
+    public class Layer
     {
         public readonly string[,] LayerObjectMap;
         public readonly int LayerHeightY;
@@ -105,7 +105,7 @@ namespace MapGeneration
             LayerObjectMap[y, x] = objectName;
         }
 
-        public void SetOnRandomLayerID(string objectName)                               //Randomly sets given object inside given area
+        public void SetOnRandomLayerID(string objectName)
         {
             for (int y = 0; y < LayerHeightY; y++) 
             {
@@ -114,6 +114,20 @@ namespace MapGeneration
                     if ((Random.Range(0, 5) == 1) && x != 0 && x != LayerLengthX - 1)   //Randomizer of inner objects
                     {
                         LayerObjectMap[y, x] = objectName;
+                    }
+                }
+            }
+        }
+
+        public void SetOnUniqueObject(string[,] objectMap, string objectToFindName, string objectToPlaceName, int probality) 
+        {
+            for (int y = 0; y < LayerHeightY; y++)
+            {
+                for (int x = 0; x < LayerLengthX; x++)
+                {
+                    if ((objectMap[y, x] == objectToFindName) && Random.Range(0, probality) == 0)
+                    {
+                        SetOnUniqueLayerID(y, x, objectToPlaceName);
                     }
                 }
             }
@@ -157,6 +171,11 @@ namespace MapGeneration
             }
         }
 
+        public void AddRoomLayer()            // Creates new layer on top of previous (with higher Z-Index)
+        {
+                Layers.Add(new Layer(RoomHeightY, RoomLengthX));
+        }
+
         public void RemoveRoomLayer(int numberOfLayer)                          //Removes given layer
         {
             Layers.RemoveAt(numberOfLayer);
@@ -191,7 +210,7 @@ namespace MapGeneration
             this.MaxRoomLengthX = MaxRoomLengthX;
             this.NumberOfLocationRooms = NumberOfLocationRooms;
 
-            this.LocationRooms = generateLocationRooms();
+            this.LocationRooms = generateLocationRooms(slori);
             
             this.MaxLocationNumberOfLayers = calculateMaxNumberOfLayers();
             this.LocationHeightY = calculateLocationHeightY();
@@ -209,24 +228,31 @@ namespace MapGeneration
         }
 
         //Generates all types of room in the location
-        private Room[] generateLocationRooms()
+        private Room[] generateLocationRooms(SLocationOfRoomsInformation slori) //ok
         {
             Room[] generatedRooms = new Room[NumberOfLocationRooms];
-            
+            int room = 0;
+
             for (int i = 0; i < NumberOfLocationRooms; i++) 
             {
-                int randomRoom = Random.Range(0, 2);
-                
-                if (randomRoom == 0)
-                    generatedRooms[i] = new Gym(Random.Range(MinRoomHeightY,MaxRoomHeightY), Random.Range(MinRoomLengthX, MaxRoomLengthX));
-                else if (randomRoom == 1)
-                    generatedRooms[i] = new EmtyRoom(Random.Range(MinRoomHeightY, MaxRoomHeightY), Random.Range(MinRoomLengthX, MaxRoomLengthX));
+                int randomRoom = Random.Range(0, slori.numberOfRoomTypes);     //Generates random room
+
+                if (randomRoom == 0 && slori.isGym)                            //Checks if such a room is included in location generation
+                {
+                    generatedRooms[room] = new Gym(Random.Range(MinRoomHeightY, MaxRoomHeightY), Random.Range(MinRoomLengthX, MaxRoomLengthX));
+                    room++;
+                }
+                else if (randomRoom == 1 && slori.isOffice)                 //Checks if such a room is included in location generation
+                {
+                    generatedRooms[room] = new Office(Random.Range(MinRoomHeightY, MaxRoomHeightY), Random.Range(MinRoomLengthX, MaxRoomLengthX));
+                    room++;
+                } //Add else if here 
             }
 
             return generatedRooms;
         }        
 
-        private int calculateMaxNumberOfLayers()
+        private int calculateMaxNumberOfLayers() //ok
         {
             int count = 0;
             int maxNumberLayers = 0;
@@ -249,7 +275,7 @@ namespace MapGeneration
             return maxNumberLayers;
         }
 
-        private int calculateLocationHeightY() 
+        private int calculateLocationHeightY() //ok
         {
             int locationHeightY = 0;
             for (int room = 0; room < NumberOfLocationRooms; room++)
@@ -259,7 +285,7 @@ namespace MapGeneration
             return locationHeightY;
         }
 
-        private int calculateLocationLenghtX()
+        private int calculateLocationLenghtX()//ok
         {
             int locationLengthX = 0;
             for (int room = 0; room < NumberOfLocationRooms; room++)
@@ -270,20 +296,20 @@ namespace MapGeneration
             return locationLengthX;
         }
 
-        private string[,,] createLocationObjectMap(SLocationOfRoomsInformation slori) //rewr cw
+        private string[,,] createLocationObjectMap(SLocationOfRoomsInformation slori) //rewr cw //FIXME
         {
-            string[,,] objectMap = new string[MaxLocationNumberOfLayers, LocationHeightY, LocationLengthX];            
+            string[,,] objectMap = new string[MaxLocationNumberOfLayers, LocationHeightY, LocationLengthX];
             int[,] roomsPosition = createRoomPosition(slori);                                               //also known as "rp"(roomPosition)
-            
+
             int spacingY = 0;
             int spacingX = 0;
-            
+
             int maxHeightInRow = 0;
             int roomNumber = 0;
-
+            
             bool isAnyRoomExist = true;
-
-            for (int rowY = 0; rowY < roomsPosition.GetLength(0) && isAnyRoomExist; rowY++) 
+            
+            for (int rowY = 0; rowY < roomsPosition.GetLength(0) && isAnyRoomExist; rowY++)
             {
                 if (checkIfArrayHasRoomsInARow(roomsPosition, rowY)) //checks if row has any rooms
                 {
@@ -297,33 +323,35 @@ namespace MapGeneration
                                 {
                                     if (maxHeightInRow < y)
                                         maxHeightInRow = y;
-
                                     for (int x = 0; x < LocationRooms[roomNumber].Layers[layer].LayerLengthX; x++) //looks through x-axis in the room
                                     {
                                         objectMap[layer, y + spacingY, x + spacingX] = LocationRooms[roomNumber].Layers[layer].LayerObjectMap[y, x];   // inst room
                                     }
                                 }
                             }
-
+                            
                             spacingX += LocationRooms[roomNumber].RoomLengthX; // sets X-spacing to locate next room in a row
-
+                            
                             if (roomNumber < NumberOfLocationRooms - 1) // sets next room
                             {
                                 roomNumber++;
                             }
                             else
                             {
-                                isAnyRoomExist = false;
+                                isAnyRoomExist = false;                               
                                 break;
                             }
                         }
                         else if (roomsPosition[rowY, rowElementX] == 0 && checkIfArrayHasRoomsInARow(roomsPosition, rowY, rowElementX) == true) //main condition IF ELEMENT EQUALS 0 
                         {
-                            spacingX += 4; // Random.Range(MinRoomLengthX, MaxRoomLengthX); // SPACING
+                           // spacingX += 4; // Random.Range(MinRoomLengthX, MaxRoomLengthX); // SPACING
+                            spacingX += LocationRooms[roomNumber].RoomLengthX;
+                            roomNumber++;
                         }
                         else if (rowElementX == roomsPosition.GetLength(1) - 1) //main condition IF LAST ELEMENT IN THE ROW
                         {
-                            spacingY += maxHeightInRow + 1;
+                            spacingY += maxHeightInRow;
+                            spacingY += maxHeightInRow;
                             maxHeightInRow = 0;
                             spacingX = 0;
 
@@ -337,14 +365,13 @@ namespace MapGeneration
                                 break;
                             }
                         }
-                    }                  
+                    }
                 }
             }
-
             return objectMap;
         }
 
-        private int[,] createRoomPosition(SLocationOfRoomsInformation RoomInformation) //rewr // ADD EXCEPTIONS
+        private int[,] createRoomPosition(SLocationOfRoomsInformation RoomInformation)
         {
             try
             {
@@ -372,7 +399,7 @@ namespace MapGeneration
             {
                 return createRoomPosition(RoomInformation);
             }
-            }
+        }
 
         private bool checkIfArrayHasRoomsInARow(int[,] array, int rowToCheckY) 
         {
@@ -418,7 +445,15 @@ namespace MapGeneration
     //Structs
     struct SLocationOfRoomsInformation
     {
-        public int minHeightY, maxHeightY, minLengthX, maxLengthX;
+        public int minHeightY;
+        public int maxHeightY;
+        public int minLengthX;
+        public int maxLengthX;
+
+        public int numberOfRoomTypes;
+
+        public bool isGym;
+        public bool isOffice;
     }
 
     //Exceptions 
@@ -439,6 +474,11 @@ namespace MapGeneration
         public NumberOfRoomsInsideLocationIsSmalerThenNumberOfAllRoomsException(int locationHeightY, int locationLengthX, int numberOfRoomsInLocation)
             : base("Number of rooms [ " + numberOfRoomsInLocation + " ] is bigger then area of location : (" + (locationHeightY * locationLengthX) + ") where locatioHeightY is [ " + locationHeightY + " ] and locationLengthX is [ " + locationLengthX + " ]")                                                                                 
         { }
+    }
+
+    class AnyRoomsWereNotChoosenException : System.Exception 
+    {
+        public AnyRoomsWereNotChoosenException() : base("Select at least one room type") { }
     }
 }
 

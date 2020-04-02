@@ -174,7 +174,7 @@ Camera:
   far clip plane: 1000
   field of view: 177
   orthographic: 1
-  orthographic size: 43.822372
+  orthographic size: 24.713987
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -198,7 +198,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 280408589}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50, y: 14, z: 0}
+  m_LocalPosition: {x: 25.3, y: 11.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -247,25 +247,25 @@ PrefabInstance:
         type: 3}
       propertyPath: leftWall
       value: 
-      objectReference: {fileID: 2479602682666764946, guid: d855af04570b9ad4cb51ffce30a0330a,
+      objectReference: {fileID: 7719797421311196708, guid: 747668337d5039c469fe0647d8c9de85,
         type: 3}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: rightWall
       value: 
-      objectReference: {fileID: 5324872209762640997, guid: b3a01b55d65a48c4ebf6fc67610ef19e,
+      objectReference: {fileID: 914958536223538245, guid: dad7a59445daf9b4d853e18fa85d0272,
         type: 3}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: floor
       value: 
-      objectReference: {fileID: 3938433848932042991, guid: f903e16fb45685548add404160f4e5e1,
+      objectReference: {fileID: 6857191621299409194, guid: b4352db39f122344c93fb18e0bf3c10e,
         type: 3}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: wall
       value: 
-      objectReference: {fileID: 3742439687717138062, guid: ca4a9dd872be0d7469d33f512f257744,
+      objectReference: {fileID: 458659812006723290, guid: d68fda1e94803414c867c38cca25a78d,
         type: 3}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
@@ -299,12 +299,12 @@ PrefabInstance:
         type: 3}
       propertyPath: innerObject
       value: 
-      objectReference: {fileID: 3435220243951682523, guid: 93cc0b4b710174f4d9f7ea69a0571eb9,
+      objectReference: {fileID: 2125560403475918878, guid: e758880d4a5960a488b194007cb8fb16,
         type: 3}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: numberOfRooms
-      value: 30
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
@@ -344,22 +344,110 @@ PrefabInstance:
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: minLocationHeightY
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: maxLocationHeightY
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: minLocationLengthX
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
       propertyPath: maxLocationLengthX
-      value: 5
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: isOffice
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: OfficeFloor
+      value: 
+      objectReference: {fileID: 15714967205702415, guid: f78ce6cc49f6f714cbab1e56805e7989,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: OfficeTopWallBrink
+      value: 
+      objectReference: {fileID: 7166004096363727309, guid: 7316db5e05e9467459e1429676012b59,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: OfficeWall
+      value: 
+      objectReference: {fileID: 1338655933737523655, guid: 9fef6498da8f3b949ae3d1be5c4ea6bf,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: OfficeLeftWall
+      value: 
+      objectReference: {fileID: 8538029716082285116, guid: de8a02e6f65f318469ab8e9665755e7a,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: OfficeRightWall
+      value: 
+      objectReference: {fileID: 555277649647806928, guid: 7caa8c8c24b1d6e40808df50dd52e8d1,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: OfficeTable
+      value: 
+      objectReference: {fileID: 2202234901332826926, guid: 2c9ca7553dc6fc94ca2bee2ade3c26a6,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: OfficeComputer
+      value: 
+      objectReference: {fileID: 9138653914015650789, guid: 72b79ddaf3c73d54cbd8eb8e8f3634f0,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymFloor
+      value: 
+      objectReference: {fileID: 6857191621299409194, guid: b4352db39f122344c93fb18e0bf3c10e,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymTopWallBrink
+      value: 
+      objectReference: {fileID: 7493096054928581635, guid: 7878373d9aac3bb448c06499a93662b4,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymWall
+      value: 
+      objectReference: {fileID: 458659812006723290, guid: d68fda1e94803414c867c38cca25a78d,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymLeftWall
+      value: 
+      objectReference: {fileID: 7719797421311196708, guid: 747668337d5039c469fe0647d8c9de85,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymRightWall
+      value: 
+      objectReference: {fileID: 914958536223538245, guid: dad7a59445daf9b4d853e18fa85d0272,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: GymInnerObject
+      value: 
+      objectReference: {fileID: 2125560403475918878, guid: e758880d4a5960a488b194007cb8fb16,
+        type: 3}
+    - target: {fileID: 1806697312258901792, guid: 2738d8fc0b57a394194a4e5768b25961,
+        type: 3}
+      propertyPath: IsGym
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6964672586421334284, guid: 2738d8fc0b57a394194a4e5768b25961,
         type: 3}
