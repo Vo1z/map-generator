@@ -182,7 +182,7 @@ class MapGenerationController : MonoBehaviour
 
     private void createMap(Location location)//ADD ROOM CONDITION
     {
-        for (int z = 0; z < location.MaxLocationNumberOfLayers; z++) 
+        for (int z = 0; z < location.LocationLayersZ; z++) 
         {
             for (int y = 0; y < location.LocationHeightY; y++)
             {
