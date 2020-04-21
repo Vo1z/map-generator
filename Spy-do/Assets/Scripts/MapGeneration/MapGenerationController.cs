@@ -65,6 +65,7 @@ class MapGenerationController : MonoBehaviour
 
         //room = new Gym(Random.Range(gymMinHeightY, gymMaxHeightY), Random.Range(gymMinLengthX, gymMaxLengthX));        
         //room = new Office(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
+        //room = new LocationGeneralRoom(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
 
         location = new Location(slori);
     }
@@ -72,11 +73,9 @@ class MapGenerationController : MonoBehaviour
     void Start()
     {
         //location.Test(slori);
-        
         createMap(location);
 
         //createRoom(room);
-
     }
 
 /*    private void createLayer(string[,] objectMap, int heightY, int lengthX) 
@@ -307,7 +306,9 @@ class MapGenerationController : MonoBehaviour
 /* How to add new room:
  * 1) Create room inside Rooms.cs as inherited class from Room
  * 2) Add objets of the room to the field
- * 3) Adjust createMap() method with objects of your room
- * 4) Increase numberOfRoomTypes in setStruct() method
- * 5) Add else if structure to  MapGenerationLibrary.generateLocationRooms()
+ * 3) Adjust findSumOfAllLocationRooms()
+ * 4) Adjust setStruct()
+ * 5) Adjust createMap() method with objects of your room
+ * 6) Increase numberOfRoomTypes in setStruct() method
+ * 7) Add else if structure to  MapGenerationLibrary.generateLocationRooms()
  */
