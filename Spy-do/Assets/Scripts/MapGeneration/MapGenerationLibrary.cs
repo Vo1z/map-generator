@@ -209,15 +209,14 @@ namespace MapGeneration
 
         public readonly string[,,] LocationObjectMap;
         public readonly Room[] LocationRooms;
+        public readonly int[,] LocationIdMap;
+
+        public readonly int LocationIdMapHeightY;
+        public readonly int LocationIdMapLengthX;
 
         public readonly int LocationLayersZ;
         public readonly int LocationHeightY;
         public readonly int LocationLengthX;
-        
-        public readonly int LocationIdMapHeightY;
-        public readonly int LocationIdMapLengthX;
-
-        public readonly int[,] LocationIdMap;
 
         public Location(SLocationOfRoomsInformation slori) //CONSTRUCTOR that creates default ID MAP with 1s
         {
@@ -231,9 +230,9 @@ namespace MapGeneration
 
             this.NumberOfActualRooms = calculateNumberOfActualRooms();
 
-            this.LocationLayersZ = calculateMaxNumberOfLayers();
-            this.LocationHeightY = calculateLocationHeightY();
             this.LocationLengthX = calculateLocationLengthX();
+            this.LocationHeightY = calculateLocationHeightY();
+            this.LocationLayersZ = calculateMaxNumberOfLayers();
 
             this.LocationObjectMap = createLocationObjectMap(slori);
         }
@@ -312,7 +311,7 @@ namespace MapGeneration
         private int calculateMaxNumberOfLayers() //ok
         {
             int count = 0;
-            int maxNumberLayers = 0;
+            int maxNumberLayers = 0;            
 
             for (int room = 0; room < NumberOfLocationRooms; room++)
             {                
@@ -331,10 +330,15 @@ namespace MapGeneration
                 }
             }
 
+            if (maxNumberLayers < (count = new GeneralRoom(1,1).Layers.Count))
+            {
+                maxNumberLayers = count;
+            }
+
             return maxNumberLayers;
         }
 
-        private int calculateLocationHeightY() //REWORKED //doubts //CW
+        private int calculateLocationHeightY() //REWORKED //doubts
         {
             int maxHeightInRowY = 0;
             int totalHeightY = 0;
@@ -457,7 +461,7 @@ namespace MapGeneration
         private string[,,] createLocationDefaultRoom()
         {
             string[,,] objectMap = new string[LocationLayersZ, LocationHeightY, LocationLengthX];
-            Room defaultRoom = new LocationGeneralRoom(LocationHeightY, LocationLengthX);
+            Room defaultRoom = new GeneralRoom(LocationHeightY, LocationLengthX);
 
             for (int z = 0; z < defaultRoom.Layers.Count; z++) 
             {

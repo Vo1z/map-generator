@@ -19,6 +19,19 @@ class MapGenerationController : MonoBehaviour
     public int minLocationLengthX;
     public int maxLocationLengthX;
 
+    [Header("General Room")]
+    public GameObject GRFloor1;
+    public GameObject GRFloor2;
+    public GameObject GRFloor3;
+
+    public GameObject GRInnerObject;
+
+    public GameObject GRTopWall;
+    public GameObject GRBottomWall;
+    public GameObject GRLeftWall;
+    public GameObject GRRightWall;
+    public GameObject GRTopWallBrink;
+
     [Header("Office Objects")]
     public bool isOffice;
     public int officeQuantity;
@@ -65,7 +78,7 @@ class MapGenerationController : MonoBehaviour
 
         //room = new Gym(Random.Range(gymMinHeightY, gymMaxHeightY), Random.Range(gymMinLengthX, gymMaxLengthX));        
         //room = new Office(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
-        //room = new LocationGeneralRoom(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
+        //room = new GeneralRoom(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
 
         location = new Location(slori);
     }
@@ -75,7 +88,7 @@ class MapGenerationController : MonoBehaviour
         //location.Test(slori);
         createMap(location);
 
-        //createRoom(room);
+        createRoom(room);
     }
 
 /*    private void createLayer(string[,] objectMap, int heightY, int lengthX) 
@@ -131,6 +144,35 @@ class MapGenerationController : MonoBehaviour
                 {
                     switch (room.Layers[layerNumber].LayerObjectMap[y, x])
                     {
+                        //-------------General Room-------------
+                        case "GRFloor1":
+                            Instantiate(GRFloor1, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRFloor2":
+                            Instantiate(GRFloor2, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRFloor3":
+                            Instantiate(GRFloor3, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRTopWall":
+                            Instantiate(GRTopWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRBottomWall":
+                            Instantiate(GRBottomWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRLeftWall":
+                            Instantiate(GRLeftWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRRightWall":
+                            Instantiate(GRRightWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRTopWallBrink":
+                            Instantiate(GRTopWallBrink, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRInnerObject":
+                            Instantiate(GRInnerObject, new Vector2(x, y), Quaternion.identity);
+                            break;
+
                         //-------------Office-------------
                         case "OfficeFloor":
                             Instantiate(OfficeFloor, new Vector2(x, y), Quaternion.identity);
@@ -189,6 +231,35 @@ class MapGenerationController : MonoBehaviour
                 {
                     switch (location.LocationObjectMap[z, y, x])
                     {
+                        //-------------General Room-------------
+                        case "GRFloor1":
+                            Instantiate(GRFloor1, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRFloor2":
+                            Instantiate(GRFloor2, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRFloor3":
+                            Instantiate(GRFloor3, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRTopWall":
+                            Instantiate(GRTopWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRBottomWall":
+                            Instantiate(GRBottomWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRLeftWall":
+                            Instantiate(GRLeftWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRRightWall":
+                            Instantiate(GRRightWall, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRTopWallBrink":
+                            Instantiate(GRTopWallBrink, new Vector2(x, y), Quaternion.identity);
+                            break;
+                        case "GRInnerObject":
+                            Instantiate(GRInnerObject, new Vector2(x, y), Quaternion.identity);
+                            break;
+
                         //-------------Office-------------
                         case "OfficeFloor":
                             Instantiate(OfficeFloor, new Vector2(x, y), Quaternion.identity);
