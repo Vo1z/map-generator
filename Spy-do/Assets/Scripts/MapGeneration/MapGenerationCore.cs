@@ -5,17 +5,60 @@
  * Email: vitya.voody@gmail.com
  * Twitter: @V0IZ_
  */
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MapGeneration
 {
 
+    abstract class ComplexObject
+    {
+        public readonly int COHeightY;
+        public readonly int COLengthX;
+
+        public readonly List<Layer> COLayers;
+
+        public ComplexObject(int heightY, int lengthX) 
+        {
+            this.COLayers = new List<Layer>();
+            this.COHeightY = heightY;
+            this.COLengthX = lengthX;
+            instCO();
+        }
+
+        protected void AddCOLayer(int layerHeightY, int layerLenghtX)            // Creates new layer on a top of the previous (with higher Z-Index)
+        {
+            if (layerHeightY > COHeightY)
+            {
+                throw new LayerIsBiggerThanRoomException(COHeightY);               //Exceptions
+            }
+            else if (layerLenghtX > COLengthX)
+            {
+                throw new LayerIsBiggerThanRoomException(COLengthX);
+            }
+            else if (layerHeightY > COHeightY || layerLenghtX > COLengthX)
+            {
+                throw new LayerIsBiggerThanRoomException(COLengthX, COHeightY);
+            }
+            else
+            {
+                COLayers.Add(new Layer(layerHeightY, layerLenghtX));
+            }
+        }
+
+        protected void AddCOLayer() 
+        {
+            AddCOLayer(COHeightY, COLengthX);
+        }
+
+        abstract protected void instCO();
+    }
+
     //Class that describes layers (Is used in Room class)
-    public class Layer
+    class Layer
     {
         public readonly string[,] LayerObjectMap;
+
         public readonly int LayerHeightY;
         public readonly int LayerLengthX;
 
@@ -80,16 +123,16 @@ namespace MapGeneration
             }
         }
 
-        public void SetUniqueSquare(int startY, int endY, int startX, int endX, string objectName) 
+        public void SetUniqueSquare(int startY, int endY, int startX, int endX, string objectName)
         {
             if (startY > endY)
                 throw new StartPoitIsSmallerThenEndPointException(startY, endY);
             if (startX > endX)
                 throw new StartPoitIsSmallerThenEndPointException(startX, endX);
 
-            for (int y = startY; y < endY; y++) 
+            for (int y = startY; y < endY; y++)
             {
-                for (int x = startX; x < endX; x++) 
+                for (int x = startX; x < endX; x++)
                 {
                     LayerObjectMap[y, x] = objectName;
                 }
@@ -135,13 +178,13 @@ namespace MapGeneration
             }
         }
 
-        public void SetOnUniqueObject(string[,] objectMap, string objectToFindName, string objectToPlaceName, int probality)
+        public void SetOnUniqueObject(string[,] objectMap, string objectToFindName, string objectToPlaceName, int probability)
         {
             for (int y = 0; y < objectMap.GetLength(0); y++)
             {
                 for (int x = 0; x < objectMap.GetLength(1); x++)
                 {
-                    if ((objectMap[y, x] == objectToFindName) && Random.Range(0, probality) == 0)
+                    if ((objectMap[y, x] == objectToFindName) && Random.Range(0, probability) == 0)
                     {
                         SetOnUniqueLayerID(y, x, objectToPlaceName);
                     }
@@ -149,24 +192,23 @@ namespace MapGeneration
             }
         }
     }
-
-
     //Class which is responsible for collecting data for creating room 
-    public abstract class Room
+    abstract class Room
     {
         public readonly int RoomHeightY;                                        //Variable that stores width of the room of Y dimension
         public readonly int RoomLengthX;                                        //Variable that stores width of the room of X dimension
 
-        public readonly List<Layer> Layers = new List<Layer>();
-
+        public readonly List<Layer> RoomLayers;
+        
         public Room(int roomHeightY, int roomLengthX)                           //Constructor
         {
+            RoomLayers = new List<Layer>();
             this.RoomHeightY = roomHeightY;
             this.RoomLengthX = roomLengthX;
             instRoom();
         }
 
-        public void AddRoomLayer(int layerHeightY, int layerLenghtX)            // Creates new layer on top of previous (with higher Z-Index)
+        protected void AddRoomLayer(int layerHeightY, int layerLenghtX)         // Creates new layer on a top of the previous (with higher Z-Index)
         {
             if (layerHeightY > RoomHeightY)
             {
@@ -176,29 +218,54 @@ namespace MapGeneration
             {
                 throw new LayerIsBiggerThanRoomException(RoomLengthX);
             }
-            else if (layerHeightY > RoomHeightY && layerLenghtX > RoomLengthX)
+            else if (layerHeightY > RoomHeightY || layerLenghtX > RoomLengthX)
             {
                 throw new LayerIsBiggerThanRoomException(RoomLengthX, RoomHeightY);
             }
             else
             {
-                Layers.Add(new Layer(layerHeightY, layerLenghtX));
+                RoomLayers.Add(new Layer(layerHeightY, layerLenghtX));
             }
         }
 
-        public void AddRoomLayer()            // Creates new layer on top of previous (with higher Z-Index)
+        protected void AddRoomLayer()                                              // Creates new layer on top of previous (with higher Z-Index)
         {
-            Layers.Add(new Layer(RoomHeightY, RoomLengthX));
+            RoomLayers.Add(new Layer(RoomHeightY, RoomLengthX));
         }
 
-        public void RemoveRoomLayer(int numberOfLayer)                          //Removes given layer
+        protected void RemoveRoomLayer(int numberOfLayer)                          //Removes given layer
         {
-            Layers.RemoveAt(numberOfLayer);
+            RoomLayers.RemoveAt(numberOfLayer);
         }
 
-        abstract private protected void instRoom();
+        //======CO======
+        protected void SetComplexObject(ComplexObject cObj, int layerZ, int posY, int posX) 
+        {
+            if ((cObj.COLayers.Count + layerZ + 1) > RoomLayers.Count)
+            {
+                throw new NotEnoughLayersException(RoomLayers.Count, cObj.COLayers.Count);
+            }
+            else if ( ((posX + cObj.COLengthX) > RoomLengthX) || ((posY + cObj.COHeightY) > RoomHeightY) ) 
+            {
+                throw new NotEnoughSpaceInRoomException();
+            }
+            else
+            {
+                for (int z = 0; z < cObj.COLayers.Count; z++)
+                {
+                    for (int y = 0; y < cObj.COLayers[z].LayerHeightY; y++)
+                    {
+                        for (int x = 0; x < cObj.COLayers[z].LayerLengthX; x++)
+                        {
+                            RoomLayers[layerZ + z].LayerObjectMap[posX + x, posY + y] = cObj.COLayers[z].LayerObjectMap[x, y];
+                        }
+                    }
+                }
+            }
+        }
+
+        abstract protected void instRoom();
     }
-
 
     // Class that is responible for sorting all data about rooms on game level
     class Location
@@ -239,7 +306,7 @@ namespace MapGeneration
 
         public void Test(SLocationOfRoomsInformation slori) //DELETEME
         {
-            Debug.Log(calculateNumberOfActualRooms());
+           // Debug.Log(calculateNumberOfActualRooms());
         }
 
         //Generates all types of room in the location
@@ -267,6 +334,13 @@ namespace MapGeneration
                     generatedRooms[room] = new Office(Random.Range(slori.officeMinHeightY, slori.officeMaxHeightY), Random.Range(slori.officeMinLengthX, slori.officeMaxLengthX));
                     room++;
                     localSLORI.officeQuantity--;
+                    i++;
+                }
+                else if ((randomRoom == 2) && (slori.isEmptySpace) && (localSLORI.emptySpaceQuantity <= slori.emptySpaceQuantity))
+                {
+                    generatedRooms[room] = new EmptySpace(Random.Range(slori.emptySpaceMinHeightY, slori.emptySpaceMaxHeightY), Random.Range(slori.emptySpaceMinLengthX, slori.emptySpaceMaxLengthX));
+                    room++;
+                    localSLORI.emptySpaceQuantity--;
                     i++;
                 }
                 /*else if ((randomRoom == 1) && (slori.<ROOM>) && (localSLORI.<ROOM QUANTITY> <= slori.<ROOM QUANTITY>))              //Checks if such a room is included in location generation
@@ -323,14 +397,14 @@ namespace MapGeneration
 
                 if (LocationRooms[room] != null)
                 {
-                    for (int layer = 0; layer < LocationRooms[room].Layers.Count; layer++)
+                    for (int layer = 0; layer < LocationRooms[room].RoomLayers.Count; layer++)
                     {
                         count++;
                     }
                 }
             }
 
-            if (maxNumberLayers < (count = new GeneralRoom(1,1).Layers.Count))
+            if (maxNumberLayers < (count = new GeneralRoom(1,1).RoomLayers.Count))
             {
                 maxNumberLayers = count;
             }
@@ -388,7 +462,7 @@ namespace MapGeneration
 
                     if (roomNumber < NumberOfActualRooms - 1)//? //room counter
                     {                        
-                        roomNumber++;                        
+                        roomNumber++;
                     }
                     else
                     {
@@ -428,13 +502,13 @@ namespace MapGeneration
                             maxHeightYInRow = LocationRooms[roomNumber].RoomHeightY;
 
                         //creates room
-                        for (int layerZ = 0; layerZ < LocationRooms[roomNumber].Layers.Count; layerZ++) //goes through layers (or Z dimension) in objectMap
+                        for (int layerZ = 0; layerZ < LocationRooms[roomNumber].RoomLayers.Count; layerZ++) //goes through layers (or Z dimension) in objectMap
                         {
-                            for (int omY = 0; omY < LocationRooms[roomNumber].Layers[layerZ].LayerObjectMap.GetLength(0); omY++) //goes through Y dimension in objectMap
+                            for (int omY = 0; omY < LocationRooms[roomNumber].RoomLayers[layerZ].LayerObjectMap.GetLength(0); omY++) //goes through Y dimension in objectMap
                             {
-                                for (int omX = 0; omX < LocationRooms[roomNumber].Layers[layerZ].LayerObjectMap.GetLength(1); omX++) //goes through X dimension in objectMap 
+                                for (int omX = 0; omX < LocationRooms[roomNumber].RoomLayers[layerZ].LayerObjectMap.GetLength(1); omX++) //goes through X dimension in objectMap 
                                 {
-                                    objectMap[layerZ, omY + spacingY, omX + spacingX] = LocationRooms[roomNumber].Layers[layerZ].LayerObjectMap[omY, omX];
+                                    objectMap[layerZ, omY + spacingY, omX + spacingX] = LocationRooms[roomNumber].RoomLayers[layerZ].LayerObjectMap[omY, omX];
                                 }
                             }
                         }
@@ -463,13 +537,13 @@ namespace MapGeneration
             string[,,] objectMap = new string[LocationLayersZ, LocationHeightY, LocationLengthX];
             Room defaultRoom = new GeneralRoom(LocationHeightY, LocationLengthX);
 
-            for (int z = 0; z < defaultRoom.Layers.Count; z++) 
+            for (int z = 0; z < defaultRoom.RoomLayers.Count; z++) 
             {
-                for (int y = 0; y < defaultRoom.Layers[z].LayerObjectMap.GetLength(0); y++) 
+                for (int y = 0; y < defaultRoom.RoomLayers[z].LayerObjectMap.GetLength(0); y++) 
                 {
-                    for (int x = 0; x < defaultRoom.Layers[z].LayerObjectMap.GetLength(1); x++) 
+                    for (int x = 0; x < defaultRoom.RoomLayers[z].LayerObjectMap.GetLength(1); x++) 
                     {
-                        objectMap[z, y, x] = defaultRoom.Layers[z].LayerObjectMap[y, x];
+                        objectMap[z, y, x] = defaultRoom.RoomLayers[z].LayerObjectMap[y, x];
                     }
                 }
             }
@@ -477,91 +551,4 @@ namespace MapGeneration
             return objectMap;
         }
     }
-
-    
-
-    //Structs
-    public struct SLocationOfRoomsInformation
-    {
-        public int minLocationHeightY;
-        public int maxLocationHeightY;
-        public int minLocationLengthX;
-        public int maxLocationLengthX;
-
-        public int sumOfAllLocationRooms; //responsible for SUM of all rooms in the location
-        public int numberOfRoomTypes; //responsible for number of TYPES of the rooms on location
-
-        //=====Gym=====        
-        public bool isGym;
-        public int gymQuantity;
-
-        public int gymMinHeightY;
-        public int gymMaxHeightY;
-        public int gymMinLengthX;
-        public int gymMaxLengthX;
-
-        //=====Office=====
-        public bool isOffice;
-        public int officeQuantity;
-
-        public int officeMinHeightY;
-        public int officeMaxHeightY;
-        public int officeMinLengthX;
-        public int officeMaxLengthX;
-
-        //=====<ROOM>=====
-        /*public bool is<ROOM>;
-        public int <ROOM>Quantity;
-
-        public int <ROOM>MinHeightY;
-        public int <ROOM>MaxHeightY;
-        public int <ROOM>MinLengthX;
-        public int <ROOM>MaxLengthX;*/
-    }
-
-    //Exceptions 
-    class LayerIsBiggerThanRoomException : System.Exception
-    {
-        public LayerIsBiggerThanRoomException(int coordinate)
-            : base("Layer is bigger than room: " + "[" + coordinate + "]")
-        { }
-
-        public LayerIsBiggerThanRoomException(int coordinateX, int coordinateY)
-            : base("Layer is bigger than room: " + "[" + coordinateX + ", " + coordinateY + "]")
-        { }
-    }
-
-    class NumberOfRoomsInsideLocationIsSmalerThenNumberOfAllRoomsException : System.Exception
-    {
-
-        public NumberOfRoomsInsideLocationIsSmalerThenNumberOfAllRoomsException(int locationHeightY, int locationLengthX, int numberOfRoomsInLocation)
-            : base("Number of rooms [ " + numberOfRoomsInLocation + " ] is bigger then area of location : (" + (locationHeightY * locationLengthX) + ") where locatioHeightY is [ " + locationHeightY + " ] and locationLengthX is [ " + locationLengthX + " ]")
-        { }
-    }
-
-    class AnyRoomsWereNotChoosenException : System.Exception
-    {
-        public AnyRoomsWereNotChoosenException()
-            : base("Select at least one room type")
-        { }
-    }
-
-    class StartPoitIsSmallerThenEndPointException : System.Exception
-    {
-        public StartPoitIsSmallerThenEndPointException(int startPoint, int endPoint) : base(nameof(endPoint) + " is bigger then " + nameof(startPoint)) { }
-    }
 }
-    
-/*
-            TO DO LIST
-1. add corners - done
-2. left, right, top and down walls - done;
-3. add layers - done;
-4. add doors
-5. add inner objects - rework is needed;
-6. add top side of the wall - done;
-7. add map generation - done;
-8. add spacing;
-9. rewrite Room generation - done;
-10. rewrite room;
-*/

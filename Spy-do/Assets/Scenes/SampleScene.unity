@@ -261,6 +261,61 @@ PrefabInstance:
       propertyPath: maxLocationLengthX
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: isEmptySpace
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: emptySpaceQuantity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: emptySpaceMinHeightY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: emptySpaceMaxHeightY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: emptySpaceMinLengthX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: emptySpaceMaxLengthX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: officeQuantity
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: gymQuantity
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: isOffice
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: officeMinHeightY
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: officeMinLengthX
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -352,7 +407,7 @@ MonoBehaviour:
   GRTopWallBrink: {fileID: 4403886640598759880, guid: d3d3a0a1a503ac34fb211e32fa7f95c6,
     type: 3}
   isOffice: 1
-  officeQuantity: 30
+  officeQuantity: 15
   officeMinHeightY: 5
   officeMaxHeightY: 8
   officeMinLengthX: 5
@@ -372,7 +427,7 @@ MonoBehaviour:
   OfficeComputer: {fileID: 9138653914015650789, guid: 72b79ddaf3c73d54cbd8eb8e8f3634f0,
     type: 3}
   isGym: 1
-  gymQuantity: 30
+  gymQuantity: 15
   gymMinHeightY: 5
   gymMaxHeightY: 8
   gymMinLengthX: 5
@@ -388,6 +443,12 @@ MonoBehaviour:
     type: 3}
   GymInnerObject: {fileID: 2125560403475918878, guid: e758880d4a5960a488b194007cb8fb16,
     type: 3}
+  isEmptySpace: 1
+  emptySpaceQuantity: 3
+  emptySpaceMinHeightY: 2
+  emptySpaceMaxHeightY: 2
+  emptySpaceMinLengthX: 2
+  emptySpaceMaxLengthX: 2
 --- !u!1 &3843422828890247147
 GameObject:
   m_ObjectHideFlags: 0

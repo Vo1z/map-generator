@@ -5,8 +5,6 @@
  * Email: vitya.voody@gmail.com
  * Twitter: @V0IZ_
  */
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MapGeneration;
 
@@ -65,6 +63,15 @@ class MapGenerationController : MonoBehaviour
     public GameObject GymRightWall;
     public GameObject GymInnerObject;
 
+    [Header("Empty Space")]
+
+    public bool isEmptySpace;
+    public int emptySpaceQuantity;
+
+    public int emptySpaceMinHeightY;
+    public int emptySpaceMaxHeightY;
+    public int emptySpaceMinLengthX;
+    public int emptySpaceMaxLengthX;
     //[Header("<ROOM> Objects")]
     //<ROOM> GAME OBJECTS
 
@@ -91,58 +98,15 @@ class MapGenerationController : MonoBehaviour
         createRoom(room);
     }
 
-/*    private void createLayer(string[,] objectMap, int heightY, int lengthX) 
-    {
-        for (int y = 0; y < heightY; y++) 
-        {
-            for (int x = 0; x < lengthX; x++) 
-            {
-                switch (objectMap[y, x]) 
-                {
-                    case "floor":
-                        Instantiate(floor, new Vector2(x, y), Quaternion.identity);
-                        break;
-                    case "wall":
-                        Instantiate(wall, new Vector2(x, y), Quaternion.identity);
-                        break;
-                    case "leftWall":
-                        Instantiate(leftWall, new Vector2(x, y), Quaternion.identity);
-                        break;
-                    case "rightWall":
-                        Instantiate(rightWall, new Vector2(x, y), Quaternion.identity);
-                        break;
-                    case "leftCorner":
-                        Instantiate(leftCorner, new Vector2(x, y), Quaternion.identity);
-                        break;
-                    case "rightCorner":
-                        Instantiate(rightCorner, new Vector2(x, y), Quaternion.identity);
-                        break;
-                    case "leftTopBrinkCorner":
-                        Instantiate(leftTopBrinkCorner, new Vector2(x, y), Quaternion.identity);
-                        break;
-                    case "rightTopBrinkCorner":
-                        Instantiate(rightTopBrinkCorner, new Vector2(x, y), Quaternion.identity);
-                        break;
-                    case "topWallBrink":
-                        Instantiate(topWallBrink, new Vector2(x, y), Quaternion.identity);
-                        break;
-                    case "innerObject":
-                        Instantiate(innerObject, new Vector2(x, y), Quaternion.identity);
-                        break;
-                }
-            }
-        }
-    }*/
-
     private void createRoom(Room room)//ADD ROOM CONDITION
     {
-        for (int layerNumber = 0; layerNumber < room.Layers.Count; layerNumber++)
+        for (int layerNumber = 0; layerNumber < room.RoomLayers.Count; layerNumber++)
         {
-            for (int y = 0; y < room.Layers[layerNumber].LayerHeightY; y++)
+            for (int y = 0; y < room.RoomLayers[layerNumber].LayerHeightY; y++)
             {
-                for (int x = 0; x < room.Layers[layerNumber].LayerLengthX; x++)
+                for (int x = 0; x < room.RoomLayers[layerNumber].LayerLengthX; x++)
                 {
-                    switch (room.Layers[layerNumber].LayerObjectMap[y, x])
+                    switch (room.RoomLayers[layerNumber].LayerObjectMap[y, x])
                     {
                         //-------------General Room-------------
                         case "GRFloor1":
@@ -323,6 +287,10 @@ class MapGenerationController : MonoBehaviour
         {
             sumOfAllLocationRooms += officeQuantity;
         }
+        if (isEmptySpace == true) 
+        {
+            sumOfAllLocationRooms += emptySpaceQuantity;
+        }
         /*if (is<ROOM> == true)
         {
             sumOfAllLocationRooms += <ROOM>Quantity;
@@ -356,12 +324,22 @@ class MapGenerationController : MonoBehaviour
         slori.officeMinLengthX = this.officeMinLengthX;
         slori.officeMaxLengthX = this.officeMaxLengthX;
 
+        //======EmptySpace======
+        slori.isEmptySpace = this.isEmptySpace;
+        slori.emptySpaceQuantity = this.emptySpaceQuantity;
+
+        slori.emptySpaceMinHeightY = this.emptySpaceMinHeightY;
+        slori.emptySpaceMaxHeightY = this.emptySpaceMaxHeightY;
+        slori.emptySpaceMinLengthX = this.emptySpaceMinLengthX;
+        slori.emptySpaceMaxLengthX = this.emptySpaceMaxLengthX;
+
+
         //=====<ROOM>======
         //<OBJECTS OF <ROOM>>
 
-        slori.numberOfRoomTypes = 2; //Depends on number of rooms
+        slori.numberOfRoomTypes = 3; //Depends on number of rooms
 
-        if (!isGym && !isOffice /*&& !is<ROOM>*/)
+        if (!isGym && !isOffice && !isEmptySpace/*&& !is<ROOM>*/)
         {
             throw new AnyRoomsWereNotChoosenException();
         }
@@ -369,6 +347,7 @@ class MapGenerationController : MonoBehaviour
         {
             slori.isGym = this.isGym;
             slori.isOffice = this.isOffice;
+            slori.isEmptySpace = this.isEmptySpace;
             /*slori.is<ROOM> = this.is<ROOM>;*/
         }
     }
@@ -378,8 +357,9 @@ class MapGenerationController : MonoBehaviour
  * 1) Create room inside Rooms.cs as inherited class from Room
  * 2) Add objets of the room to the field
  * 3) Adjust findSumOfAllLocationRooms()
- * 4) Adjust setStruct()
- * 5) Adjust createMap() method with objects of your room
- * 6) Increase numberOfRoomTypes in setStruct() method
- * 7) Add else if structure to  MapGenerationLibrary.generateLocationRooms()
+ * 4) Adjust slori
+ * 5) Adjust setStruct()
+ * 6) Adjust createMap() method with objects of your room
+ * 7) Increase numberOfRoomTypes in setStruct() method
+ * 8) Add else if structure to  MapGenerationLibrary.generateLocationRooms()
  */
