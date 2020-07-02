@@ -1,7 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿/*
+ * Sirex production code:
+ * Project: Spy-Do
+ * Author: Voiz (Viktor Lishchuk)
+ * Email: vitya.voody@gmail.com
+ * Twitter: @V0IZ_
+ */
 namespace MapGeneration
 {
     //Structs
@@ -53,25 +56,25 @@ namespace MapGeneration
         public int <ROOM>MaxLengthX;*/
     }
 
-    public struct SExitPosition
+    struct SExitInformation
     {
-        public readonly int Y;
-        public readonly int X;
-        public readonly int Wall; //0 - left, 1 - top, 2- right, 3- bootom
+        public readonly EPosition WallPosition;
+        public readonly int ExitIndexZ;
 
-        public SExitPosition(int Y, int X)
+        public SExitInformation(EPosition wallPosition, int exitIndexZ) 
         {
-            this.Y = Y;
-            this.X = X;
-            this.Wall = 0;
-        }
-
-        public SExitPosition(int Y, int X, int Wall)
-        {
-            this.Y = Y;
-            this.X = X;
-            this.Wall = Wall;
+            this.WallPosition = wallPosition;
+            this.ExitIndexZ = exitIndexZ;
         }
     }
 
+    public enum EPosition 
+    {
+        TOP, RIGHT, BOTTOM, LEFT
+    }
+
+    struct CONSTANTS 
+    {
+        public const int NOT_IMPLEMENTED = -1;
+    }
 }

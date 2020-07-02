@@ -75,27 +75,27 @@ class MapGenerationController : MonoBehaviour
     //[Header("<ROOM> Objects")]
     //<ROOM> GAME OBJECTS
 
-    private Room room;
-    private Location location;
-    private SLocationOfRoomsInformation slori;
+    private Room room_;
+    private Location location_;
+    private SLocationOfRoomsInformation slori_;
 
     void Awake()
     {
         setStruct(); //constructor for sLocationOfRoomsInformation struct
 
-        //room = new Gym(Random.Range(gymMinHeightY, gymMaxHeightY), Random.Range(gymMinLengthX, gymMaxLengthX));        
-        //room = new Office(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
-        //room = new GeneralRoom(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
+        //room_ = new Gym(Random.Range(gymMinHeightY, gymMaxHeightY), Random.Range(gymMinLengthX, gymMaxLengthX));        
+        //room_ = new Office(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
+        //room_ = new GeneralRoom(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
 
-        location = new Location(slori);
+        location_ = new Location(slori_);
     }
 
     void Start()
     {
         //location.Test(slori);
-        createMap(location);
+        createMap(location_);
 
-        createRoom(room);
+        //createRoom(room_);
     }
 
     private void createRoom(Room room)//ADD ROOM CONDITION
@@ -302,42 +302,42 @@ class MapGenerationController : MonoBehaviour
 
     private void setStruct()//ADD ROOM CONDITION
     {
-        slori.sumOfAllLocationRooms = findSumOfAllLocationRooms(); //responsible for sum of all rooms in the location
-        slori.minLocationHeightY = this.minLocationHeightY;
-        slori.maxLocationHeightY = this.maxLocationHeightY;
-        slori.minLocationLengthX = this.minLocationLengthX;
-        slori.maxLocationLengthX = this.maxLocationLengthX;
+        slori_.sumOfAllLocationRooms = findSumOfAllLocationRooms(); //responsible for sum of all rooms in the location
+        slori_.minLocationHeightY = this.minLocationHeightY;
+        slori_.maxLocationHeightY = this.maxLocationHeightY;
+        slori_.minLocationLengthX = this.minLocationLengthX;
+        slori_.maxLocationLengthX = this.maxLocationLengthX;
 
         //=====Gym======
-        slori.gymQuantity = this.gymQuantity;
+        slori_.gymQuantity = this.gymQuantity;
 
-        slori.gymMinHeightY = this.gymMinHeightY;
-        slori.gymMaxHeightY = this.gymMaxHeightY;
-        slori.gymMinLengthX = this.gymMinLengthX;
-        slori.gymMaxLengthX = this.gymMaxLengthX;
+        slori_.gymMinHeightY = this.gymMinHeightY;
+        slori_.gymMaxHeightY = this.gymMaxHeightY;
+        slori_.gymMinLengthX = this.gymMinLengthX;
+        slori_.gymMaxLengthX = this.gymMaxLengthX;
 
         //=====Office======
-        slori.officeQuantity = this.officeQuantity;
+        slori_.officeQuantity = this.officeQuantity;
         
-        slori.officeMinHeightY = this.officeMinHeightY;
-        slori.officeMaxHeightY = this.officeMaxHeightY;
-        slori.officeMinLengthX = this.officeMinLengthX;
-        slori.officeMaxLengthX = this.officeMaxLengthX;
+        slori_.officeMinHeightY = this.officeMinHeightY;
+        slori_.officeMaxHeightY = this.officeMaxHeightY;
+        slori_.officeMinLengthX = this.officeMinLengthX;
+        slori_.officeMaxLengthX = this.officeMaxLengthX;
 
         //======EmptySpace======
-        slori.isEmptySpace = this.isEmptySpace;
-        slori.emptySpaceQuantity = this.emptySpaceQuantity;
+        slori_.isEmptySpace = this.isEmptySpace;
+        slori_.emptySpaceQuantity = this.emptySpaceQuantity;
 
-        slori.emptySpaceMinHeightY = this.emptySpaceMinHeightY;
-        slori.emptySpaceMaxHeightY = this.emptySpaceMaxHeightY;
-        slori.emptySpaceMinLengthX = this.emptySpaceMinLengthX;
-        slori.emptySpaceMaxLengthX = this.emptySpaceMaxLengthX;
+        slori_.emptySpaceMinHeightY = this.emptySpaceMinHeightY;
+        slori_.emptySpaceMaxHeightY = this.emptySpaceMaxHeightY;
+        slori_.emptySpaceMinLengthX = this.emptySpaceMinLengthX;
+        slori_.emptySpaceMaxLengthX = this.emptySpaceMaxLengthX;
 
 
         //=====<ROOM>======
         //<OBJECTS OF <ROOM>>
 
-        slori.numberOfRoomTypes = 3; //Depends on number of rooms
+        slori_.numberOfRoomTypes = 3; //Depends on number of rooms
 
         if (!isGym && !isOffice && !isEmptySpace/*&& !is<ROOM>*/)
         {
@@ -345,9 +345,9 @@ class MapGenerationController : MonoBehaviour
         }
         else
         {
-            slori.isGym = this.isGym;
-            slori.isOffice = this.isOffice;
-            slori.isEmptySpace = this.isEmptySpace;
+            slori_.isGym = this.isGym;
+            slori_.isOffice = this.isOffice;
+            slori_.isEmptySpace = this.isEmptySpace;
             /*slori.is<ROOM> = this.is<ROOM>;*/
         }
     }

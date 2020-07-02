@@ -1,8 +1,15 @@
-﻿using System.Collections;
+﻿/*
+ * Sirex production code:
+ * Project: Spy-Do
+ * Author: Voiz (Viktor Lishchuk)
+ * Email: vitya.voody@gmail.com
+ * Twitter: @V0IZ_
+ */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapGeneration 
+namespace MapGeneration
 {
     //Exceptions 
     class LayerIsBiggerThanRoomException : System.Exception
@@ -40,12 +47,23 @@ namespace MapGeneration
     {
         public NotEnoughLayersException(int numberOfRoomLayers, int numberOfCOLayers)
             : base("Room does not have enough layers to implement ComplexObject" +
-                  " [ RoomLayers: " + numberOfRoomLayers +" ]" + " [ComplexObjectLayers : " + numberOfCOLayers + " ]" )
+                  " [ RoomLayers: " + numberOfRoomLayers + " ]" + " [ComplexObjectLayers : " + numberOfCOLayers + " ]")
         { }
     }
 
-    class NotEnoughSpaceInRoomException : System.Exception 
+    class NotEnoughSpaceInRoomException : System.Exception
     {
-        public NotEnoughSpaceInRoomException() : base() { }
+        public NotEnoughSpaceInRoomException(string dimentionName, int reqSpace, int currSpace) : base("[ Required " + dimentionName + " space is " + reqSpace +
+                                            " ] > [Current " + dimentionName + " space is " + currSpace + " ]") { }
+    }
+
+    class DefaultExitWasNotFoundException : System.Exception
+    {
+        public DefaultExitWasNotFoundException() : base("Room does not have default Exit") { }
+    }
+
+    class DefaultLayerZWasNotFoundException : System.Exception
+    {
+        public DefaultLayerZWasNotFoundException() : base("Room does not have default LayerZ for Exit") { }
     }
 }

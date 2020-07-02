@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/*
+ * Sirex production code:
+ * Project: Spy-Do
+ * Author: Voiz (Viktor Lishchuk)
+ * Email: vitya.voody@gmail.com
+ * Twitter: @V0IZ_
+ */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +27,8 @@ namespace MapGeneration
             //========================Layer 1=======================
             AddRoomLayer();
             RoomLayers[1].SetOnRandomLayerID("GRInnerObject", 8);
+
+            SetDefaultExitAndLayerZ(new Test(), 2);
         }
     }
 
@@ -53,6 +62,11 @@ namespace MapGeneration
             AddRoomLayer();
             RoomLayers[4].SetHorizontalLayerLine(1, "GymTopWallBrink");
             RoomLayers[4].SetHorizontalLayerLine(RoomHeightY - 1, "GymTopWallBrink");
+
+            SetDefaultExitAndLayerZ(new Test(), 2);
+
+            SetExit(new Test(), 2, EPosition.LEFT, RoomHeightY / 2);
+            SetExit(new Test(), 2, EPosition.RIGHT, RoomHeightY - 2);
         }
     }
 
@@ -63,11 +77,12 @@ namespace MapGeneration
         protected override void instRoom()
         {
             //========================Layer 0=======================
-            AddRoomLayer(RoomHeightY - 2, RoomLengthX);
+            AddRoomLayer();
             RoomLayers[0].FillWholeLayerMap("OfficeFloor");
+            RoomLayers[0].SetHorizontalLayerLine(RoomHeightY - 1, "GRFloor1");
 
             //========================Layer 1=======================
-            AddRoomLayer(RoomHeightY - 2, RoomLengthX);
+            AddRoomLayer();
             RoomLayers[1].SetOnRandomLayerID("OfficeTable", 5);            
 
             //========================Layer 2=======================
@@ -87,6 +102,11 @@ namespace MapGeneration
             AddRoomLayer();
             RoomLayers[4].SetHorizontalLayerLine(1, "OfficeTopWallBrink");
             RoomLayers[4].SetHorizontalLayerLine(RoomHeightY - 1, "OfficeTopWallBrink");
+
+            SetDefaultExitAndLayerZ(new Test(), 2);
+
+            SetExit(new Test(), 2, EPosition.LEFT, RoomHeightY / 2);
+            SetExit(new Test(), 2, EPosition.RIGHT, RoomHeightY - 2);
         }
     }
 
@@ -130,26 +150,25 @@ namespace MapGeneration
             AddRoomLayer();
             RoomLayers[6].SetHorizontalLayerLine(1, "GRTopWallBrink");
             RoomLayers[6].SetHorizontalLayerLine(RoomHeightY - 1, "GRTopWallBrink");
-        }
+
+            SetDefaultExitAndLayerZ(new Test(), 2);
+        }        
     }
 
 
     //ComplexObjects
     class Test : ComplexObject
     {
-        public Test() : base(3, 3) { }
+        public Test() : base(1, 1) { }
          
         protected override void instCO()
         {
         //========================Layer 0=======================
             AddCOLayer();
-            COLayers[0].FillWholeLayerMap("OfficeWall");
-
+            COLayers[0].FillWholeLayerMap("GymFloor");
         //========================Layer 1=======================
             AddCOLayer();
-            COLayers[1].SetOnUniqueLayerID(0, 0, "OfficeComputer");
-            COLayers[1].SetOnUniqueLayerID(0, 1, "OfficeComputer");
-            COLayers[1].SetOnUniqueLayerID(0, 2, "OfficeComputer");
+            COLayers[1].FillWholeLayerMap("GymFloor");
         }
     }
 }
