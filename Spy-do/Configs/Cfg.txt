@@ -1,0 +1,10 @@
+0.mainHeroSpeed = 1337
+1.jumpForce = 228
+2.eee = 3.3
+3.retard = -322
+4.suck = 3.32
+5.mobamba = 3.111
+6.chicken = 0.32
+7.soup = -3.1
+8.dot = 0
+9.smthInp = 12.2
