@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapGeneration
+namespace MapGenerator
 {
     //Exceptions 
     class LayerIsBiggerThanRoomException : System.Exception
@@ -45,8 +45,8 @@ namespace MapGeneration
 
     class NotEnoughLayersException : System.Exception
     {
-        public NotEnoughLayersException(int numberOfRoomLayers, int numberOfCOLayers)
-            : base("Room does not have enough layers to implement ComplexObject" +
+        public NotEnoughLayersException(int numberOfRoomLayers, int numberOfCOLayers, System.Object invokedFrom)
+            : base("Room does not have enough layers to implement " + invokedFrom.GetType() +
                   " [ RoomLayers: " + numberOfRoomLayers + " ]" + " [ComplexObjectLayers : " + numberOfCOLayers + " ]")
         { }
     }

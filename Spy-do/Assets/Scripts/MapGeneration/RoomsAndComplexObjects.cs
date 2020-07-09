@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapGeneration
+namespace MapGenerator
 {
     //Rooms
     class EmptySpace : Room 
@@ -28,6 +28,8 @@ namespace MapGeneration
             AddRoomLayer();
             RoomLayers[1].SetOnRandomLayerID("GRInnerObject", 8);
 
+            AddRoomLayer();
+            AddRoomLayer();
             SetDefaultExitAndLayerZ(new Test(), 2);
         }
     }
@@ -65,8 +67,8 @@ namespace MapGeneration
 
             SetDefaultExitAndLayerZ(new Test(), 2);
 
-            SetExit(new Test(), 2, EPosition.LEFT, RoomHeightY / 2);
-            SetExit(new Test(), 2, EPosition.RIGHT, RoomHeightY - 2);
+            SetExit(new Test(), 2, EPosition.LEFT, Random.Range(1, RoomHeightY - 2));
+            SetExit(new Test(), 2, EPosition.RIGHT, Random.Range(1, RoomHeightY - 2));
         }
     }
 
@@ -83,7 +85,8 @@ namespace MapGeneration
 
             //========================Layer 1=======================
             AddRoomLayer();
-            RoomLayers[1].SetOnRandomLayerID("OfficeTable", 5);            
+            RoomLayers[1].SetOnRandomLayerID("OfficeTable", 5);
+            RoomLayers[1].SetHorizontalLayerLine(RoomHeightY - 1, null);
 
             //========================Layer 2=======================
             AddRoomLayer();
@@ -105,8 +108,8 @@ namespace MapGeneration
 
             SetDefaultExitAndLayerZ(new Test(), 2);
 
-            SetExit(new Test(), 2, EPosition.LEFT, RoomHeightY / 2);
-            SetExit(new Test(), 2, EPosition.RIGHT, RoomHeightY - 2);
+            SetExit(new Test(), 2, EPosition.LEFT, Random.Range(1, RoomHeightY - 2));
+            SetExit(new Test(), 2, EPosition.RIGHT, Random.Range(1, RoomHeightY - 2));
         }
     }
 
@@ -145,7 +148,7 @@ namespace MapGeneration
             RoomLayers[5].SetVerticalLayerLine(RoomLengthX - 1, "GRRightWall");
             RoomLayers[5].SetHorizontalLayerLine(0, null);
             RoomLayers[5].SetHorizontalLayerLine(RoomHeightY - 1, null);
-
+            
             //========================Layer 6=======================
             AddRoomLayer();
             RoomLayers[6].SetHorizontalLayerLine(1, "GRTopWallBrink");

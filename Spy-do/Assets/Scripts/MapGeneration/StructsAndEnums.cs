@@ -5,7 +5,7 @@
  * Email: vitya.voody@gmail.com
  * Twitter: @V0IZ_
  */
-namespace MapGeneration
+namespace MapGenerator
 {
     //Structs
     public struct SLocationOfRoomsInformation

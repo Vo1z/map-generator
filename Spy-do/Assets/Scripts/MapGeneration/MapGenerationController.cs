@@ -6,7 +6,7 @@
  * Twitter: @V0IZ_
  */
 using UnityEngine;
-using MapGeneration;
+using MapGenerator;
 
 //Inner class that creates floor for room
 class MapGenerationController : MonoBehaviour

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapGeneration
+namespace MapGenerator
 {
     //Class that describes ComplexObjects(Is used in Room class)
     abstract class ComplexObject
@@ -123,7 +123,7 @@ namespace MapGeneration
             }
         }
 
-        public void SetUniqueSquare(int startY, int endY, int startX, int endX, string objectName)
+        public void SetUniqueRectangle(int startY, int endY, int startX, int endX, string objectName)
         {
             if (startY > endY)
                 throw new StartPoitIsSmallerThenEndPointException(startY, endY);
@@ -232,7 +232,7 @@ namespace MapGeneration
                 }
             }
         }   
-        public void AddNeighborExitsOnLeftWall(Room room) //FIXEME
+        public void AddNeighborExitsOnLeftWall(Room room)
         {
             if (room != null)
             {
@@ -279,9 +279,9 @@ namespace MapGeneration
         //======CO======
         protected void SetComplexObject(ComplexObject cObj, int layerZ, int posY, int posX) 
         {
-            if ((cObj.COLayers.Count + layerZ + 1) > RoomLayers.Count)
+            if ((cObj.COLayers.Count + layerZ) > RoomLayers.Count)
             {
-                throw new NotEnoughLayersException(RoomLayers.Count, cObj.COLayers.Count);
+                throw new NotEnoughLayersException(RoomLayers.Count, cObj.COLayers.Count, this);
             }
             else if ((posX + cObj.COLengthX) > RoomLengthX)
             {
@@ -394,14 +394,14 @@ namespace MapGeneration
         }
 
         //Generates all types of room in the location
-        private Room[] generateLocationRooms(SLocationOfRoomsInformation slori) //REWORKED
+        private Room[] generateLocationRooms(SLocationOfRoomsInformation slori)
         {
             SLocationOfRoomsInformation localSLORI = slori;
 
             Room[] generatedRooms = new Room[NumberOfLocationRooms];
             int room = 0;
 
-            int i = 0;
+            int i = 0;          
             while (i < NumberOfLocationRooms)
             {
                 int randomRoom = Random.Range(0, slori.numberOfRoomTypes);                                                    //Generates random room
@@ -462,7 +462,7 @@ namespace MapGeneration
             return roomsWithExits;
         }
 
-        private int[,] createLocationIdMap(SLocationOfRoomsInformation slori)//REWORKED
+        private int[,] createLocationIdMap(SLocationOfRoomsInformation slori)
         {
             int[,] locationRoomMap = new int[LocationIdMapHeightY, LocationIdMapLengthX];
 
@@ -477,7 +477,7 @@ namespace MapGeneration
             return locationRoomMap;
         }
 
-        private int calculateNumberOfActualRooms() //ok
+        private int calculateNumberOfActualRooms()
         {
             if (LocationIdMap.Length < NumberOfLocationRooms)
             {
@@ -489,7 +489,7 @@ namespace MapGeneration
             }
         }
 
-        private int calculateMaxNumberOfLayers() //ok
+        private int calculateMaxNumberOfLayers()
         {
             int count = 0;
             int maxNumberLayers = 0;            
@@ -519,7 +519,7 @@ namespace MapGeneration
             return maxNumberLayers;
         }
 
-        private int calculateLocationHeightY() //REWORKED //doubts
+        private int calculateLocationHeightY()
         {
             int maxHeightInRowY = 0;
             int totalHeightY = 0;
@@ -554,7 +554,7 @@ namespace MapGeneration
             return totalHeightY;
         }
 
-        private int calculateLocationLengthX() //REWORKED //doubts
+        private int calculateLocationLengthX()
         {
             int lengthOfRowX = 0;
             int maxTotalLengthX = 0;
@@ -588,7 +588,7 @@ namespace MapGeneration
             return maxTotalLengthX;
         }
 
-        private string[,,] createLocationObjectMap(SLocationOfRoomsInformation slori)//TODO
+        private string[,,] createLocationObjectMap(SLocationOfRoomsInformation slori)
         {
             string[,,] objectMap = createLocationDefaultRoom();//new string[LocationLayersZ, LocationHeightY, LocationLengthX];
 
