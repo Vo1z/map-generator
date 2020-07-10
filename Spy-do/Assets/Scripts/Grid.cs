@@ -27,6 +27,17 @@ public class Grid : MonoBehaviour
         CreateGrid();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            Node c = WorldToNodePoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            Debug.Log("GCost: " + c.GCost);
+            Debug.Log("FCost: " + c.FCost);
+            Debug.Log("HCost: " + c.HCost);
+        }
+    }
+
     public List<Node> GetNeighbourNodes(Node targetNode_in)
     {
         List<Node> neighbourNodes_ = new List<Node>();
@@ -38,6 +49,11 @@ public class Grid : MonoBehaviour
                 if(x == 0 && y == 0)
                 {
                     continue; 
+                }
+
+                if(Mathf.Abs(x) == 1 && Mathf.Abs(y) == 1)
+                {
+                    continue;
                 }
 
                 int neighbourX = targetNode_in.GridPosX + x;

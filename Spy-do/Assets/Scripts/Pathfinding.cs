@@ -39,14 +39,16 @@ public class Pathfinding : MonoBehaviour
         int yDistance = Mathf.Abs(nodeB.GridPosY - nodeA.GridPosY);
         int sum = 0;
 
-        if(xDistance > yDistance)
-        {
-            sum = 14 * yDistance + 10 * (xDistance - yDistance);
-        }
-        else
-        {
-            sum = 14 * xDistance + 10 * (yDistance - xDistance);
-        }
+        //if(xDistance > yDistance)
+        //{
+        //    sum = 14 * yDistance + 10 * (xDistance - yDistance);
+        //}
+        //else
+        //{
+        //    sum = 14 * xDistance + 10 * (yDistance - xDistance);
+        //}
+
+        sum = 10 * xDistance + 10 * yDistance;
 
         return sum;
     }
