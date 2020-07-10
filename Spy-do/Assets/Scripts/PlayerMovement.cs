@@ -10,13 +10,6 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D _bc2D = null;
     private Rigidbody2D _rb2D = null;
     private bool _isMoving = false;
-    private enum MovementState
-    {
-        Standing, 
-        Moving, 
-        Stopping
-    }
-    MovementState _movingType;
 
     //test
     private Transform _player = null;
@@ -25,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _isMoving = false;
-        _movingType = MovementState.Standing;
         _gridComponent = FindObjectOfType<Grid>();
         _bc2D = GetComponent<BoxCollider2D>();
         _rb2D = GetComponent<Rigidbody2D>();
@@ -80,9 +72,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void ExecuteMovement()
+    private IEnumerator ExecuteMovement()
     {
         List<Node> currentPath = _gridComponent.Path;
+        _isMoving = true;
 
         if(currentPath != null)
         {
@@ -97,19 +90,24 @@ public class PlayerMovement : MonoBehaviour
                 int nextPosX = currentPath[i + 1].GridPosX;
                 int nextPosY = currentPath[i + 1].GridPosY;
 
-                int horizontal = nextPosX - currentPosX;
-                int vertical = nextPosY - currentPosY;
+                Vector3 a = currentPath[i].WorldPos;
+                Vector3 b = currentPath[i + 1].WorldPos;
 
-                transform.Translate(horizontal, vertical, 0);
+                float horizontal = nextPosX - currentPosX;
+                float vertical = nextPosY - currentPosY;
 
+                //transform.position = Vector3.Lerp(a, b, Time.deltaTime * 5);
+                transform.Translate(new Vector3(horizontal, vertical, 0f));
+
+                yield return new WaitForSeconds(0.03f);
                 //while (inLoop)
                 //{
                 //    if (!_isMoving)
                 //    {
-                //        if(firstTime)
+                //        if (firstTime)
                 //        {
-                //            AttemptMove(horizontal, vertical);
-                //            
+                //            StartCoroutine(Movement(new Vector3(horizontal, vertical, 0)));
+
                 //            firstTime = false;
                 //        }
                 //        else
@@ -119,15 +117,9 @@ public class PlayerMovement : MonoBehaviour
                 //    }
                 //}
             }
-
-            //float lastPosX = currentPath[currentPath.Count - 1].GridPosX;
-            //float lastPosY = currentPath[currentPath.Count - 1].GridPosY;
-
-            //float h = lastPosX - transform.position.x;
-            //float v = lastPosY - transform.position.y;
-
-            //transform.Translate(h, v, 0);
         }
+
+        _isMoving = false;
     }
 
     // Update is called once per frame
@@ -139,16 +131,13 @@ public class PlayerMovement : MonoBehaviour
 
             for (int i = 0; i < currentPath.Count; i++)
             {
-                //Debug.Log(i + "x: " + currentPath[i].GridPosX);
-                //Debug.Log(i + "y: " + currentPath[i].GridPosY);
-                
                 Debug.Log(i + ": " + currentPath[i].WorldPos);
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !_isMoving)
         {
-            ExecuteMovement();
+            StartCoroutine(ExecuteMovement());
         }
         else
         {
@@ -187,9 +176,6 @@ public class PlayerMovement : MonoBehaviour
 
             if (horizontal != 0 || vertical != 0)
             {
-                //Vector2 start_ = transform.position;
-                //Vector2 end_ = start_ + new Vector2(horizontal_, vertical_);
-                //StartCoroutine(Movement(end_));
                 AttemptMove(horizontal, vertical);
             }
         }
