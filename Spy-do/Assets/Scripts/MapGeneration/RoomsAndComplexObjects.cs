@@ -20,7 +20,7 @@ namespace MapGenerator
         {
             //========================Layer 0=======================
             AddRoomLayer();
-            RoomLayers[0].FillWholeLayerMap("GRFloor1");
+            RoomLayers[0].FillWholeLayerMap("GRFloor2");
             RoomLayers[0].SetOnRandomLayerID("GRFloor2", 2);
             RoomLayers[0].SetOnRandomLayerID("GRFloor3", 2);
             
@@ -124,20 +124,20 @@ namespace MapGenerator
             RoomLayers[0].FillWholeLayerMap("GRFloor1");
             RoomLayers[0].SetOnRandomLayerID("GRFloor2", 2);
             RoomLayers[0].SetOnRandomLayerID("GRFloor3", 2);
-            RoomLayers[0].SetHorizontalLayerLine(RoomHeightY - 2, "GRTopWall");
 
             //========================Layer 1=======================
-            AddRoomLayer(RoomHeightY - 1, RoomLengthX);
-            RoomLayers[1].SetOnRandomLayerID("GRInnerObject", 8);
-            RoomLayers[1].SetHorizontalLayerLine(RoomHeightY - 2, "GRTopWall");
+            AddRoomLayer();
 
             //========================Layer 2=======================
-            AddRoomLayer();
-            RoomLayers[2].SetHorizontalLayerLine(0, "GRBottomWall");
+            AddRoomLayer(RoomHeightY - 1, RoomLengthX);
+            RoomLayers[2].SetHorizontalLayerLine(RoomHeightY - 2, "GRTopWall");
+            RoomLayers[2].SetOnRandomLayerID("GRInnerObject", 8);
             RoomLayers[2].SetHorizontalLayerLine(RoomHeightY - 2, "GRTopWall");
 
             //========================Layer 3=======================
             AddRoomLayer();            
+            RoomLayers[3].SetHorizontalLayerLine(0, "GRBottomWall");
+            RoomLayers[3].SetHorizontalLayerLine(RoomHeightY - 2, "GRTopWall");
 
             //========================Layer 4=======================
             AddRoomLayer();

@@ -7,6 +7,7 @@
  */
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace MapGenerator
 {
@@ -636,13 +637,20 @@ namespace MapGenerator
                 }
             }
 
+            //Adds DefaultRoom strings to the bottom of the Generated room
+            GeneralRoom defaultRoom = new GeneralRoom(LocationHeightY, LocationLengthX); 
+            for (int x = 0; x < objectMap.GetLength(2); x++) 
+            {
+                objectMap[objectMap.GetLength(0) - 1, 0, x] = "GRBottomWall";               //SETS BUTTOM WALL TO PREVENT BUGS WITH EMPTY SPACE (has to fixed in the future)
+            }
+
             return objectMap;
         }
 
         private string[,,] createLocationDefaultRoom()
         {
             string[,,] objectMap = new string[LocationLayersZ, LocationHeightY, LocationLengthX];
-            Room defaultRoom = new GeneralRoom(LocationHeightY, LocationLengthX);
+            Room defaultRoom = new GeneralRoom(LocationHeightY, LocationLengthX);                   //Creates general rooms
 
             for (int z = 0; z < defaultRoom.RoomLayers.Count; z++) 
             {
