@@ -24,7 +24,7 @@ public class Grid : MonoBehaviour
 
     void Start()
     {
-        Invoke("CreateGrid", 3);
+        CreateGrid();
     }
 
     void Update()
