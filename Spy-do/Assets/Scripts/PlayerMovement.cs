@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private Grid _gridComponent = null;
     private BoxCollider2D _bc2D = null;
     private Rigidbody2D _rb2D = null;
-    private bool _isMoving = false;
+    public bool _isMoving = false;
 
     //test
     private Transform _player = null;
@@ -119,6 +119,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        currentPath = null;
         _isMoving = false;
     }
 

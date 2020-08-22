@@ -18,7 +18,10 @@ public class Pathfinding : MonoBehaviour
 
     void Update()
     {
-        CursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float mousePosX = Mathf.Clamp(Input.mousePosition.x, 0, Screen.width);
+        float mousePosY = Mathf.Clamp(Input.mousePosition.y, 0, Screen.height);
+        CursorPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePosX, mousePosY, 0));
+        Debug.Log(CursorPos);
 
         FindPath(_startPos.position, CursorPos);
 
@@ -29,6 +32,10 @@ public class Pathfinding : MonoBehaviour
             {
                 _lr.SetPosition(i, GridComponent.Path[i].WorldPos);
             }
+        }
+        else
+        {
+            _lr.positionCount = 0;
         }
     }
 
