@@ -7,9 +7,15 @@
  */
 namespace MapGenerator
 {
-    
-    class StartPointIsSmallerThenEndPointException : System.Exception
+    namespace Exceptions
     {
-        public StartPointIsSmallerThenEndPointException(int startPoint, int endPoint) : base(nameof(endPoint) + " is bigger then " + nameof(startPoint)) { }
+
+        class StartPointIsSmallerThenEndPointException : System.Exception
+        {
+            public StartPointIsSmallerThenEndPointException(int startPoint, int endPoint) : base(nameof(endPoint) +
+                " is bigger then " + nameof(startPoint))
+            {
+            }
+        }
     }
 }

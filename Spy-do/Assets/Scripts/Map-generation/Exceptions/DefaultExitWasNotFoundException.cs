@@ -7,8 +7,13 @@
  */
 namespace MapGenerator
 {
-    class DefaultExitWasNotFoundException : System.Exception
+    namespace Exceptions
     {
-        public DefaultExitWasNotFoundException() : base("Room does not have default Exit") { }
+        class DefaultExitWasNotFoundException : System.Exception
+        {
+            public DefaultExitWasNotFoundException() : base("Room does not have default Exit")
+            {
+            }
+        }
     }
 }

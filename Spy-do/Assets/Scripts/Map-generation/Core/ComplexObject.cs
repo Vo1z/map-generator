@@ -5,51 +5,58 @@
  * Email: vitya.voody@gmail.com
  * Twitter: @V0IZ_
  */
+
 using System.Collections.Generic;
+using MapGenerator.Exceptions;
 
 namespace MapGenerator
 {
-    //Class that describes ComplexObjects(Is used in Room class)
-    abstract class ComplexObject
+    namespace Core
     {
-        public readonly int COHeightY;
-        public readonly int COLengthX;
-
-        public readonly List<Layer> COLayers;
-
-        public ComplexObject(int heightY, int lengthX) 
+        //Class that describes ComplexObjects(Is used in Room class)
+        abstract class ComplexObject
         {
-            this.COLayers = new List<Layer>();
-            this.COHeightY = heightY;
-            this.COLengthX = lengthX;
-            instCO();
-        }
+            public readonly int COHeightY;
+            public readonly int COLengthX;
 
-        protected void AddCOLayer(int layerHeightY, int layerLenghtX)            // Creates new layer on a top of the previous (with higher Z-Index)
-        {
-            if (layerHeightY > COHeightY)
-            {
-                throw new LayerIsBiggerThanRoomException(COHeightY);              //Exceptions
-            }
-            else if (layerLenghtX > COLengthX)
-            {
-                throw new LayerIsBiggerThanRoomException(COLengthX);
-            }
-            else if (layerHeightY > COHeightY || layerLenghtX > COLengthX)
-            {
-                throw new LayerIsBiggerThanRoomException(COLengthX, COHeightY);
-            }
-            else
-            {
-                COLayers.Add(new Layer(layerHeightY, layerLenghtX));
-            }
-        }
+            public readonly List<Layer> COLayers;
 
-        protected void AddCOLayer() 
-        {
-            AddCOLayer(COHeightY, COLengthX);
-        }
+            public ComplexObject(int heightY, int lengthX)
+            {
+                this.COLayers = new List<Layer>();
+                this.COHeightY = heightY;
+                this.COLengthX = lengthX;
+                instCO();
+            }
 
-        abstract protected void instCO();
+            protected void
+                AddCOLayer(int layerHeightY,
+                    int layerLenghtX) // Creates new layer on a top of the previous (with higher Z-Index)
+            {
+                if (layerHeightY > COHeightY)
+                {
+                    throw new LayerIsBiggerThanRoomException(COHeightY); //Exceptions
+                }
+                else if (layerLenghtX > COLengthX)
+                {
+                    throw new LayerIsBiggerThanRoomException(COLengthX);
+                }
+                else if (layerHeightY > COHeightY || layerLenghtX > COLengthX)
+                {
+                    throw new LayerIsBiggerThanRoomException(COLengthX, COHeightY);
+                }
+                else
+                {
+                    COLayers.Add(new Layer(layerHeightY, layerLenghtX));
+                }
+            }
+
+            protected void AddCOLayer()
+            {
+                AddCOLayer(COHeightY, COLengthX);
+            }
+
+            abstract protected void instCO();
+        }
     }
 }

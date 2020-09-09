@@ -7,11 +7,16 @@
  */
 namespace MapGenerator
 {
-    class NotEnoughLayersException : System.Exception
+    namespace Exceptions
     {
-        public NotEnoughLayersException(int numberOfRoomLayers, int numberOfCOLayers, System.Object invokedFrom)
-            : base("Room does not have enough layers to implement " + invokedFrom.GetType() +
-                   " [ RoomLayers: " + numberOfRoomLayers + " ]" + " [ComplexObjectLayers : " + numberOfCOLayers + " ]")
-        { }
+        class NotEnoughLayersException : System.Exception
+        {
+            public NotEnoughLayersException(int numberOfRoomLayers, int numberOfCOLayers, System.Object invokedFrom)
+                : base("Room does not have enough layers to implement " + invokedFrom.GetType() +
+                       " [ RoomLayers: " + numberOfRoomLayers + " ]" + " [ComplexObjectLayers : " + numberOfCOLayers +
+                       " ]")
+            {
+            }
+        }
     }
 }

@@ -5,10 +5,8 @@
  * Email: vitya.voody@gmail.com
  * Twitter: @V0IZ_
  */
-namespace MapGenerator
+
+struct SConstants 
 {
-    struct SConstants 
-    {
-        public const int NOT_IMPLEMENTED = -1;
-    }
+    public const int NOT_IMPLEMENTED = -1;
 }

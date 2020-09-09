@@ -7,10 +7,14 @@
  */
 namespace MapGenerator
 {
-    class AnyRoomsWereNotChosenException : System.Exception
+    namespace Exceptions
     {
-        public AnyRoomsWereNotChosenException()
-            : base("Select at least one room type")
-        { }
+        class AnyRoomsWereNotChosenException : System.Exception
+        {
+            public AnyRoomsWereNotChosenException()
+                : base("Select at least one room type")
+            {
+            }
+        }
     }
 }

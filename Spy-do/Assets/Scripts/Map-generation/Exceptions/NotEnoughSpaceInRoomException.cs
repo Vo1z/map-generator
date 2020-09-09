@@ -7,9 +7,15 @@
  */
 namespace MapGenerator
 {
-    class NotEnoughSpaceInRoomException : System.Exception
+    namespace Exceptions
     {
-        public NotEnoughSpaceInRoomException(string dimentionName, int reqSpace, int currSpace) : base("[ Required " + dimentionName + " space is " + reqSpace +
-            " ] > [Current " + dimentionName + " space is " + currSpace + " ]") { }
+        class NotEnoughSpaceInRoomException : System.Exception
+        {
+            public NotEnoughSpaceInRoomException(string dimentionName, int reqSpace, int currSpace) : base(
+                "[ Required " + dimentionName + " space is " + reqSpace +
+                " ] > [Current " + dimentionName + " space is " + currSpace + " ]")
+            {
+            }
+        }
     }
 }
