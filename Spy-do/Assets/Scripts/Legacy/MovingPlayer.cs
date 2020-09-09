@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/*
+ * Sirex production code:
+ * Project: Spy-Do
+ * Author: ROB1N (Ivan Fomenko)
+ * Email: iv_fomenko@bk.ru
+ * Twitter: @ROB1N21806
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;

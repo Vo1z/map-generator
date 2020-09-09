@@ -1,5 +1,11 @@
-﻿//Script source (tutorial): https://youtu.be/fURWEzpNPL8
-//Responsible for the script: Ivan
+﻿/*
+ * Sirex production code:
+ * Project: Spy-Do
+ * Author: ROB1N (Ivan Fomenko)
+ * Email: iv_fomenko@bk.ru
+ * Twitter: @ROB1N21806
+ */
+//Script source (tutorial): https://youtu.be/fURWEzpNPL8
 
 using System.Collections;
 using System.Collections.Generic;
