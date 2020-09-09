@@ -5,8 +5,7 @@
  * Email: vitya.voody@gmail.com
  * Twitter: @V0IZ_
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace MapGenerator

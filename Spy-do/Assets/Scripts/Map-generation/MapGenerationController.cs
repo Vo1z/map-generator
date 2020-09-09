@@ -341,7 +341,7 @@ class MapGenerationController : MonoBehaviour
 
         if (!isGym && !isOffice && !isEmptySpace/*&& !is<ROOM>*/)
         {
-            throw new AnyRoomsWereNotChoosenException();
+            throw new AnyRoomsWereNotChosenException();
         }
         else
         {

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Sirex production code:
  * Project: Spy-Do
  * Author: Voiz (Viktor Lishchuk)
@@ -7,7 +7,6 @@
  */
 namespace MapGenerator
 {
-    //Structs
     public struct SLocationOfRoomsInformation
     {
         public int minLocationHeightY;
@@ -54,27 +53,5 @@ namespace MapGenerator
         public int <ROOM>MaxHeightY;
         public int <ROOM>MinLengthX;
         public int <ROOM>MaxLengthX;*/
-    }
-
-    struct SExitInformation
-    {
-        public readonly EPosition WallPosition;
-        public readonly int ExitIndexZ;
-
-        public SExitInformation(EPosition wallPosition, int exitIndexZ) 
-        {
-            this.WallPosition = wallPosition;
-            this.ExitIndexZ = exitIndexZ;
-        }
-    }
-
-    public enum EPosition 
-    {
-        TOP, RIGHT, BOTTOM, LEFT
-    }
-
-    struct CONSTANTS 
-    {
-        public const int NOT_IMPLEMENTED = -1;
     }
 }
