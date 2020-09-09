@@ -14,9 +14,7 @@ namespace MapGenerator
 {
     namespace Controll
     {
-
-
-//Inner class that creates floor for room
+    //Inner class that creates floor for room
         class MapGenerationController : MonoBehaviour
         {
             [Header("Location Propertirties")] public int minLocationHeightY;
