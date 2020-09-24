@@ -85,7 +85,7 @@ namespace MapGenerator
                 //room_ = new Office(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
                 //room_ = new GeneralRoom(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
 
-                _location = new Location();
+                //_location = new Location();
             }
 
             void Start()

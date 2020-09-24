@@ -20,29 +20,37 @@ namespace MapGenerator
             public int NumberOfRoomsInARowX { get; protected set; }
             public int NumberOfRoomRowsY { get; protected set; }
 
-            public int LocationLayersZ { get; protected set; }
-            public int LocationHeightY { get; protected set; }
-            public int LocationLengthX { get; protected set; }
+            public int LocationLayersZ { get => GetLocationNumberOfLayersZ(); protected set => LocationLayersZ = value; }
+            public int LocationHeightY { get => GetLocationHeightY();  protected set => LocationHeightY = value; }
+            public int LocationLengthX { get => GetLocationLengthX();  protected set => LocationLengthX = value; }
             
             public string[,,] LocationObjectMap { get; protected set; }
-            public List<Room> LocationRooms { get; set; }
+            public string GeneralRoomName { get; set; }
+            public Room[,] LocationRooms { get; set; }
 
-            public Location(int numberOfRoomsInARowX, int numberOfRoomRowsY) => throw new NotImplementedException();
+            public Location(int numberOfRoomsInARowX, int numberOfRoomRowsY)
+            {
+            }
+
+            private String[,,] CreateObjectMap()
+            {
+                string[,,] objectMap = new string[LocationLayersZ, LocationHeightY, LocationLengthX];
+
+                return objectMap;
+            }
 
             //Not tested
-            private int GetLocationNumberOfLayers()
+            private int GetLocationNumberOfLayersZ()
             {
-                int numberOfLocationLayers = 0;
+                int numberOfLayers = 0;
 
-                LocationRooms.ForEach(
-                    room =>
-                    {
-                        if (numberOfLocationLayers < room.RoomLayers.Count)
-                            numberOfLocationLayers = room.RoomLayers.Count;
-                    }
-                );
+                foreach (var room in LocationRooms)
+                {
+                    if (numberOfLayers < room.RoomLayers.Count)
+                        numberOfLayers = room.RoomLayers.Count;
+                }
 
-                return numberOfLocationLayers;
+                return numberOfLayers;
             }
 
             //Not tested
@@ -51,16 +59,16 @@ namespace MapGenerator
                 int locationHeightY = 0;
                 int maxHeightInARow = 0;
 
-                for (int roomNumber = 0; roomNumber < LocationRooms.Count; roomNumber++)
+                for (int y = 0; y < LocationRooms.GetLength(0); y++)
                 {
-                    if (maxHeightInARow < LocationRooms[roomNumber].RoomHeightY)
-                        maxHeightInARow = LocationRooms[roomNumber].RoomHeightY;
-                    
-                    if (roomNumber % NumberOfRoomsInARowX == 0 || roomNumber == LocationRooms.Count)
+                    for (int x = 0; x < LocationRooms.GetLength(1); x++)
                     {
-                        locationHeightY += maxHeightInARow;
-                        maxHeightInARow = 0;
+                        if (maxHeightInARow < LocationRooms[y, x].RoomHeightY)
+                            maxHeightInARow = LocationRooms[y, x].RoomHeightY;
                     }
+
+                    locationHeightY += maxHeightInARow;
+                    maxHeightInARow = 0;
                 }
 
                 return locationHeightY;
@@ -70,25 +78,23 @@ namespace MapGenerator
             private int GetLocationLengthX()
             {
                 int locationLengthX = 0;                                                
-                int lengthInARow = 0;                                                   
-                                                                        
-                for (int roomNumber = 0; roomNumber < LocationRooms.Count; roomNumber++)
-                {
-                    lengthInARow += LocationRooms[roomNumber].RoomLengthX;               
-                                                                        
-                    if (roomNumber % NumberOfRoomsInARowX == 0 || roomNumber == LocationRooms.Count)
-                    {
-                        if (locationLengthX < lengthInARow)
-                            locationLengthX = lengthInARow;
+                int lengthInARow = 0;
 
-                        lengthInARow = 0;
-                    }                                                                   
+                for (int y = 0; y < LocationRooms.GetLength(0); y++)
+                {
+                    for (int x = 0; x < LocationRooms.GetLength(1); x++)
+                    {
+                        lengthInARow += LocationRooms[y,x].RoomLengthX;
+                    }
+
+                    if (locationLengthX < lengthInARow)
+                        locationLengthX = lengthInARow;
+
+                    lengthInARow = 0;
                 }
-                
+
                 return locationLengthX;
             }
-
-            private string[,,] CreateObjectMap() => throw new NotImplementedException();
         }
     }
 }
