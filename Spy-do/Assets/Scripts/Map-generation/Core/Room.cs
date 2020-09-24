@@ -5,7 +5,6 @@
  * Email: vitya.voody@gmail.com
  * Twitter: @V0IZ_
  */
-
 using System.Collections.Generic;
 using MapGenerator.Exceptions;
 
@@ -21,11 +20,14 @@ namespace MapGenerator
 
             public readonly List<Layer> RoomLayers;
             public readonly List<SExitInformation> RoomExits;
-
+            
+            //Exit data
             public ComplexObject DefaultExitComplexObject { get; protected set; }
             public int DefaultLayerForExit { get; protected set; }
 
-            public Room(int roomHeightY, int roomLengthX) //Constructor
+            public bool IsSpawned { get; set; }
+
+            public Room(int roomHeightY, int roomLengthX)
             {
                 this.DefaultLayerForExit = SConstants.NOT_IMPLEMENTED;
                 this.DefaultExitComplexObject = null;
@@ -35,7 +37,7 @@ namespace MapGenerator
                 this.RoomHeightY = roomHeightY;
                 this.RoomLengthX = roomLengthX;
 
-                this.instRoom();
+                this.createRoomObjectMap();
 
                 this.checkIfDefaultExitAndLayerExists();
             }
@@ -68,9 +70,8 @@ namespace MapGenerator
                 }
             }
 
-            protected void
-                AddRoomLayer(int layerHeightY,
-                    int layerLenghtX) // Creates new layer on a top of the previous (with higher Z-Index)
+            // Creates new layer on a top of the previous (with higher Z-Index)
+            protected void AddRoomLayer(int layerHeightY, int layerLenghtX)
             {
                 if (layerHeightY > RoomHeightY)
                 {
@@ -90,17 +91,20 @@ namespace MapGenerator
                 }
             }
 
-            protected void AddRoomLayer() // Creates new layer on top of previous (with higher Z-Index)
+            // Creates new layer on top of previous (with higher Z-Index)
+            protected void AddRoomLayer()
             {
                 RoomLayers.Add(new Layer(RoomHeightY, RoomLengthX));
             }
 
-            protected void RemoveRoomLayer(int numberOfLayer) //Removes given layer
+            //Removes given layer
+            protected void RemoveRoomLayer(int numberOfLayer)
             {
                 RoomLayers.RemoveAt(numberOfLayer);
             }
 
-            //======CO======
+            //======ComplexObject======
+
             protected void SetComplexObject(ComplexObject cObj, int layerZ, int posY, int posX)
             {
                 if ((cObj.COLayers.Count + layerZ) > RoomLayers.Count)
@@ -132,6 +136,7 @@ namespace MapGenerator
             }
 
             //======Exit======
+
             protected void SetDefaultExitAndLayerZ(ComplexObject cObj, int layerZ)
             {
                 this.DefaultExitComplexObject = cObj;
@@ -174,7 +179,8 @@ namespace MapGenerator
                 }
             }
 
-            abstract protected void instRoom();
+            //Abstract methods
+            abstract protected void createRoomObjectMap();
         }
     }
 }

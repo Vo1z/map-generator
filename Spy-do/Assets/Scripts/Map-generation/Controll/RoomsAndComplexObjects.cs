@@ -22,7 +22,7 @@ namespace MapGenerator
             {
             }
 
-            protected override void instRoom()
+            protected override void createRoomObjectMap()
             {
                 //========================Layer 0=======================
                 AddRoomLayer();
@@ -46,7 +46,7 @@ namespace MapGenerator
             {
             }
 
-            protected override void instRoom()
+            protected override void createRoomObjectMap()
             {
                 //========================Layer 0=======================
                 AddRoomLayer(RoomHeightY - 2, RoomLengthX);
@@ -86,7 +86,7 @@ namespace MapGenerator
             {
             }
 
-            protected override void instRoom()
+            protected override void createRoomObjectMap()
             {
                 //========================Layer 0=======================
                 AddRoomLayer();
@@ -129,7 +129,7 @@ namespace MapGenerator
             {
             }
 
-            protected override void instRoom()
+            protected override void createRoomObjectMap()
             {
                 //========================Layer 0=======================
                 AddRoomLayer(RoomHeightY - 1, RoomLengthX);

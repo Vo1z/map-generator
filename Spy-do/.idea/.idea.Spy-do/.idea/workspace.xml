@@ -20,72 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1a8dfb7-ea8e-4e9d-b0a4-483e6d867115" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MapGeneratorDemonstration.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MapGeneratorDemonstration.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene1.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene1.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Exceptons.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Exceptons.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRBottomWall.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRBottomWall.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRFloor1.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRFloor1.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRFloor2.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRFloor2.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRFloor3.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRFloor3.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRInnerObject.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRInnerObject.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRLeftWall.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRLeftWall.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRRightWall.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRRightWall.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRTopWall.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRTopWall.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRTopWallBrink.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/GeneralRoom/GRTopWallBrink.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymFloor.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymFloor.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymInnerObject.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymInnerObject.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymLeftWall.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymLeftWall.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymRightWall.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymRightWall.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymTopWallBrink.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymTopWallBrink.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymWall.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Gym/GymWall.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/MapGenerationController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/MapGenerationController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/MapGenerationCore.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/MapGenerationCore.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/MapGenerator.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/MapGenerator.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeComputer.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeComputer.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeFloor.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeFloor.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeLeftWall.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeLeftWall.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeRightWall.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeRightWall.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeTable.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeTable.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeTopWallBrink.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeTopWallBrink.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeWall.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/Office/OfficeWall.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/RoomsAndComplexObjects.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/RoomsAndComplexObjects.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/StructsAndEnums.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapGeneration/StructsAndEnums.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Spy-do/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Spy-do/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Spy-do/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Spy-do/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/MapGenerationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/MapGenerationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/RoomsAndComplexObjects.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/RoomsAndComplexObjects.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Location.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Location.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Structs-and-enums/SLocationOfRoomsInformation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Structs-and-enums/SLocationOfRoomsInformation.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +42,11 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/MapGeneration/MapGenerationController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interactive-objects/TransparencyCaller.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Structs-and-enums/SRoomInformation.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/RoomsAndComplexObjects.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Room.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/MapGenerationController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Location.cs" />
       </list>
     </option>
   </component>
@@ -113,7 +60,8 @@
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -145,6 +93,9 @@
       <updated>1599046553585</updated>
       <workItem from="1599046566635" duration="127000" />
       <workItem from="1599067918950" duration="3997000" />
+      <workItem from="1600253323074" duration="7299000" />
+      <workItem from="1600685485920" duration="8099000" />
+      <workItem from="1600781240875" duration="39000" />
     </task>
     <servers />
   </component>
@@ -169,9 +120,22 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1815" y="175" width="1022" height="737" key="SettingsEditor" timestamp="1599068535805">
+    <state x="475" y="180" width="405" height="613" key="RiderGenerateDialog" timestamp="1600258714234">
+      <screen x="0" y="99" width="1366" height="768" />
+    </state>
+    <state x="475" y="180" width="405" height="613" key="RiderGenerateDialog/1366.0.1920.1080/0.99.1366.768@1366.0.1920.1080" timestamp="1600258714234" />
+    <state x="2126" y="211" width="1022" height="737" key="SettingsEditor" timestamp="1600692441742">
       <screen x="1366" y="0" width="1920" height="1080" />
     </state>
-    <state x="1815" y="175" width="1022" height="737" key="SettingsEditor/1366.0.1920.1080/0.99.1366.768@1366.0.1920.1080" timestamp="1599068535805" />
+    <state x="2126" y="211" width="1022" height="737" key="SettingsEditor/1366.0.1920.1080/0.99.1366.768@1366.0.1920.1080" timestamp="1600692441742" />
+    <state x="0" y="-5" width="864" height="1000" maximized="true" key="dock-window-1" timestamp="1600781279900">
+      <screen x="0" y="0" width="864" height="1536" />
+    </state>
+    <state x="0" y="99" width="1366" height="768" key="dock-window-1/1366.0.1920.1080/0.99.1366.768@1366.0.1920.1080" timestamp="1600258515521" />
+    <state x="0" y="-5" width="864" height="1000" maximized="true" key="dock-window-1/864.230.1920.1080/0.0.864.1536@864.230.1920.1080" timestamp="1600781279900" />
+    <state x="0" y="99" width="1366" height="768" key="dock-window-2" timestamp="1600685699609">
+      <screen x="0" y="99" width="1366" height="768" />
+    </state>
+    <state x="0" y="99" width="1366" height="768" key="dock-window-2/1366.0.1920.1080/0.99.1366.768@1366.0.1920.1080" timestamp="1600685699609" />
   </component>
 </project>

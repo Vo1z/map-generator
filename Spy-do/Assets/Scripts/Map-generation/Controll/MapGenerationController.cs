@@ -76,30 +76,28 @@ namespace MapGenerator
             //[Header("<ROOM> Objects")]
             //<ROOM> GAME OBJECTS
 
-            private Room room_;
-            private Location location_;
-            private SLocationOfRoomsInformation slori_;
+            private Room _room;
+            private Location _location;
 
             void Awake()
             {
-                setStruct(); //constructor for sLocationOfRoomsInformation struct
-
                 //room_ = new Gym(Random.Range(gymMinHeightY, gymMaxHeightY), Random.Range(gymMinLengthX, gymMaxLengthX));        
                 //room_ = new Office(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
                 //room_ = new GeneralRoom(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
 
-                location_ = new Location(slori_);
+                _location = new Location();
             }
 
             void Start()
             {
                 //location.Test(slori);
-                createMap(location_);
+                createMap(_location);
 
                 //createRoom(room_);
             }
 
-            private void createRoom(Room room) //ADD ROOM CONDITION
+            //ADD ROOM CONDITION
+            private void createRoom(Room room)
             {
                 for (int layerNumber = 0; layerNumber < room.RoomLayers.Count; layerNumber++)
                 {
@@ -186,7 +184,8 @@ namespace MapGenerator
                 }
             }
 
-            private void createMap(Location location) //ADD ROOM CONDITION
+            //ADD ROOM CONDITION
+            private void createMap(Location location)
             {
                 for (int z = 0; z < location.LocationLayersZ; z++)
                 {
@@ -273,86 +272,6 @@ namespace MapGenerator
                             }
                         }
                     }
-                }
-            }
-
-            private int findSumOfAllLocationRooms() //ADD ROOM CONDITION
-            {
-                int sumOfAllLocationRooms = 0;
-
-                if (isGym == true)
-                {
-                    sumOfAllLocationRooms += gymQuantity;
-                }
-
-                if (isOffice == true)
-                {
-                    sumOfAllLocationRooms += officeQuantity;
-                }
-
-                if (isEmptySpace == true)
-                {
-                    sumOfAllLocationRooms += emptySpaceQuantity;
-                }
-                /*if (is<ROOM> == true)
-                {
-                    sumOfAllLocationRooms += <ROOM>Quantity;
-                }*/
-
-
-                return sumOfAllLocationRooms;
-            }
-
-            private void setStruct() //ADD ROOM CONDITION
-            {
-                slori_.sumOfAllLocationRooms =
-                    findSumOfAllLocationRooms(); //responsible for sum of all rooms in the location
-                slori_.minLocationHeightY = this.minLocationHeightY;
-                slori_.maxLocationHeightY = this.maxLocationHeightY;
-                slori_.minLocationLengthX = this.minLocationLengthX;
-                slori_.maxLocationLengthX = this.maxLocationLengthX;
-
-                //=====Gym======
-                slori_.gymQuantity = this.gymQuantity;
-
-                slori_.gymMinHeightY = this.gymMinHeightY;
-                slori_.gymMaxHeightY = this.gymMaxHeightY;
-                slori_.gymMinLengthX = this.gymMinLengthX;
-                slori_.gymMaxLengthX = this.gymMaxLengthX;
-
-                //=====Office======
-                slori_.officeQuantity = this.officeQuantity;
-
-                slori_.officeMinHeightY = this.officeMinHeightY;
-                slori_.officeMaxHeightY = this.officeMaxHeightY;
-                slori_.officeMinLengthX = this.officeMinLengthX;
-                slori_.officeMaxLengthX = this.officeMaxLengthX;
-
-                //======EmptySpace======
-                slori_.isEmptySpace = this.isEmptySpace;
-                slori_.emptySpaceQuantity = this.emptySpaceQuantity;
-
-                slori_.emptySpaceMinHeightY = this.emptySpaceMinHeightY;
-                slori_.emptySpaceMaxHeightY = this.emptySpaceMaxHeightY;
-                slori_.emptySpaceMinLengthX = this.emptySpaceMinLengthX;
-                slori_.emptySpaceMaxLengthX = this.emptySpaceMaxLengthX;
-
-
-                //=====<ROOM>======
-                //<OBJECTS OF <ROOM>>
-
-                slori_.numberOfRoomTypes = 3; //Depends on number of rooms
-
-                if (!isGym && !isOffice && !isEmptySpace /*&& !is<ROOM>*/)
-                {
-                    throw new AnyRoomsWereNotChosenException();
-                }
-                else
-                {
-                    slori_.isGym = this.isGym;
-                    slori_.isOffice = this.isOffice;
-                    slori_.isEmptySpace = this.isEmptySpace;
-                    /*slori.is<ROOM> = this.is<ROOM>;*/
                 }
             }
         }
