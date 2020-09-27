@@ -25,7 +25,7 @@ namespace MapGenerator
             public int LocationLengthX { get => GetLocationLengthX();  protected set => LocationLengthX = value; }
             
             public string[,,] LocationObjectMap { get; protected set; }
-            public string GeneralRoomName { get; set; }
+            public uint SpaceBetweenRooms { get; set; }
             public Room[,] LocationRooms { get; set; }
 
             public Location(int numberOfRoomsInARowX, int numberOfRoomRowsY)
@@ -35,7 +35,18 @@ namespace MapGenerator
             private String[,,] CreateObjectMap()
             {
                 string[,,] objectMap = new string[LocationLayersZ, LocationHeightY, LocationLengthX];
+                int locationZ, locationY, locationX;
 
+                //Goes through Y dimension in LocationRooms
+                for (int roomY = 0; roomY < LocationRooms.GetLength(0); roomY++)
+                { 
+                    //Goes through X dimension in LocationRooms
+                    for (int roomX = 0; roomX < LocationRooms.GetLength(1); roomX++)
+                    {
+                        
+                    }
+                }
+                
                 return objectMap;
             }
 
