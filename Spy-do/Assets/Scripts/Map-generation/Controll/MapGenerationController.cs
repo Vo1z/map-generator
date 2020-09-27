@@ -6,6 +6,7 @@
  * Twitter: @V0IZ_
  */
 
+using System.Collections.Generic;
 using UnityEngine;
 using MapGenerator.Core;
 using MapGenerator.Exceptions;
@@ -73,30 +74,27 @@ namespace MapGenerator
             public int emptySpaceMinLengthX;
 
             public int emptySpaceMaxLengthX;
+            
             //[Header("<ROOM> Objects")]
             //<ROOM> GAME OBJECTS
 
+            private Dictionary<GameObject, string> _mapObjects = new Dictionary<GameObject, string>();
             private Room _room;
             private Location _location;
 
+
             void Awake()
             {
-                //room_ = new Gym(Random.Range(gymMinHeightY, gymMaxHeightY), Random.Range(gymMinLengthX, gymMaxLengthX));        
-                //room_ = new Office(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
-                //room_ = new GeneralRoom(Random.Range(officeMinHeightY, officeMaxHeightY), Random.Range(officeMinLengthX, officeMaxLengthX));
-
-                //_location = new Location();
             }
 
             void Start()
             {
-                //location.Test(slori);
                 createMap(_location);
-
-                //createRoom(room_);
             }
 
             //ADD ROOM CONDITION
+
+
             private void createRoom(Room room)
             {
                 for (int layerNumber = 0; layerNumber < room.RoomLayers.Count; layerNumber++)
@@ -185,6 +183,7 @@ namespace MapGenerator
             }
 
             //ADD ROOM CONDITION
+
             private void createMap(Location location)
             {
                 for (int z = 0; z < location.LocationLayersZ; z++)

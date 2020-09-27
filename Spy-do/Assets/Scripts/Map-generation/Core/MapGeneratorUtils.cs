@@ -1,4 +1,6 @@
+using System;
 using MapGenerator.Core;
+using MapGenerator.Exceptions;
 
 namespace MapGenerator
 {
@@ -18,6 +20,11 @@ namespace MapGenerator
                 }
 
                 return maxHeightX;
+            }
+
+            public static Room[,] GenerateRoomArray(int numberOfRowsY, int numberOfRoomsInARowX, Type[] roomTypes)
+            {
+                throw new NotImplementedException();
             }
         }
     }
