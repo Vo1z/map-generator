@@ -3,6 +3,7 @@
  * Project: Spy-Do
  * Author: Voiz (Viktor Lishchuk)
  * Email: vitya.voody@gmail.com
+ * GitHub: Vo1z
  * Twitter: @V0IZ_
  */
 
@@ -28,7 +29,7 @@ namespace MapGenerator
                 AddRoomLayer();
                 RoomLayers[0].FillWholeLayerMap("GRFloor2");
                 RoomLayers[0].SetOnRandomLayerID("GRFloor2", 2);
-                RoomLayers[0].SetOnRandomLayerID("GRFloor3", 2);
+                RoomLayers[0].SetOnRandomLayerID("GRFloor3", 2); 
 
                 //========================Layer 1=======================
                 AddRoomLayer();
@@ -88,6 +89,7 @@ namespace MapGenerator
 
             protected override void createRoomObjectMap()
             {
+                IsSpawned = true;
                 //========================Layer 0=======================
                 AddRoomLayer();
                 RoomLayers[0].FillWholeLayerMap("OfficeFloor");

@@ -3,6 +3,7 @@
  * Project: Spy-Do
  * Author: Voiz (Viktor Lishchuk)
  * Email: vitya.voody@gmail.com
+ * GitHub: Vo1z
  * Twitter: @V0IZ_
  */
 
@@ -79,22 +80,36 @@ namespace MapGenerator
             //<ROOM> GAME OBJECTS
 
             private Dictionary<GameObject, string> _mapObjects = new Dictionary<GameObject, string>();
+            private Room[,] _roomsArray = new Room[2, 5];
             private Room _room;
             private Location _location;
-
-
+            
             void Awake()
             {
+                //todo debug creates _roomsArray
+                for (int y = 0; y < _roomsArray.GetLength(0); y++)
+                {
+                    for (int x = 0; x < _roomsArray.GetLength(1); x++)
+                    {
+                        _roomsArray[y,x] = new Office(10, 10);
+                        //_roomsArray[y,x] = new Office(Random.Range(5,10), Random.Range(5,10));
+                    }    
+                }
+                
+                _location = new Location(_roomsArray, 0, 1);
+                _location.Test();
+                
+                //todo debug
             }
 
             void Start()
             {
-                createMap(_location);
+                //createMap(_location);
             }
 
-            //ADD ROOM CONDITION
-
-
+            //ADD ROOM CONDITION 
+            
+            
             private void createRoom(Room room)
             {
                 for (int layerNumber = 0; layerNumber < room.RoomLayers.Count; layerNumber++)

@@ -3,18 +3,18 @@
  * Project: Spy-Do
  * Author: Voiz (Viktor Lishchuk)
  * Email: vitya.voody@gmail.com
+ * GitHub: Vo1z
  * Twitter: @V0IZ_
  */
 
 using System;
-using System.Collections.Generic;
 using MapGenerator.Exceptions;
+using UnityEngine;
 
 namespace MapGenerator
 {
     namespace Core
     {
-
         // Class that is responsible for sorting all data about rooms on game level
         class Location
         {
@@ -38,32 +38,24 @@ namespace MapGenerator
             }
 
             public string[,,] LocationObjectMap { get; protected set; }
-            public int HorizontalRoomSpacingX 
-            { 
-                get => HorizontalRoomSpacingX;
-                set
-                {
-                    if (value < 0)
-                        throw new BadInputException("HorizontalRoomSpacingX is smaller than 0");
-                    else
-                        HorizontalRoomSpacingX = value;
-                }
-            }
-            public int VerticalRoomSpacingY
-            {
-                get => VerticalRoomSpacingY;
-                set
-                {
-                    if (value < 0)
-                        throw new BadInputException("VerticalRoomSpacingY is smaller than 0");
-                    else
-                        VerticalRoomSpacingY = value;
-                }
-            }
+            public int HorizontalRoomSpacingX { get;  set; }
+            public int VerticalRoomSpacingY { get; set; }
             public Room[,] LocationRooms { get; set; }
 
-            public Location(int numberOfRoomsInARowX, int numberOfRoomRowsY)
+            public Location(Room[,] locationRooms, int verticalRoomSpacingY,  int horizontalRoomSpacingX)
             {
+                Debug.Log("Entering Constructor");
+                 
+                HorizontalRoomSpacingX = horizontalRoomSpacingX;
+                VerticalRoomSpacingY = verticalRoomSpacingY;
+                LocationRooms = locationRooms;
+            }
+
+            public void Test()
+            {
+                Debug.Log("Number of layers Z: " + GetLocationNumberOfLayersZ());
+                Debug.Log("Height Y: " + GetLocationHeightY());
+                Debug.Log("Length X: " + GetLocationLengthX());
             }
 
             //Not tested
@@ -109,7 +101,7 @@ namespace MapGenerator
                 return objectMap;
             }
 
-            //Not tested
+            //Tested
             private int GetLocationNumberOfLayersZ()
             {
                 int numberOfLayers = 0;
@@ -123,7 +115,7 @@ namespace MapGenerator
                 return numberOfLayers;
             }
 
-            //Not tested
+            //Tested
             private int GetLocationHeightY()
             {
                 int locationHeightY = 0;
@@ -140,11 +132,13 @@ namespace MapGenerator
                     locationHeightY += maxHeightInARow + VerticalRoomSpacingY;
                     maxHeightInARow = 0;
                 }
+                //Removes spacing after the last row
+                locationHeightY -= VerticalRoomSpacingY;
 
                 return locationHeightY;
             }
 
-            //Not tested
+            //Tested
             private int GetLocationLengthX()
             {
                 int locationLengthX = 0;
@@ -157,7 +151,9 @@ namespace MapGenerator
                         if (LocationRooms[y, x].IsSpawned)
                             lengthInARow += LocationRooms[y, x].RoomLengthX + HorizontalRoomSpacingX;
                     }
-
+                    //Removes spacing after the last room in a row
+                    lengthInARow -= HorizontalRoomSpacingX;     
+                    
                     if (locationLengthX < lengthInARow)
                         locationLengthX = lengthInARow;
 
