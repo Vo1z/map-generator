@@ -17,19 +17,22 @@ namespace MapGenerator
         //Class which is responsible for collecting data for creating room 
         abstract class Room
         {
+            #region Fields
+            
             public readonly int RoomHeightY; //Variable that stores width of the room of Y dimension
             public readonly int RoomLengthX; //Variable that stores width of the room of X dimension
 
             public readonly List<Layer> RoomLayers;
             public readonly List<SExitInformation> RoomExits;
             
-            //Exit data
             public ComplexObject DefaultExitComplexObject { get; protected set; }
             public int DefaultLayerForExit { get; protected set; }
 
-            public bool IsSpawned { get; set; }
+            public bool IsSpawned { get; set; } = true;
 
-            public Room(int roomHeightY, int roomLengthX)
+            #endregion
+
+            protected Room(int roomHeightY, int roomLengthX)
             {
                 this.DefaultLayerForExit = SConstants.NOT_IMPLEMENTED;
                 this.DefaultExitComplexObject = null;
@@ -42,34 +45,6 @@ namespace MapGenerator
                 this.createRoomObjectMap();
 
                 this.checkIfDefaultExitAndLayerExists();
-            }
-
-            public void AddNeighborExitsOnRightWall(Room room)
-            {
-                if (room != null)
-                {
-                    foreach (SExitInformation sExit in room.RoomExits)
-                    {
-                        if (sExit.WallPosition == EPosition.LEFT && sExit.ExitIndexZ < RoomHeightY)
-                        {
-                            SetExit(DefaultExitComplexObject, DefaultLayerForExit, EPosition.RIGHT, sExit.ExitIndexZ);
-                        }
-                    }
-                }
-            }
-
-            public void AddNeighborExitsOnLeftWall(Room room)
-            {
-                if (room != null)
-                {
-                    foreach (SExitInformation sExit in room.RoomExits)
-                    {
-                        if (sExit.WallPosition == EPosition.RIGHT && sExit.ExitIndexZ < RoomHeightY)
-                        {
-                            SetExit(DefaultExitComplexObject, DefaultLayerForExit, EPosition.LEFT, sExit.ExitIndexZ);
-                        }
-                    }
-                }
             }
 
             // Creates new layer on a top of the previous (with higher Z-Index)
@@ -137,8 +112,36 @@ namespace MapGenerator
                 }
             }
 
-            //======Exit======
+            //======Methods relative to exits======
+            
+            public void AddNeighborExitsOnRightWall(Room room)
+            {
+                if (room != null)
+                {
+                    foreach (SExitInformation sExit in room.RoomExits)
+                    {
+                        if (sExit.WallPosition == EPosition.LEFT && sExit.ExitIndexZ < RoomHeightY)
+                        {
+                            SetExit(DefaultExitComplexObject, DefaultLayerForExit, EPosition.RIGHT, sExit.ExitIndexZ);
+                        }
+                    }
+                }
+            }
 
+            public void AddNeighborExitsOnLeftWall(Room room)
+            {
+                if (room != null)
+                {
+                    foreach (SExitInformation sExit in room.RoomExits)
+                    {
+                        if (sExit.WallPosition == EPosition.RIGHT && sExit.ExitIndexZ < RoomHeightY)
+                        {
+                            SetExit(DefaultExitComplexObject, DefaultLayerForExit, EPosition.LEFT, sExit.ExitIndexZ);
+                        }
+                    }
+                }
+            }
+            
             protected void SetDefaultExitAndLayerZ(ComplexObject cObj, int layerZ)
             {
                 this.DefaultExitComplexObject = cObj;
@@ -181,8 +184,10 @@ namespace MapGenerator
                 }
             }
 
+            //======End of methods relative to exits======
+            
             //Abstract methods
-            abstract protected void createRoomObjectMap();
+            protected abstract void createRoomObjectMap();
         }
     }
 }
