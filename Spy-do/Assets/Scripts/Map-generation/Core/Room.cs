@@ -34,17 +34,17 @@ namespace MapGenerator
 
             protected Room(int roomHeightY, int roomLengthX)
             {
-                this.DefaultLayerForExit = SConstants.NOT_IMPLEMENTED;
-                this.DefaultExitComplexObject = null;
+                DefaultLayerForExit = SConstants.NOT_IMPLEMENTED;
+                DefaultExitComplexObject = null;
 
-                this.RoomLayers = new List<Layer>();
-                this.RoomExits = new List<SExitInformation>();
-                this.RoomHeightY = roomHeightY;
-                this.RoomLengthX = roomLengthX;
+                RoomLayers = new List<Layer>();
+                RoomExits = new List<SExitInformation>();
+                RoomHeightY = roomHeightY;
+                RoomLengthX = roomLengthX;
 
-                this.createRoomObjectMap();
+                CreateRoomObjectMap();
 
-                this.checkIfDefaultExitAndLayerExists();
+                CheckIfDefaultExitAndLayerExists();
             }
 
             // Creates new layer on a top of the previous (with higher Z-Index)
@@ -171,7 +171,7 @@ namespace MapGenerator
                 }
             }
 
-            private void checkIfDefaultExitAndLayerExists() //Exception
+            private void CheckIfDefaultExitAndLayerExists() //Exception
             {
                 if (DefaultLayerForExit == SConstants.NOT_IMPLEMENTED)
                 {
@@ -187,7 +187,7 @@ namespace MapGenerator
             //======End of methods relative to exits======
             
             //Abstract methods
-            protected abstract void createRoomObjectMap();
+            protected abstract void CreateRoomObjectMap();
         }
     }
 }

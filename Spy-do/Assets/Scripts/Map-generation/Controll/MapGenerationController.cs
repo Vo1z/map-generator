@@ -81,7 +81,7 @@ namespace MapGenerator
             //<ROOM> GAME OBJECTS
 
             private Dictionary<GameObject, string> _mapObjects = new Dictionary<GameObject, string>();
-            private Room[,] _roomsArray = new Room[2, 5];
+            private Room[,] _roomsArray = new Room[5, 5];
             private Room _room;
             private Location _location;
 
@@ -98,7 +98,8 @@ namespace MapGenerator
                     }
                 }
 
-                _location = new Location(_roomsArray, 0, 1);
+                //_location = new Location(_roomsArray, true, 2, 0);
+                _location = new Location(_roomsArray, true, 0, 5, 0, 4);
                 //_location.Test();
                 #endregion
             }
@@ -202,11 +203,11 @@ namespace MapGenerator
 
             private void CreateMap(Location location)
             {
-                for (int z = 0; z < location.LocationLayersZ; z++)
+                for (int z = 0; z < location.LocationObjectMap.GetLength(0); z++)
                 {
-                    for (int y = 0; y < location.LocationHeightY; y++)
+                    for (int y = 0; y < location.LocationObjectMap.GetLength(1); y++)
                     {
-                        for (int x = 0; x < location.LocationLengthX; x++)
+                        for (int x = 0; x < location.LocationObjectMap.GetLength(2); x++)
                         {
                             switch (location.LocationObjectMap[z, y, x])
                             {
@@ -297,7 +298,7 @@ namespace MapGenerator
                 {
                 }
 
-                protected override void createRoomObjectMap()
+                protected override void CreateRoomObjectMap()
                 {
                     //========================Layer 0=======================
                     AddRoomLayer();
@@ -321,7 +322,7 @@ namespace MapGenerator
                 {
                 }
 
-                protected override void createRoomObjectMap()
+                protected override void CreateRoomObjectMap()
                 {
                     //========================Layer 0=======================
                     AddRoomLayer(RoomHeightY - 2, RoomLengthX);
@@ -361,13 +362,13 @@ namespace MapGenerator
                 {
                 }
 
-                protected override void createRoomObjectMap()
+                protected override void CreateRoomObjectMap()
                 {
                     IsSpawned = true;
                     //========================Layer 0=======================
                     AddRoomLayer();
                     RoomLayers[0].FillWholeLayerMap(nameof(OfficeFloor));
-                    RoomLayers[0].SetHorizontalLayerLine(RoomHeightY - 1, nameof(GRFloor1));
+                    RoomLayers[0].SetHorizontalLayerLine(RoomHeightY - 1, null);
 
                     //========================Layer 1=======================
                     AddRoomLayer();
@@ -405,7 +406,7 @@ namespace MapGenerator
                 {
                 }
 
-                protected override void createRoomObjectMap()
+                protected override void CreateRoomObjectMap()
                 {
                     //========================Layer 0=======================
                     AddRoomLayer(RoomHeightY - 1, RoomLengthX);
