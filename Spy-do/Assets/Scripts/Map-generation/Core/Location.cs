@@ -69,7 +69,9 @@ namespace MapGenerator
             #endregion
 
             //Constructor for non-randomized spacing
-            public Location(Room backgroundRoom, Room[,] locationRooms, bool randomSpacingIsUsedInRows, int verticalRoomSpacingY, int horizontalRoomSpacingX)
+            public Location(Room backgroundRoom, Room[,] locationRooms,
+                bool randomSpacingIsUsedInRows,
+                int verticalRoomSpacingY, int horizontalRoomSpacingX)
             {
                 //Todo replace debug
                 Debug.Log("Entering Constructor");
@@ -93,7 +95,7 @@ namespace MapGenerator
             }
 
             //Constructor for randomized spacing
-            public Location(Room[,] locationRooms,
+            public Location(Room backgroundRoom, Room[,] locationRooms,
                 bool randomSpacingIsUsedInRows,
                 int randomSpacingFromY, int randomSpacingToY,
                 int randomSpacingFromX, int randomSpacingToX)
@@ -101,6 +103,7 @@ namespace MapGenerator
                 //Todo replace debug
                 Debug.Log("Entering Constructor");
 
+                _backgroundRoom = backgroundRoom;
                 _locationRooms = locationRooms;
 
                 _randomSpacingFromY = randomSpacingFromY;
@@ -184,7 +187,7 @@ namespace MapGenerator
                     //Block tht assigns actual sizes of the object map
                     if (ActualLocationLengthX < locationX)
                         ActualLocationLengthX = locationX;
-                    
+
                     locationX = 0;
                     locationY += highestHighOfTheRoomInARow;
                     //Checks if spacing is randomized and sets proper value of Y-spacing 
@@ -195,32 +198,39 @@ namespace MapGenerator
                 }
 
                 //Block tht assigns actual sizes of the object map
+                ActualLocationLengthX -= _horizontalRoomSpacingX;
                 ActualLocationLayersZ = objectMap.GetLength(0);
                 ActualLocationHeightY = locationY;
+                
+                //Creates background room for location
+                objectMap = CreateBackgroundRoom(in objectMap);
 
                 return objectMap;
             }
             
-            //Not tested
-            private void CreateBackgroundRoom(ref string[,,] objectMap)
+            //Tested
+            private string[,,] CreateBackgroundRoom(in string[,,] objectMap)
             {
                 List<Layer> backgroundRoomLayers = _backgroundRoom.GenerateRoom(ActualLocationHeightY, ActualLocationLengthX);
+                string[,,] objectMapWithBackGround = new string[ActualLocationLayersZ, ActualLocationHeightY, ActualLocationLengthX];
+                MapGeneratorUtils.Resize3DArray(in objectMap, ref objectMapWithBackGround);
 
-                if (objectMap.GetLength(0) > backgroundRoomLayers.Count)
+                //Iterates through the map and sets proper objects from background roomLayers
+                for (int z = 0; z < backgroundRoomLayers.Count; z++)
                 {
-                    
+                    for (int y = 0; y < backgroundRoomLayers[z].HeightY; y++)
+                    {
+                        for (int x = 0; x < backgroundRoomLayers[z].LengthX; x++)
+                        {
+                            if (String.IsNullOrEmpty(objectMapWithBackGround[z, y, x]) || objectMapWithBackGround[z, y, x].Equals("null"))
+                            {
+                                objectMapWithBackGround[z, y, x] = backgroundRoomLayers[z].ObjectMap[y, x];
+                            }
+                        }
+                    }
                 }
                 
-                // for (int z = 0; z < backgroundRoomLayers.Count; z++)
-                // {
-                //     for (int y = 0; y < backgroundRoomLayers[z].HeightY; y++)
-                //     {
-                //         for (int x = 0; x < backgroundRoomLayers[y].LengthX; x++)
-                //         {
-                //             if()    
-                //         }
-                //     }
-                // }
+                return objectMapWithBackGround;
             }
 
             //Tested

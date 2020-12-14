@@ -98,8 +98,9 @@ namespace MapGenerator
                     }
                 }
 
+                Office office = new Office();
                 //_location = new Location(_roomsArray, true, 2, 0);
-                _location = new Location(_roomsArray, true, 0, 5, 0, 4);
+                _location = new Location(office, _roomsArray, true, 0, 5, 0, 4);
                 //_location.Test();
                 #endregion
             }
@@ -359,6 +360,10 @@ namespace MapGenerator
             class Office : Room
             {
                 public Office(int heightY, int lengthX) : base(heightY, lengthX)
+                {
+                }
+
+                public Office() : base()
                 {
                 }
 
