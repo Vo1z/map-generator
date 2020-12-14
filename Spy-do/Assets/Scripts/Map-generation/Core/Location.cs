@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using MapGenerator.Exceptions;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -24,6 +25,8 @@ namespace MapGenerator
             #region VariablesThatAreResponsibleForHoldingInformationAboutGeneration
             //Array that holds map of identifiers of particular tiles 
             public readonly string[,,] LocationObjectMap;
+            //
+            private readonly Room _backgroundRoom;
             //Array that holds rooms that have to be spawned
             private readonly Room[,] _locationRooms;
             #endregion
@@ -66,11 +69,12 @@ namespace MapGenerator
             #endregion
 
             //Constructor for non-randomized spacing
-            public Location(Room[,] locationRooms, bool randomSpacingIsUsedInRows, int verticalRoomSpacingY, int horizontalRoomSpacingX)
+            public Location(Room backgroundRoom, Room[,] locationRooms, bool randomSpacingIsUsedInRows, int verticalRoomSpacingY, int horizontalRoomSpacingX)
             {
                 //Todo replace debug
                 Debug.Log("Entering Constructor");
 
+                _backgroundRoom = backgroundRoom;
                 _locationRooms = locationRooms;
 
                 _horizontalRoomSpacingX = horizontalRoomSpacingX;
@@ -149,27 +153,27 @@ namespace MapGenerator
                             //In assigning it checks if given spacing is bigger than 0
                             //and if space is randomized comparing to _randomSpacingIsUsedInRows
                             int randomYSpacing =
-                                highestHighOfTheRoomInARow - _locationRooms[roomNumY, roomNumX].RoomHeightY > 0 && _randomSpacingIsUsedInRows
-                                    ? Random.Range(0, highestHighOfTheRoomInARow - _locationRooms[roomNumY, roomNumX].RoomHeightY)
+                                highestHighOfTheRoomInARow - _locationRooms[roomNumY, roomNumX].HeightY > 0 && _randomSpacingIsUsedInRows
+                                    ? Random.Range(0, highestHighOfTheRoomInARow - _locationRooms[roomNumY, roomNumX].HeightY)
                                     : 0;
 
                             //Goes through Z dimension in particular Room
-                            for (int z = 0; z < _locationRooms[roomNumY, roomNumX].RoomLayers.Count; z++)
+                            for (int z = 0; z < _locationRooms[roomNumY, roomNumX].Layers.Count; z++)
                             {
                                 //Goes through Y dimension in particular Room
-                                for (int y = 0; y < _locationRooms[roomNumY, roomNumX].RoomHeightY; y++)
+                                for (int y = 0; y < _locationRooms[roomNumY, roomNumX].HeightY; y++)
                                 {
                                     //Goes through X dimension in particular Room
-                                    for (int x = 0; x < _locationRooms[roomNumY, roomNumX].RoomLengthX; x++)
+                                    for (int x = 0; x < _locationRooms[roomNumY, roomNumX].LengthX; x++)
                                     {
                                         objectMap[z, locationY + y + randomYSpacing, locationX + x] =
-                                            _locationRooms[roomNumY, roomNumX].RoomLayers[z].LayerObjectMap[y, x];
+                                            _locationRooms[roomNumY, roomNumX].Layers[z].ObjectMap[y, x];
                                     }
                                 }
                             }
                         }
 
-                        locationX += _locationRooms[roomNumY, roomNumX].RoomLengthX;
+                        locationX += _locationRooms[roomNumY, roomNumX].LengthX;
                         //Checks if spacing is randomized and sets proper value of X-spacing 
                         if (_spacingIsRandom)
                             locationX += Random.Range(_randomSpacingFromX, _randomSpacingToX);
@@ -197,6 +201,28 @@ namespace MapGenerator
                 return objectMap;
             }
             
+            //Not tested
+            private void CreateBackgroundRoom(ref string[,,] objectMap)
+            {
+                List<Layer> backgroundRoomLayers = _backgroundRoom.GenerateRoom(ActualLocationHeightY, ActualLocationLengthX);
+
+                if (objectMap.GetLength(0) > backgroundRoomLayers.Count)
+                {
+                    
+                }
+                
+                // for (int z = 0; z < backgroundRoomLayers.Count; z++)
+                // {
+                //     for (int y = 0; y < backgroundRoomLayers[z].HeightY; y++)
+                //     {
+                //         for (int x = 0; x < backgroundRoomLayers[y].LengthX; x++)
+                //         {
+                //             if()    
+                //         }
+                //     }
+                // }
+            }
+
             //Tested
             private int GetLocationNumberOfLayersZ()
             {
@@ -204,10 +230,9 @@ namespace MapGenerator
 
                 foreach (var room in _locationRooms)
                 {
-                    if ((room.IsSpawned) && (numberOfLayers < room.RoomLayers.Count))
-                        numberOfLayers = room.RoomLayers.Count;
+                    if ((room.IsSpawned) && (numberOfLayers < room.Layers.Count))
+                        numberOfLayers = room.Layers.Count;
                 }
-
                 return numberOfLayers;
             }
 
@@ -221,8 +246,8 @@ namespace MapGenerator
                 {
                     for (int x = 0; x < _locationRooms.GetLength(1); x++)
                     {
-                        if ((_locationRooms[y, x].IsSpawned) && (maxHeightInARow < _locationRooms[y, x].RoomHeightY))
-                            maxHeightInARow = _locationRooms[y, x].RoomHeightY + _randomSpacingToY;
+                        if ((_locationRooms[y, x].IsSpawned) && (maxHeightInARow < _locationRooms[y, x].HeightY))
+                            maxHeightInARow = _locationRooms[y, x].HeightY + _randomSpacingToY;
                     }
 
                     locationHeightY += maxHeightInARow + _verticalRoomSpacingY;
@@ -246,7 +271,7 @@ namespace MapGenerator
                     for (int x = 0; x < _locationRooms.GetLength(1); x++)
                     {
                         if (_locationRooms[y, x].IsSpawned)
-                            lengthInARow += _locationRooms[y, x].RoomLengthX + _horizontalRoomSpacingX + _randomSpacingToX;
+                            lengthInARow += _locationRooms[y, x].LengthX + _horizontalRoomSpacingX + _randomSpacingToX;
                     }
 
                     //Removes spacing after the last room in a row

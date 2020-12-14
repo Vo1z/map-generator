@@ -15,57 +15,57 @@ namespace MapGenerator
     namespace Core
     {
         //Class that describes layers (Is used in Room class)
-        class Layer
+        public class Layer
         {
-            public readonly string[,] LayerObjectMap;
+            public readonly string[,] ObjectMap;
 
-            public readonly int LayerHeightY;
-            public readonly int LayerLengthX;
+            public readonly int HeightY;
+            public readonly int LengthX;
 
             internal Layer(int heightY, int lengthX)
             {
-                this.LayerObjectMap = new string[heightY, lengthX];
-                this.LayerHeightY = heightY;
-                this.LayerLengthX = lengthX;
+                this.ObjectMap = new string[heightY, lengthX];
+                this.HeightY = heightY;
+                this.LengthX = lengthX;
             }
 
             public void FillWholeLayerMap(string objectName)
             {
-                for (int y = 0; y < LayerHeightY; y++)
+                for (int y = 0; y < HeightY; y++)
                 {
-                    for (int x = 0; x < LayerLengthX; x++)
+                    for (int x = 0; x < LengthX; x++)
                     {
-                        LayerObjectMap[y, x] = objectName;
+                        ObjectMap[y, x] = objectName;
                     }
                 }
             }
 
             public void SetLayerEdges(int numberOfInnerCircle, string objectName)
             {
-                for (int y = 0; y < LayerHeightY; y++)
+                for (int y = 0; y < HeightY; y++)
                 {
-                    for (int x = 0; x < LayerLengthX; x++)
+                    for (int x = 0; x < LengthX; x++)
                     {
-                        if ((y == numberOfInnerCircle || y == (LayerHeightY - 1) - numberOfInnerCircle) &&
-                            (x >= numberOfInnerCircle && x <= (LayerLengthX - 1) - numberOfInnerCircle))
-                            LayerObjectMap[y, x] = objectName;
+                        if ((y == numberOfInnerCircle || y == (HeightY - 1) - numberOfInnerCircle) &&
+                            (x >= numberOfInnerCircle && x <= (LengthX - 1) - numberOfInnerCircle))
+                            ObjectMap[y, x] = objectName;
 
-                        if ((x == numberOfInnerCircle || x == (LayerLengthX - 1) - numberOfInnerCircle) &&
-                            (y >= numberOfInnerCircle && y <= (LayerHeightY - 1) - numberOfInnerCircle))
-                            LayerObjectMap[y, x] = objectName;
+                        if ((x == numberOfInnerCircle || x == (LengthX - 1) - numberOfInnerCircle) &&
+                            (y >= numberOfInnerCircle && y <= (HeightY - 1) - numberOfInnerCircle))
+                            ObjectMap[y, x] = objectName;
                     }
                 }
             }
 
             public void SetVerticalLayerLine(int Xindex, string objectName)
             {
-                for (int y = 0; y < LayerHeightY; y++)
+                for (int y = 0; y < HeightY; y++)
                 {
-                    for (int x = 0; x < LayerLengthX; x++)
+                    for (int x = 0; x < LengthX; x++)
                     {
                         if (x == Xindex)
                         {
-                            LayerObjectMap[y, x] = objectName;
+                            ObjectMap[y, x] = objectName;
                         }
                     }
                 }
@@ -73,13 +73,13 @@ namespace MapGenerator
 
             public void SetHorizontalLayerLine(int Yindex, string objectName)
             {
-                for (int y = 0; y < LayerHeightY; y++)
+                for (int y = 0; y < HeightY; y++)
                 {
-                    for (int x = 0; x < LayerLengthX; x++)
+                    for (int x = 0; x < LengthX; x++)
                     {
                         if (y == Yindex)
                         {
-                            LayerObjectMap[y, x] = objectName;
+                            ObjectMap[y, x] = objectName;
                         }
                     }
                 }
@@ -96,7 +96,7 @@ namespace MapGenerator
                 {
                     for (int x = startX; x < endX; x++)
                     {
-                        LayerObjectMap[y, x] = objectName;
+                        ObjectMap[y, x] = objectName;
                     }
                 }
             }
@@ -104,39 +104,39 @@ namespace MapGenerator
             public void SetUniqueCorners(string leftTopCorner, string rightTopCorner, string leftBottomCorner,
                 string rightBottomCorner)
             {
-                LayerObjectMap[0, 0] = leftBottomCorner;
-                LayerObjectMap[0, LayerLengthX - 1] = rightBottomCorner;
-                LayerObjectMap[LayerHeightY - 1, 0] = leftTopCorner;
-                LayerObjectMap[LayerHeightY - 1, LayerLengthX - 1] = rightTopCorner;
+                ObjectMap[0, 0] = leftBottomCorner;
+                ObjectMap[0, LengthX - 1] = rightBottomCorner;
+                ObjectMap[HeightY - 1, 0] = leftTopCorner;
+                ObjectMap[HeightY - 1, LengthX - 1] = rightTopCorner;
             }
 
             public void SetBottomLayerCorners(string objectName)
             {
-                LayerObjectMap[0, 0] = objectName;
-                LayerObjectMap[0, LayerLengthX - 1] = objectName;
+                ObjectMap[0, 0] = objectName;
+                ObjectMap[0, LengthX - 1] = objectName;
             }
 
             public void SetTopLayerCorners(string objectName)
             {
-                LayerObjectMap[LayerHeightY - 1, 0] = objectName;
-                LayerObjectMap[LayerHeightY - 1, LayerLengthX - 1] = objectName;
+                ObjectMap[HeightY - 1, 0] = objectName;
+                ObjectMap[HeightY - 1, LengthX - 1] = objectName;
             }
 
             public void SetOnUniqueLayerID(int y, int x, string objectName)
             {
-                LayerObjectMap[y, x] = objectName;
+                ObjectMap[y, x] = objectName;
             }
 
             public void SetOnRandomLayerID(string objectName, int probability)
             {
-                for (int y = 0; y < LayerHeightY; y++)
+                for (int y = 0; y < HeightY; y++)
                 {
-                    for (int x = 0; x < LayerLengthX; x++)
+                    for (int x = 0; x < LengthX; x++)
                     {
-                        if ((Random.Range(0, probability) == 1) && x != 0 && x != LayerLengthX - 1
+                        if ((Random.Range(0, probability) == 1) && x != 0 && x != LengthX - 1
                         ) //Randomizer of inner objects
                         {
-                            LayerObjectMap[y, x] = objectName;
+                            ObjectMap[y, x] = objectName;
                         }
                     }
                 }

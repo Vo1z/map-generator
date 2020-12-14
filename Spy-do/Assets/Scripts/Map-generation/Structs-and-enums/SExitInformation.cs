@@ -7,12 +7,12 @@
  * Twitter: @V0IZ_
  */
 
-struct SExitInformation
+public struct SExitInformation
 {
-    public readonly EPosition WallPosition;
+    public readonly ExitPosition WallPosition;
     public readonly int ExitIndexZ;
 
-    public SExitInformation(EPosition wallPosition, int exitIndexZ) 
+    public SExitInformation(ExitPosition wallPosition, int exitIndexZ) 
     {
         this.WallPosition = wallPosition;
         this.ExitIndexZ = exitIndexZ;

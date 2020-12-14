@@ -9,21 +9,22 @@
 
 using System.Collections.Generic;
 using MapGenerator.Exceptions;
+using UnityEngine;
 
 namespace MapGenerator
 {
     namespace Core
     {
         //Class which is responsible for collecting data for creating room 
-        abstract class Room
+        public abstract class Room
         {
             #region Fields
             
-            public readonly int RoomHeightY; //Variable that stores width of the room of Y dimension
-            public readonly int RoomLengthX; //Variable that stores width of the room of X dimension
+            public int HeightY {get; private set; } //Variable that stores width of the room of Y dimension
+            public int LengthX { get; private set; } //Variable that stores width of the room of X dimension
 
-            public readonly List<Layer> RoomLayers;
-            public readonly List<SExitInformation> RoomExits;
+            public readonly List<Layer> Layers;
+            public readonly List<SExitInformation> Exits;
             
             public ComplexObject DefaultExitComplexObject { get; protected set; }
             public int DefaultLayerForExit { get; protected set; }
@@ -32,80 +33,104 @@ namespace MapGenerator
 
             #endregion
 
-            protected Room(int roomHeightY, int roomLengthX)
+            protected Room(int heightY, int lengthX)
             {
-                DefaultLayerForExit = SConstants.NOT_IMPLEMENTED;
+                DefaultLayerForExit = SConstants.EXIT_IS_NOT_IMPLEMENTED;
                 DefaultExitComplexObject = null;
 
-                RoomLayers = new List<Layer>();
-                RoomExits = new List<SExitInformation>();
-                RoomHeightY = roomHeightY;
-                RoomLengthX = roomLengthX;
+                Layers = new List<Layer>();
+                Exits = new List<SExitInformation>();
+                HeightY = heightY;
+                LengthX = lengthX;
 
                 CreateRoomObjectMap();
 
                 CheckIfDefaultExitAndLayerExists();
             }
 
+            #region LazyGenerationConstructorAndMethod
+            //Constructor for rooms that is expected to generate object map after being initialized 
+            protected Room()
+            {
+                DefaultLayerForExit = SConstants.EXIT_IS_NOT_IMPLEMENTED;
+                DefaultExitComplexObject = null;
+
+                Layers = new List<Layer>();
+                Exits = new List<SExitInformation>();
+            }
+            
+            //Method that generates object map
+            public List<Layer> GenerateRoom(int heightY, int lengthX)
+            {
+                HeightY = heightY;
+                LengthX = lengthX;
+                
+                CreateRoomObjectMap();
+                CheckIfDefaultExitAndLayerExists();
+
+                return this.Layers;
+            }
+            #endregion
+
             // Creates new layer on a top of the previous (with higher Z-Index)
             protected void AddRoomLayer(int layerHeightY, int layerLenghtX)
             {
-                if (layerHeightY > RoomHeightY)
+                if (layerHeightY > HeightY)
                 {
-                    throw new LayerIsBiggerThanRoomException(RoomHeightY); //Exceptions
+                    throw new LayerIsBiggerThanRoomException(HeightY); //Exceptions
                 }
-                else if (layerLenghtX > RoomLengthX)
+                else if (layerLenghtX > LengthX)
                 {
-                    throw new LayerIsBiggerThanRoomException(RoomLengthX);
+                    throw new LayerIsBiggerThanRoomException(LengthX);
                 }
-                else if (layerHeightY > RoomHeightY || layerLenghtX > RoomLengthX)
+                else if (layerHeightY > HeightY || layerLenghtX > LengthX)
                 {
-                    throw new LayerIsBiggerThanRoomException(RoomLengthX, RoomHeightY);
+                    throw new LayerIsBiggerThanRoomException(LengthX, HeightY);
                 }
                 else
                 {
-                    RoomLayers.Add(new Layer(layerHeightY, layerLenghtX));
+                    Layers.Add(new Layer(layerHeightY, layerLenghtX));
                 }
             }
 
             // Creates new layer on top of previous (with higher Z-Index)
             protected void AddRoomLayer()
             {
-                RoomLayers.Add(new Layer(RoomHeightY, RoomLengthX));
+                Layers.Add(new Layer(HeightY, LengthX));
             }
 
             //Removes given layer
             protected void RemoveRoomLayer(int numberOfLayer)
             {
-                RoomLayers.RemoveAt(numberOfLayer);
+                Layers.RemoveAt(numberOfLayer);
             }
 
             //======ComplexObject======
 
             protected void SetComplexObject(ComplexObject cObj, int layerZ, int posY, int posX)
             {
-                if ((cObj.COLayers.Count + layerZ) > RoomLayers.Count)
+                if ((cObj.COLayers.Count + layerZ) > Layers.Count)
                 {
-                    throw new NotEnoughLayersException(RoomLayers.Count, cObj.COLayers.Count, this);
+                    throw new NotEnoughLayersException(Layers.Count, cObj.COLayers.Count, this);
                 }
-                else if ((posX + cObj.COLengthX) > RoomLengthX)
+                else if ((posX + cObj.COLengthX) > LengthX)
                 {
-                    throw new NotEnoughSpaceInRoomException("X", (posX + cObj.COLengthX + 1), RoomLengthX);
+                    throw new NotEnoughSpaceInRoomException("X", (posX + cObj.COLengthX + 1), LengthX);
                 }
-                else if ((posY + cObj.COHeightY) > RoomHeightY)
+                else if ((posY + cObj.COHeightY) > HeightY)
                 {
-                    throw new NotEnoughSpaceInRoomException("Y", (posY + cObj.COHeightY + 1), RoomHeightY);
+                    throw new NotEnoughSpaceInRoomException("Y", (posY + cObj.COHeightY + 1), HeightY);
                 }
                 else
                 {
                     for (int z = 0; z < cObj.COLayers.Count; z++)
                     {
-                        for (int y = 0; y < cObj.COLayers[z].LayerHeightY; y++)
+                        for (int y = 0; y < cObj.COLayers[z].HeightY; y++)
                         {
-                            for (int x = 0; x < cObj.COLayers[z].LayerLengthX; x++)
+                            for (int x = 0; x < cObj.COLayers[z].LengthX; x++)
                             {
-                                RoomLayers[layerZ + z].LayerObjectMap[posY + y, posX + x] =
-                                    cObj.COLayers[z].LayerObjectMap[y, x];
+                                Layers[layerZ + z].ObjectMap[posY + y, posX + x] =
+                                    cObj.COLayers[z].ObjectMap[y, x];
                             }
                         }
                     }
@@ -118,11 +143,11 @@ namespace MapGenerator
             {
                 if (room != null)
                 {
-                    foreach (SExitInformation sExit in room.RoomExits)
+                    foreach (SExitInformation sExit in room.Exits)
                     {
-                        if (sExit.WallPosition == EPosition.LEFT && sExit.ExitIndexZ < RoomHeightY)
+                        if (sExit.WallPosition == ExitPosition.LEFT && sExit.ExitIndexZ < HeightY)
                         {
-                            SetExit(DefaultExitComplexObject, DefaultLayerForExit, EPosition.RIGHT, sExit.ExitIndexZ);
+                            SetExit(DefaultExitComplexObject, DefaultLayerForExit, ExitPosition.RIGHT, sExit.ExitIndexZ);
                         }
                     }
                 }
@@ -132,11 +157,11 @@ namespace MapGenerator
             {
                 if (room != null)
                 {
-                    foreach (SExitInformation sExit in room.RoomExits)
+                    foreach (SExitInformation sExit in room.Exits)
                     {
-                        if (sExit.WallPosition == EPosition.RIGHT && sExit.ExitIndexZ < RoomHeightY)
+                        if (sExit.WallPosition == ExitPosition.RIGHT && sExit.ExitIndexZ < HeightY)
                         {
-                            SetExit(DefaultExitComplexObject, DefaultLayerForExit, EPosition.LEFT, sExit.ExitIndexZ);
+                            SetExit(DefaultExitComplexObject, DefaultLayerForExit, ExitPosition.LEFT, sExit.ExitIndexZ);
                         }
                     }
                 }
@@ -148,39 +173,34 @@ namespace MapGenerator
                 this.DefaultLayerForExit = layerZ;
             }
 
-            protected void SetExit(ComplexObject cObj, int layerZ, EPosition wallPosition, int exitIndex)
+            protected void SetExit(ComplexObject cObj, int layerZ, ExitPosition wallPosition, int exitIndex)
             {
                 switch (wallPosition)
                 {
-                    case EPosition.TOP:
-                        SetComplexObject(cObj, layerZ, RoomHeightY - 1, exitIndex);
-                        RoomExits.Add(new SExitInformation(wallPosition, exitIndex));
+                    case ExitPosition.TOP:
+                        SetComplexObject(cObj, layerZ, HeightY - 1, exitIndex);
+                        Exits.Add(new SExitInformation(wallPosition, exitIndex));
                         break;
-                    case EPosition.RIGHT:
-                        SetComplexObject(cObj, layerZ, exitIndex, RoomLengthX - 1);
-                        RoomExits.Add(new SExitInformation(wallPosition, exitIndex));
+                    case ExitPosition.RIGHT:
+                        SetComplexObject(cObj, layerZ, exitIndex, LengthX - 1);
+                        Exits.Add(new SExitInformation(wallPosition, exitIndex));
                         break;
-                    case EPosition.BOTTOM:
+                    case ExitPosition.BOTTOM:
                         SetComplexObject(cObj, layerZ, 0, exitIndex);
-                        RoomExits.Add(new SExitInformation(wallPosition, exitIndex));
+                        Exits.Add(new SExitInformation(wallPosition, exitIndex));
                         break;
-                    case EPosition.LEFT:
+                    case ExitPosition.LEFT:
                         SetComplexObject(cObj, layerZ, exitIndex, 0);
-                        RoomExits.Add(new SExitInformation(wallPosition, exitIndex));
+                        Exits.Add(new SExitInformation(wallPosition, exitIndex));
                         break;
                 }
             }
 
             private void CheckIfDefaultExitAndLayerExists() //Exception
             {
-                if (DefaultLayerForExit == SConstants.NOT_IMPLEMENTED)
+                if (DefaultLayerForExit == SConstants.EXIT_IS_NOT_IMPLEMENTED || DefaultExitComplexObject == null)
                 {
                     throw new DefaultLayerZWasNotFoundException();
-                }
-
-                if (DefaultExitComplexObject == null)
-                {
-                    throw new DefaultExitWasNotFoundException();
                 }
             }
 

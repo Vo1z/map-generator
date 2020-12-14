@@ -7,7 +7,7 @@
  * Twitter: @V0IZ_
  */
 
-public enum EPosition 
+public enum ExitPosition 
 {
     TOP, RIGHT, BOTTOM, LEFT
 }

@@ -106,7 +106,7 @@ namespace MapGenerator
 
             void Start()
             {
-               CreateMap(_location);
+                CreateMap(_location);
             }
 
             //ADD ROOM CONDITION 
@@ -114,13 +114,13 @@ namespace MapGenerator
 
             private void CreateRoom(Room room)
             {
-                for (int layerNumber = 0; layerNumber < room.RoomLayers.Count; layerNumber++)
+                for (int layerNumber = 0; layerNumber < room.Layers.Count; layerNumber++)
                 {
-                    for (int y = 0; y < room.RoomLayers[layerNumber].LayerHeightY; y++)
+                    for (int y = 0; y < room.Layers[layerNumber].HeightY; y++)
                     {
-                        for (int x = 0; x < room.RoomLayers[layerNumber].LayerLengthX; x++)
+                        for (int x = 0; x < room.Layers[layerNumber].LengthX; x++)
                         {
-                            switch (room.RoomLayers[layerNumber].LayerObjectMap[y, x])
+                            switch (room.Layers[layerNumber].ObjectMap[y, x])
                             {
                                 //-------------General Room-------------
                                 case "GRFloor1":
@@ -294,7 +294,7 @@ namespace MapGenerator
             //Rooms
             class EmptySpace : Room
             {
-                public EmptySpace(int roomHeightY, int roomLengthX) : base(roomHeightY, roomLengthX)
+                public EmptySpace(int heightY, int lengthX) : base(heightY, lengthX)
                 {
                 }
 
@@ -302,13 +302,13 @@ namespace MapGenerator
                 {
                     //========================Layer 0=======================
                     AddRoomLayer();
-                    RoomLayers[0].FillWholeLayerMap("GRFloor2");
-                    RoomLayers[0].SetOnRandomLayerID("GRFloor2", 2);
-                    RoomLayers[0].SetOnRandomLayerID("GRFloor3", 2);
+                    Layers[0].FillWholeLayerMap("GRFloor2");
+                    Layers[0].SetOnRandomLayerID("GRFloor2", 2);
+                    Layers[0].SetOnRandomLayerID("GRFloor3", 2);
 
                     //========================Layer 1=======================
                     AddRoomLayer();
-                    RoomLayers[1].SetOnRandomLayerID("GRInnerObject", 8);
+                    Layers[1].SetOnRandomLayerID("GRInnerObject", 8);
 
                     AddRoomLayer();
                     AddRoomLayer();
@@ -318,47 +318,47 @@ namespace MapGenerator
 
             class Gym : Room
             {
-                public Gym(int roomHeightY, int roomLengthX) : base(roomHeightY, roomLengthX)
+                public Gym(int heightY, int lengthX) : base(heightY, lengthX)
                 {
                 }
 
                 protected override void CreateRoomObjectMap()
                 {
                     //========================Layer 0=======================
-                    AddRoomLayer(RoomHeightY - 2, RoomLengthX);
-                    RoomLayers[0].FillWholeLayerMap("GymFloor");
+                    AddRoomLayer(HeightY - 2, LengthX);
+                    Layers[0].FillWholeLayerMap("GymFloor");
 
                     //========================Layer 1=======================
-                    AddRoomLayer(RoomHeightY - 2, RoomLengthX);
-                    RoomLayers[1].SetOnRandomLayerID("GymInnerObject", 5);
+                    AddRoomLayer(HeightY - 2, LengthX);
+                    Layers[1].SetOnRandomLayerID("GymInnerObject", 5);
 
                     //========================Layer 2=======================
                     AddRoomLayer();
-                    RoomLayers[2].SetHorizontalLayerLine(0, "GymWall");
-                    RoomLayers[2].SetHorizontalLayerLine(RoomHeightY - 2, "GymWall");
+                    Layers[2].SetHorizontalLayerLine(0, "GymWall");
+                    Layers[2].SetHorizontalLayerLine(HeightY - 2, "GymWall");
 
                     //========================Layer 3=======================
                     AddRoomLayer();
-                    RoomLayers[3].SetVerticalLayerLine(0, "GymLeftWall");
-                    RoomLayers[3].SetVerticalLayerLine(RoomLengthX - 1, "GymRightWall");
-                    RoomLayers[3].SetHorizontalLayerLine(0, null);
-                    RoomLayers[3].SetHorizontalLayerLine(RoomHeightY - 1, null);
+                    Layers[3].SetVerticalLayerLine(0, "GymLeftWall");
+                    Layers[3].SetVerticalLayerLine(LengthX - 1, "GymRightWall");
+                    Layers[3].SetHorizontalLayerLine(0, null);
+                    Layers[3].SetHorizontalLayerLine(HeightY - 1, null);
 
                     //========================Layer 4=======================
                     AddRoomLayer();
-                    RoomLayers[4].SetHorizontalLayerLine(1, "GymTopWallBrink");
-                    RoomLayers[4].SetHorizontalLayerLine(RoomHeightY - 1, "GymTopWallBrink");
+                    Layers[4].SetHorizontalLayerLine(1, "GymTopWallBrink");
+                    Layers[4].SetHorizontalLayerLine(HeightY - 1, "GymTopWallBrink");
 
                     SetDefaultExitAndLayerZ(new Test(), 2);
 
-                    SetExit(new Test(), 2, EPosition.LEFT, Random.Range(1, RoomHeightY - 2));
-                    SetExit(new Test(), 2, EPosition.RIGHT, Random.Range(1, RoomHeightY - 2));
+                    SetExit(new Test(), 2, ExitPosition.LEFT, Random.Range(1, HeightY - 2));
+                    SetExit(new Test(), 2, ExitPosition.RIGHT, Random.Range(1, HeightY - 2));
                 }
             }
 
             class Office : Room
             {
-                public Office(int roomHeightY, int roomLengthX) : base(roomHeightY, roomLengthX)
+                public Office(int heightY, int lengthX) : base(heightY, lengthX)
                 {
                 }
 
@@ -367,81 +367,81 @@ namespace MapGenerator
                     IsSpawned = true;
                     //========================Layer 0=======================
                     AddRoomLayer();
-                    RoomLayers[0].FillWholeLayerMap(nameof(OfficeFloor));
-                    RoomLayers[0].SetHorizontalLayerLine(RoomHeightY - 1, null);
+                    Layers[0].FillWholeLayerMap(nameof(OfficeFloor));
+                    Layers[0].SetHorizontalLayerLine(HeightY - 1, null);
 
                     //========================Layer 1=======================
                     AddRoomLayer();
-                    RoomLayers[1].SetOnRandomLayerID(nameof(OfficeTable), 5);
-                    RoomLayers[1].SetHorizontalLayerLine(RoomHeightY - 1, null);
+                    Layers[1].SetOnRandomLayerID(nameof(OfficeTable), 5);
+                    Layers[1].SetHorizontalLayerLine(HeightY - 1, null);
 
                     //========================Layer 2=======================
                     AddRoomLayer();
-                    RoomLayers[2].SetOnUniqueObject(RoomLayers[1].LayerObjectMap, nameof(OfficeTable), nameof(OfficeComputer), 4);
-                    RoomLayers[2].SetHorizontalLayerLine(0, nameof(OfficeWall));
-                    RoomLayers[2].SetHorizontalLayerLine(RoomHeightY - 2, nameof(OfficeWall));
+                    Layers[2].SetOnUniqueObject(Layers[1].ObjectMap, nameof(OfficeTable), nameof(OfficeComputer), 4);
+                    Layers[2].SetHorizontalLayerLine(0, nameof(OfficeWall));
+                    Layers[2].SetHorizontalLayerLine(HeightY - 2, nameof(OfficeWall));
 
                     //========================Layer 3=======================
                     AddRoomLayer();
-                    RoomLayers[3].SetVerticalLayerLine(0, nameof(OfficeLeftWall));
-                    RoomLayers[3].SetVerticalLayerLine(RoomLengthX - 1, nameof(OfficeRightWall));
-                    RoomLayers[3].SetHorizontalLayerLine(0, null);
-                    RoomLayers[3].SetHorizontalLayerLine(RoomHeightY - 1, null);
+                    Layers[3].SetVerticalLayerLine(0, nameof(OfficeLeftWall));
+                    Layers[3].SetVerticalLayerLine(LengthX - 1, nameof(OfficeRightWall));
+                    Layers[3].SetHorizontalLayerLine(0, null);
+                    Layers[3].SetHorizontalLayerLine(HeightY - 1, null);
 
                     //========================Layer 4=======================
                     AddRoomLayer();
-                    RoomLayers[4].SetHorizontalLayerLine(1, nameof(OfficeTopWallBrink));
-                    RoomLayers[4].SetHorizontalLayerLine(RoomHeightY - 1, nameof(OfficeTopWallBrink));
+                    Layers[4].SetHorizontalLayerLine(1, nameof(OfficeTopWallBrink));
+                    Layers[4].SetHorizontalLayerLine(HeightY - 1, nameof(OfficeTopWallBrink));
 
                     SetDefaultExitAndLayerZ(new Test(), 2);
 
-                    SetExit(new Test(), 2, EPosition.LEFT, Random.Range(1, RoomHeightY - 2));
-                    SetExit(new Test(), 2, EPosition.RIGHT, Random.Range(1, RoomHeightY - 2));
+                    SetExit(new Test(), 2, ExitPosition.LEFT, Random.Range(1, HeightY - 2));
+                    SetExit(new Test(), 2, ExitPosition.RIGHT, Random.Range(1, HeightY - 2));
                 }
             }
 
             class GeneralRoom : Room
             {
-                public GeneralRoom(int roomHeightY, int roomLengthX) : base(roomHeightY, roomLengthX)
+                public GeneralRoom(int heightY, int lengthX) : base(heightY, lengthX)
                 {
                 }
 
                 protected override void CreateRoomObjectMap()
                 {
                     //========================Layer 0=======================
-                    AddRoomLayer(RoomHeightY - 1, RoomLengthX);
-                    RoomLayers[0].FillWholeLayerMap("GRFloor1");
-                    RoomLayers[0].SetOnRandomLayerID("GRFloor2", 2);
-                    RoomLayers[0].SetOnRandomLayerID("GRFloor3", 2);
+                    AddRoomLayer(HeightY - 1, LengthX);
+                    Layers[0].FillWholeLayerMap("GRFloor1");
+                    Layers[0].SetOnRandomLayerID("GRFloor2", 2);
+                    Layers[0].SetOnRandomLayerID("GRFloor3", 2);
 
                     //========================Layer 1=======================
                     AddRoomLayer();
 
                     //========================Layer 2=======================
-                    AddRoomLayer(RoomHeightY - 1, RoomLengthX);
-                    RoomLayers[2].SetHorizontalLayerLine(RoomHeightY - 2, "GRTopWall");
-                    RoomLayers[2].SetOnRandomLayerID("GRInnerObject", 8);
-                    RoomLayers[2].SetHorizontalLayerLine(RoomHeightY - 2, "GRTopWall");
+                    AddRoomLayer(HeightY - 1, LengthX);
+                    Layers[2].SetHorizontalLayerLine(HeightY - 2, "GRTopWall");
+                    Layers[2].SetOnRandomLayerID("GRInnerObject", 8);
+                    Layers[2].SetHorizontalLayerLine(HeightY - 2, "GRTopWall");
 
                     //========================Layer 3=======================
                     AddRoomLayer();
-                    RoomLayers[3].SetHorizontalLayerLine(0, "GRBottomWall");
-                    RoomLayers[3].SetHorizontalLayerLine(RoomHeightY - 2, "GRTopWall");
+                    Layers[3].SetHorizontalLayerLine(0, "GRBottomWall");
+                    Layers[3].SetHorizontalLayerLine(HeightY - 2, "GRTopWall");
 
                     //========================Layer 4=======================
                     AddRoomLayer();
 
                     //========================Layer 5=======================
                     AddRoomLayer();
-                    RoomLayers[5].SetVerticalLayerLine(0, "GRLeftWall");
-                    RoomLayers[5].SetVerticalLayerLine(RoomLengthX - 1, "GRRightWall");
-                    RoomLayers[5].SetHorizontalLayerLine(0, null);
-                    RoomLayers[5].SetHorizontalLayerLine(RoomHeightY - 1, null);
+                    Layers[5].SetVerticalLayerLine(0, "GRLeftWall");
+                    Layers[5].SetVerticalLayerLine(LengthX - 1, "GRRightWall");
+                    Layers[5].SetHorizontalLayerLine(0, null);
+                    Layers[5].SetHorizontalLayerLine(HeightY - 1, null);
 
                     //========================Layer 6=======================
                     AddRoomLayer();
-                    RoomLayers[6].SetHorizontalLayerLine(1, "GRTopWallBrink");
-                    RoomLayers[6].SetHorizontalLayerLine(RoomHeightY - 1, "GRTopWallBrink");
+                    Layers[6].SetHorizontalLayerLine(1, "GRTopWallBrink");
+                    Layers[6].SetHorizontalLayerLine(HeightY - 1, "GRTopWallBrink");
 
                     SetDefaultExitAndLayerZ(new Test(), 2);
                 }

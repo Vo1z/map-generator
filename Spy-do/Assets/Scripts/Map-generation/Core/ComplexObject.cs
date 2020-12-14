@@ -15,7 +15,7 @@ namespace MapGenerator
     namespace Core
     {
         //Class that describes ComplexObjects(Is used in Room class)
-        abstract class ComplexObject
+        public abstract class ComplexObject
         {
             public readonly int COHeightY;
             public readonly int COLengthX;

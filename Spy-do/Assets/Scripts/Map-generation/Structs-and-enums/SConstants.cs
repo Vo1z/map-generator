@@ -7,7 +7,9 @@
  * Twitter: @V0IZ_
  */
 
+using System.Diagnostics.CodeAnalysis;
+
 struct SConstants 
 {
-    public const int NOT_IMPLEMENTED = -1;
+    public const int EXIT_IS_NOT_IMPLEMENTED = -1;
 }
