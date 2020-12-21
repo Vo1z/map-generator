@@ -8,9 +8,7 @@
  */
 
 using System;
-using MapGenerator.Core;
-using MapGenerator.Exceptions;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace MapGenerator
 {
@@ -21,6 +19,9 @@ namespace MapGenerator
             //Tested
             public static int FindHighestRoomInARow(in Room[,] roomRow, int rowIndex)
             {
+                if (roomRow == null)
+                    throw new NullReferenceException();
+
                 int maxHeightX = 0;
 
                 for (int roomNumber = 0; roomNumber < roomRow.GetLength(1); roomNumber++)
@@ -30,11 +31,6 @@ namespace MapGenerator
                 }
 
                 return maxHeightX;
-            }
-
-            public static Room[,] GenerateRoomArray(int numberOfRowsY, int numberOfRoomsInARowX, Type[] roomTypes)
-            {
-                throw new NotImplementedException();
             }
 
             //Tested
@@ -47,14 +43,50 @@ namespace MapGenerator
                     destination = new T[source.GetLength(0), source.GetLength(1), source.GetLength(2)];
                 else
                     destination = new T[source.GetLength(0), source.GetLength(1), source.GetLength(2)];
-                
+
                 //Copies elements from source to destination
                 for (int iterZ = 0; iterZ < source.GetLength(0); iterZ++)
-                    for (int iterY = 0; iterY < source.GetLength(1); iterY++)
-                        for (int iterX = 0; iterX < source.GetLength(2); iterX++)
-                            destination[iterZ, iterY, iterX] = source[iterZ, iterY, iterX];
+                for (int iterY = 0; iterY < source.GetLength(1); iterY++)
+                for (int iterX = 0; iterX < source.GetLength(2); iterX++)
+                    destination[iterZ, iterY, iterX] = source[iterZ, iterY, iterX];
 
                 return destination;
+            }
+
+            //Not tested
+            //Finds list with the biggest length in array
+            public static int FindLongestList<T>(params List<T>[] lists)
+            {
+                if (lists == null)
+                    throw new NullReferenceException();
+
+                int longest = lists[0].Count;
+
+                foreach (var list in lists)
+                    longest = longest < list.Count ? list.Count : longest;
+
+                return longest;
+            }
+
+            //Not tested
+            //Swaps two elements between each other
+            public static void Swap<T>(ref T first, ref T second)
+            {
+                T intermediate = first;
+                first = second;
+                second = intermediate;
+            }
+
+            //Not tested
+            //Swaps two elements in collections
+            public static void Swap<T>(IList<T> collection, int first, int second)
+            {
+                if (collection == null || first == second)
+                    return;
+                
+                T intermediate = collection[first];
+                collection[first] = collection[second];
+                collection[second] = collection[first];
             }
         }
     }

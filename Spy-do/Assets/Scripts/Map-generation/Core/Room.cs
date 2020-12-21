@@ -9,7 +9,6 @@
 
 using System.Collections.Generic;
 using MapGenerator.Exceptions;
-using UnityEngine;
 
 namespace MapGenerator
 {
@@ -20,8 +19,10 @@ namespace MapGenerator
         {
             #region Fields
             
-            public int HeightY {get; private set; } //Variable that stores width of the room of Y dimension
-            public int LengthX { get; private set; } //Variable that stores width of the room of X dimension
+            //Variable that stores width of the room of Y dimension
+            public int HeightY {get; private set; } 
+            //Variable that stores width of the room of X dimension
+            public int LengthX { get; private set; }
 
             public readonly List<Layer> Layers;
             public readonly List<SExitInformation> Exits;
@@ -72,6 +73,7 @@ namespace MapGenerator
             }
             #endregion
 
+            //Tested
             // Creates new layer on a top of the previous (with higher Z-Index)
             protected void AddRoomLayer(int layerHeightY, int layerLenghtX)
             {
@@ -93,12 +95,14 @@ namespace MapGenerator
                 }
             }
 
+            //Tested
             // Creates new layer on top of previous (with higher Z-Index)
             protected void AddRoomLayer()
             {
                 Layers.Add(new Layer(HeightY, LengthX));
             }
 
+            //Tested
             //Removes given layer
             protected void RemoveRoomLayer(int numberOfLayer)
             {
@@ -107,6 +111,7 @@ namespace MapGenerator
 
             //======ComplexObject======
 
+            //Tested
             protected void SetComplexObject(ComplexObject cObj, int layerZ, int posY, int posX)
             {
                 if ((cObj.COLayers.Count + layerZ) > Layers.Count)
@@ -139,6 +144,7 @@ namespace MapGenerator
 
             //======Methods relative to exits======
             
+            //Tested
             public void AddNeighborExitsOnRightWall(Room room)
             {
                 if (room != null)
@@ -153,6 +159,7 @@ namespace MapGenerator
                 }
             }
 
+            //Tested
             public void AddNeighborExitsOnLeftWall(Room room)
             {
                 if (room != null)
@@ -167,12 +174,14 @@ namespace MapGenerator
                 }
             }
             
+            //Tested
             protected void SetDefaultExitAndLayerZ(ComplexObject cObj, int layerZ)
             {
                 this.DefaultExitComplexObject = cObj;
                 this.DefaultLayerForExit = layerZ;
             }
 
+            //Tested
             protected void SetExit(ComplexObject cObj, int layerZ, ExitPosition wallPosition, int exitIndex)
             {
                 switch (wallPosition)
@@ -196,6 +205,7 @@ namespace MapGenerator
                 }
             }
 
+            //Tested
             private void CheckIfDefaultExitAndLayerExists() //Exception
             {
                 if (DefaultLayerForExit == SConstants.EXIT_IS_NOT_IMPLEMENTED || DefaultExitComplexObject == null)

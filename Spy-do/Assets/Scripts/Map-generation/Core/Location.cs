@@ -25,7 +25,7 @@ namespace MapGenerator
             #region VariablesThatAreResponsibleForHoldingInformationAboutGeneration
             //Array that holds map of identifiers of particular tiles 
             public readonly string[,,] LocationObjectMap;
-            //
+            //Variable that responsible for holding
             private readonly Room _backgroundRoom;
             //Array that holds rooms that have to be spawned
             private readonly Room[,] _locationRooms;
@@ -73,9 +73,6 @@ namespace MapGenerator
                 bool randomSpacingIsUsedInRows,
                 int verticalRoomSpacingY, int horizontalRoomSpacingX)
             {
-                //Todo replace debug
-                Debug.Log("Entering Constructor");
-
                 _backgroundRoom = backgroundRoom;
                 _locationRooms = locationRooms;
 
@@ -89,9 +86,6 @@ namespace MapGenerator
                 _worstLocationLengthX = GetLocationLengthX();
 
                 LocationObjectMap = CreateObjectMap();
-
-                //Todo replace debug
-                Test();
             }
 
             //Constructor for randomized spacing
@@ -100,9 +94,6 @@ namespace MapGenerator
                 int randomSpacingFromY, int randomSpacingToY,
                 int randomSpacingFromX, int randomSpacingToX)
             {
-                //Todo replace debug
-                Debug.Log("Entering Constructor");
-
                 _backgroundRoom = backgroundRoom;
                 _locationRooms = locationRooms;
 
@@ -118,9 +109,6 @@ namespace MapGenerator
                 _worstLocationLengthX = GetLocationLengthX();
 
                 LocationObjectMap = CreateObjectMap();
-
-                //Todo replace debug
-                Test();
             }
 
             public void Test()
