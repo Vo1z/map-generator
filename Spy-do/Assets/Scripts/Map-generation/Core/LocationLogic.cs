@@ -96,11 +96,11 @@ namespace MapGenerator
                 if (_roomsList == null || _roomsList.Contains(null))
                     throw new NullReferenceException();
 
-                Room[,] roomsArray = new Room[_roomsList.Count, MapGeneratorUtils.FindLongestList(_roomsList)];
+                Room[,] roomsArray = new Room[_roomsList.Count, MapGeneratorUtils.FindLongestListSize(_roomsList)];
 
                 for (var y = 0; y < _roomsList.Count && y < LocationHeightBoundY; y++)
                 {
-                    for (var x = 0; x < MapGeneratorUtils.FindLongestList(_roomsList) && x < LocationLengthBoundX; x++)
+                    for (var x = 0; x < MapGeneratorUtils.FindLongestListSize(_roomsList) && x < LocationLengthBoundX; x++)
                     {
                         roomsArray[y, x] = _roomsList[y][x] == null
                             ? (Room) Activator.CreateInstance(_defaultRoom, _defaultRoomHeightY, _defaultRoomLengthX)

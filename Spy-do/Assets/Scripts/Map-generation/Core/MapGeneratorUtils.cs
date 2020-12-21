@@ -14,7 +14,7 @@ namespace MapGenerator
 {
     namespace Core
     {
-        static class MapGeneratorUtils
+        public static class MapGeneratorUtils
         {
             //Tested
             public static int FindHighestRoomInARow(in Room[,] roomRow, int rowIndex)
@@ -53,9 +53,9 @@ namespace MapGenerator
                 return destination;
             }
 
-            //Not tested
+            //Tested
             //Finds list with the biggest length in array
-            public static int FindLongestList<T>(params List<T>[] lists)
+            public static int FindLongestListSize<T>(params List<T>[] lists)
             {
                 if (lists == null)
                     throw new NullReferenceException();
@@ -68,7 +68,7 @@ namespace MapGenerator
                 return longest;
             }
 
-            //Not tested
+            //Tested
             //Swaps two elements between each other
             public static void Swap<T>(ref T first, ref T second)
             {
@@ -77,16 +77,16 @@ namespace MapGenerator
                 second = intermediate;
             }
 
-            //Not tested
+            //Tested
             //Swaps two elements in collections
-            public static void Swap<T>(IList<T> collection, int first, int second)
+            public static void Swap<T>(IList<T> collection, int firstIndex, int secondIndex)
             {
-                if (collection == null || first == second)
+                if (collection == null || firstIndex == secondIndex)
                     return;
                 
-                T intermediate = collection[first];
-                collection[first] = collection[second];
-                collection[second] = collection[first];
+                T intermediate = collection[firstIndex];
+                collection[firstIndex] = collection[secondIndex];
+                collection[secondIndex] = intermediate;
             }
         }
     }

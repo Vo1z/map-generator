@@ -10,7 +10,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using config;
 
 public abstract class MovingObject : MonoBehaviour //Abstract class is called there because this script is not supposed to be directly included in the project
 {

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using MapGenerator.Core;
 using MapGenerator.Exceptions;
-using TMPro;
 
 namespace MapGenerator
 {
