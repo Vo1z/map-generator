@@ -74,28 +74,6 @@ namespace MapGenerator
             #endregion
 
             //Tested
-            // Creates new layer on a top of the previous (with higher Z-Index)
-            protected void AddRoomLayer(int layerHeightY, int layerLenghtX)
-            {
-                if (layerHeightY > HeightY)
-                {
-                    throw new LayerIsBiggerThanRoomException(HeightY); //Exceptions
-                }
-                else if (layerLenghtX > LengthX)
-                {
-                    throw new LayerIsBiggerThanRoomException(LengthX);
-                }
-                else if (layerHeightY > HeightY || layerLenghtX > LengthX)
-                {
-                    throw new LayerIsBiggerThanRoomException(LengthX, HeightY);
-                }
-                else
-                {
-                    Layers.Add(new Layer(layerHeightY, layerLenghtX));
-                }
-            }
-
-            //Tested
             // Creates new layer on top of previous (with higher Z-Index)
             protected void AddRoomLayer()
             {

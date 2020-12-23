@@ -157,8 +157,16 @@ namespace MapGenerator
                                     //Goes through X dimension in particular Room
                                     for (int x = 0; x < _locationRooms[roomNumY, roomNumX].LengthX; x++)
                                     {
-                                        objectMap[z, locationY + y + randomYSpacing, locationX + x] =
-                                            _locationRooms[roomNumY, roomNumX].Layers[z].ObjectMap[y, x];
+                                        try
+                                        {
+                                            objectMap[z, locationY + y + randomYSpacing, locationX + x] =
+                                                _locationRooms[roomNumY, roomNumX].Layers[z].ObjectMap[y, x];
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            //TODO remove debug
+                                            Debug.Log(ex.Message);
+                                        }
                                     }
                                 }
                             }
@@ -199,8 +207,13 @@ namespace MapGenerator
             //Tested
             private string[,,] CreateBackgroundRoom(in string[,,] objectMap)
             {
+                //Creates background room
                 List<Layer> backgroundRoomLayers = _backgroundRoom.GenerateRoom(ActualLocationHeightY, ActualLocationLengthX);
+                //Checks if number of layers required for creating background room smaller than actual number of layers and sets proper value
+                ActualLocationLayersZ = ActualLocationLayersZ < _backgroundRoom.Layers.Count ? _backgroundRoom.Layers.Count : ActualLocationLayersZ;
+                //Final object map with background room
                 string[,,] objectMapWithBackGround = new string[ActualLocationLayersZ, ActualLocationHeightY, ActualLocationLengthX];
+                //Copies objectMap to objectMapWithBackGround and resizes it to proper sizes
                 MapGeneratorUtils.Resize3DArray(in objectMap, ref objectMapWithBackGround);
 
                 //Iterates through the map and sets proper objects from background roomLayers

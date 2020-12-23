@@ -36,19 +36,29 @@ namespace MapGenerator
             //Tested
             public static T[,,] Resize3DArray<T>(in T[,,] source, ref T[,,] destination)
             {
-                //Checks if destination array is not null and satisfies size of the source 
-                if (destination.GetLength(0) < source.GetLength(0) ||
-                    destination.GetLength(1) < source.GetLength(1) ||
-                    destination.GetLength(2) < source.GetLength(2) || destination != null)
-                    destination = new T[source.GetLength(0), source.GetLength(1), source.GetLength(2)];
+                //Checks if destination array is not null and sets proper sizes for destination if necessary
+                if (destination != null)
+                {
+                    int z = destination.GetLength(0) < source.GetLength(0)
+                        ? source.GetLength(0)
+                        : destination.GetLength(0);
+                    int y = destination.GetLength(1) < source.GetLength(1)
+                        ? source.GetLength(1)
+                        : destination.GetLength(1);
+                    int x = destination.GetLength(2) < source.GetLength(2)
+                        ? source.GetLength(2)
+                        : destination.GetLength(2);
+                    
+                    destination = new T[z,y,x];
+                }
                 else
                     destination = new T[source.GetLength(0), source.GetLength(1), source.GetLength(2)];
-
+                
                 //Copies elements from source to destination
                 for (int iterZ = 0; iterZ < source.GetLength(0); iterZ++)
-                for (int iterY = 0; iterY < source.GetLength(1); iterY++)
-                for (int iterX = 0; iterX < source.GetLength(2); iterX++)
-                    destination[iterZ, iterY, iterX] = source[iterZ, iterY, iterX];
+                    for (int iterY = 0; iterY < source.GetLength(1); iterY++)
+                        for (int iterX = 0; iterX < source.GetLength(2); iterX++)
+                             destination[iterZ, iterY, iterX] = source[iterZ, iterY, iterX];
 
                 return destination;
             }

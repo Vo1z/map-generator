@@ -7,10 +7,12 @@
  * Twitter: @V0IZ_
  */
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using MapGenerator.Core;
 using MapGenerator.Exceptions;
+using Random = UnityEngine.Random;
 
 namespace MapGenerator
 {
@@ -80,7 +82,8 @@ namespace MapGenerator
             //<ROOM> GAME OBJECTS
 
             private Dictionary<GameObject, string> _mapObjects = new Dictionary<GameObject, string>();
-            private Room[,] _roomsArray = new Room[5, 5];
+
+            private Room[,] _roomsArray = new Room[5,5];
             private Room _room;
             private Location _location;
 
@@ -88,15 +91,18 @@ namespace MapGenerator
             {
                 #region Debug
                 //todo debug creates _roomsArray
-                for (int y = 0; y < _roomsArray.GetLength(0); y++)
-                {
-                    for (int x = 0; x < _roomsArray.GetLength(1); x++)
-                    {
-                        //_roomsArray[y, x] = new Office(10, 10);
-                        _roomsArray[y,x] = new Office(Random.Range(5,10), Random.Range(5,10));
-                    }
-                }
-
+                // for (int y = 0; y < _roomsArray.GetLength(0); y++)
+                // {
+                //     for (int x = 0; x < _roomsArray.GetLength(1); x++)
+                //     {
+                //         //_roomsArray[y, x] = new Office(Random.Range(5,10), Random.Range(5,10));
+                //         _roomsArray[y,x] = new Gym(Random.Range(5,10), Random.Range(5,10));
+                //     }
+                // }
+                _roomsArray = LocationLogic.CreateRoomMapByDefaultLogic(5, 5,
+                    (typeof(Office), 5, 10, 5, 10, 3), 
+                                    (typeof(Gym), 5, 10, 5, 10, 3),
+                                    (typeof(GeneralRoom), 5,10,5,10,3));
                 Office office = new Office();
                 //_location = new Location(_roomsArray, true, 2, 0);
                 _location = new Location(office, _roomsArray, true, 0, 5, 0, 4);
@@ -325,11 +331,11 @@ namespace MapGenerator
                 protected override void CreateRoomObjectMap()
                 {
                     //========================Layer 0=======================
-                    AddRoomLayer(HeightY - 2, LengthX);
+                    AddRoomLayer();
                     Layers[0].FillWholeLayerMap("GymFloor");
 
                     //========================Layer 1=======================
-                    AddRoomLayer(HeightY - 2, LengthX);
+                    AddRoomLayer();
                     Layers[1].SetOnRandomLayerID("GymInnerObject", 5);
 
                     //========================Layer 2=======================
@@ -413,7 +419,7 @@ namespace MapGenerator
                 protected override void CreateRoomObjectMap()
                 {
                     //========================Layer 0=======================
-                    AddRoomLayer(HeightY - 1, LengthX);
+                    AddRoomLayer();
                     Layers[0].FillWholeLayerMap("GRFloor1");
                     Layers[0].SetOnRandomLayerID("GRFloor2", 2);
                     Layers[0].SetOnRandomLayerID("GRFloor3", 2);
@@ -422,7 +428,7 @@ namespace MapGenerator
                     AddRoomLayer();
 
                     //========================Layer 2=======================
-                    AddRoomLayer(HeightY - 1, LengthX);
+                    AddRoomLayer();
                     Layers[2].SetHorizontalLayerLine(HeightY - 2, "GRTopWall");
                     Layers[2].SetOnRandomLayerID("GRInnerObject", 8);
                     Layers[2].SetHorizontalLayerLine(HeightY - 2, "GRTopWall");
