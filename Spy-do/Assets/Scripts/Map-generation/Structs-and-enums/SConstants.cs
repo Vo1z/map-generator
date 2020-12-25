@@ -7,9 +7,10 @@
  * Twitter: @V0IZ_
  */
 
-using System.Diagnostics.CodeAnalysis;
-
-struct SConstants 
+namespace MapGenerator.DataTypes
 {
-    public const int EXIT_IS_NOT_IMPLEMENTED = -1;
+    struct SConstants
+    {
+        public const int EXIT_IS_NOT_IMPLEMENTED = -1;
+    }
 }

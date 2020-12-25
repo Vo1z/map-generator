@@ -7,7 +7,13 @@
  * Twitter: @V0IZ_
  */
 
-public enum ExitPosition 
+namespace MapGenerator.DataTypes
 {
-    TOP, RIGHT, BOTTOM, LEFT
+    public enum ExitPosition
+    {
+        TOP,
+        RIGHT,
+        BOTTOM,
+        LEFT
+    }
 }

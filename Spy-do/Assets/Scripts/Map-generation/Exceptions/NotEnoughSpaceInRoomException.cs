@@ -7,17 +7,14 @@
  * Twitter: @V0IZ_
  */
 
-namespace MapGenerator
+namespace MapGenerator.Exceptions
 {
-    namespace Exceptions
+    class NotEnoughSpaceInRoomException : System.Exception
     {
-        class NotEnoughSpaceInRoomException : System.Exception
+        public NotEnoughSpaceInRoomException(string dimentionName, int reqSpace, int currSpace) : base(
+            "[ Required " + dimentionName + " space is " + reqSpace +
+            " ] > [Current " + dimentionName + " space is " + currSpace + " ]")
         {
-            public NotEnoughSpaceInRoomException(string dimentionName, int reqSpace, int currSpace) : base(
-                "[ Required " + dimentionName + " space is " + reqSpace +
-                " ] > [Current " + dimentionName + " space is " + currSpace + " ]")
-            {
-            }
         }
     }
 }

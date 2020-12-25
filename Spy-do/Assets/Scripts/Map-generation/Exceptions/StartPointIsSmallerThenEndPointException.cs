@@ -7,17 +7,13 @@
  * Twitter: @V0IZ_
  */
 
-namespace MapGenerator
+namespace MapGenerator.Exceptions
 {
-    namespace Exceptions
+    class StartPointIsSmallerThenEndPointException : System.Exception
     {
-
-        class StartPointIsSmallerThenEndPointException : System.Exception
+        public StartPointIsSmallerThenEndPointException(int startPoint, int endPoint) : base(nameof(endPoint) +
+            " is bigger then " + nameof(startPoint))
         {
-            public StartPointIsSmallerThenEndPointException(int startPoint, int endPoint) : base(nameof(endPoint) +
-                " is bigger then " + nameof(startPoint))
-            {
-            }
         }
     }
 }

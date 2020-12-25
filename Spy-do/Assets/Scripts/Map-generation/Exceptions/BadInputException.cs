@@ -7,15 +7,12 @@
  * Twitter: @V0IZ_
  */
 
-namespace MapGenerator
+namespace MapGenerator.Exceptions
 {
-    namespace Exceptions
+    public class BadInputException : System.Exception
     {
-        public class BadInputException : System.Exception
+        public BadInputException(string message) : base(message)
         {
-            public BadInputException(string message) : base(message)
-            {
-            }
         }
     }
 }

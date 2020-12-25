@@ -7,14 +7,17 @@
  * Twitter: @V0IZ_
  */
 
-public struct SExitInformation
+namespace MapGenerator.DataTypes
 {
-    public readonly ExitPosition WallPosition;
-    public readonly int ExitIndexZ;
-
-    public SExitInformation(ExitPosition wallPosition, int exitIndexZ) 
+    public struct SExitInformation
     {
-        this.WallPosition = wallPosition;
-        this.ExitIndexZ = exitIndexZ;
+        public readonly ExitPosition WallPosition;
+        public readonly int ExitIndexZ;
+
+        public SExitInformation(ExitPosition wallPosition, int exitIndexZ)
+        {
+            this.WallPosition = wallPosition;
+            this.ExitIndexZ = exitIndexZ;
+        }
     }
 }

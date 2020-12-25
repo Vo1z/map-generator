@@ -7,21 +7,18 @@
  * Twitter: @V0IZ_
  */
 
-namespace MapGenerator
+namespace MapGenerator.Exceptions
 {
-    namespace Exceptions
+    class LayerIsBiggerThanRoomException : System.Exception
     {
-        class LayerIsBiggerThanRoomException : System.Exception
+        public LayerIsBiggerThanRoomException(int coordinate)
+            : base("Layer is bigger than room: " + "[" + coordinate + "]")
         {
-            public LayerIsBiggerThanRoomException(int coordinate)
-                : base("Layer is bigger than room: " + "[" + coordinate + "]")
-            {
-            }
+        }
 
-            public LayerIsBiggerThanRoomException(int coordinateX, int coordinateY)
-                : base("Layer is bigger than room: " + "[" + coordinateX + ", " + coordinateY + "]")
-            {
-            }
+        public LayerIsBiggerThanRoomException(int coordinateX, int coordinateY)
+            : base("Layer is bigger than room: " + "[" + coordinateX + ", " + coordinateY + "]")
+        {
         }
     }
 }

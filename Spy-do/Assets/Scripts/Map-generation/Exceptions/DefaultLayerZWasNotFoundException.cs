@@ -7,16 +7,13 @@
  * Twitter: @V0IZ_
  */
 
-namespace MapGenerator
+namespace MapGenerator.Exceptions
 {
-    namespace Exceptions
+    //Exceptions 
+    class DefaultLayerZWasNotFoundException : System.Exception
     {
-        //Exceptions 
-        class DefaultLayerZWasNotFoundException : System.Exception
+        public DefaultLayerZWasNotFoundException() : base("Room does not have default LayerZ for Exit")
         {
-            public DefaultLayerZWasNotFoundException() : base("Room does not have default LayerZ for Exit")
-            {
-            }
         }
     }
 }

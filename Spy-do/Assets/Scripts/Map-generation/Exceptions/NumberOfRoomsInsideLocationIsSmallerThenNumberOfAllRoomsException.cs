@@ -7,20 +7,16 @@
  * Twitter: @V0IZ_
  */
 
-namespace MapGenerator
+namespace MapGenerator.Exceptions
 {
-    namespace Exceptions
+    class NumberOfRoomsInsideLocationIsSmallerThenNumberOfAllRoomsException : System.Exception
     {
-        class NumberOfRoomsInsideLocationIsSmallerThenNumberOfAllRoomsException : System.Exception
+        public NumberOfRoomsInsideLocationIsSmallerThenNumberOfAllRoomsException(int locationHeightY,
+            int locationLengthX, int numberOfRoomsInLocation)
+            : base("Number of rooms [ " + numberOfRoomsInLocation + " ] is bigger then area of location : (" +
+                   (locationHeightY * locationLengthX) + ") where locatioHeightY is [ " + locationHeightY +
+                   " ] and locationLengthX is [ " + locationLengthX + " ]")
         {
-
-            public NumberOfRoomsInsideLocationIsSmallerThenNumberOfAllRoomsException(int locationHeightY,
-                int locationLengthX, int numberOfRoomsInLocation)
-                : base("Number of rooms [ " + numberOfRoomsInLocation + " ] is bigger then area of location : (" +
-                       (locationHeightY * locationLengthX) + ") where locatioHeightY is [ " + locationHeightY +
-                       " ] and locationLengthX is [ " + locationLengthX + " ]")
-            {
-            }
         }
     }
 }

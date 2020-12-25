@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 using MapGenerator.Core;
+using MapGenerator.DataTypes;
 using UnityEngine;
 
 namespace Tests.EditMode
