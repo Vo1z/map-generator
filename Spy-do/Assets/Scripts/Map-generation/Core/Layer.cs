@@ -13,7 +13,7 @@ using UnityEngine;
 namespace MapGenerator.Core
 {
     //Class that describes layers (Is used in Room class)
-    public class Layer
+    public sealed class Layer
     {
         public readonly string[,] ObjectMap;
 

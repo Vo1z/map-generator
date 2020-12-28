@@ -15,7 +15,7 @@ using Random = UnityEngine.Random;
 namespace MapGenerator.Core
 {
     // Class that is responsible for sorting all data about rooms on game level
-    class Location
+    public sealed class Location
     {
         #region Fields
 
@@ -323,5 +323,4 @@ namespace MapGenerator.Core
             return locationLengthX;
         }
     }
-
 }

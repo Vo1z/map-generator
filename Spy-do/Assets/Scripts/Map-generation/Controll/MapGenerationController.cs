@@ -7,6 +7,17 @@
  * Twitter: @V0IZ_
  */
 
+/*
+ * Hint for adding rooms to map generator:
+ * 1. Add tiles as GameObjects to the fields at MapGeneratorController class
+ * 2. Add additional required fields for room (for example: probability)
+ * 3. Add tiles to _mapObjects inside MapGeneratorController.AddTilesToDatabase() method
+ * 4. Create RoomLogic extending Room class as inner class inside MapGeneratorController class
+ * 5. Using Location logic class create room array passing required arguments for such generation
+ * 6. Create instance of Location class and path created before array of rooms and all other required parameters
+ * 7. Invoke CreateLocation method from MapGeneratorController pathing created location before 
+ */
+
 using System.Collections.Generic;
 using UnityEngine;
 using MapGenerator.Core;
@@ -20,31 +31,20 @@ namespace MapGenerator
         //Inner class that creates floor for room
         class MapGenerationController : MonoBehaviour
         {
-            [Header("Location Propertirties")] public int minLocationHeightY;
-            public int maxLocationHeightY;
-            public int minLocationLengthX;
-            public int maxLocationLengthX;
+            // [Header("GenerationProperties")]
 
-            [Header("General Room")] public GameObject GRFloor1;
+            [Header("General Room")] 
+            public GameObject GRFloor1;
             public GameObject GRFloor2;
             public GameObject GRFloor3;
-
             public GameObject GRInnerObject;
-
             public GameObject GRTopWall;
             public GameObject GRBottomWall;
             public GameObject GRLeftWall;
             public GameObject GRRightWall;
             public GameObject GRTopWallBrink;
 
-            [Header("Office Objects")] public bool isOffice;
-            public int officeQuantity;
-
-            public int officeMinHeightY;
-            public int officeMaxHeightY;
-            public int officeMinLengthX;
-            public int officeMaxLengthX;
-
+            [Header("Office Objects")]
             public GameObject OfficeFloor;
             public GameObject OfficeTopWallBrink;
             public GameObject OfficeWall;
@@ -53,14 +53,7 @@ namespace MapGenerator
             public GameObject OfficeTable;
             public GameObject OfficeComputer;
 
-            [Header("Gym Objects")] public bool isGym;
-            public int gymQuantity;
-
-            public int gymMinHeightY;
-            public int gymMaxHeightY;
-            public int gymMinLengthX;
-            public int gymMaxLengthX;
-
+            [Header("Gym Objects")]
             public GameObject GymFloor;
             public GameObject GymTopWallBrink;
             public GameObject GymWall;
@@ -68,47 +61,66 @@ namespace MapGenerator
             public GameObject GymRightWall;
             public GameObject GymInnerObject;
 
-            [Header("Empty Space")] public bool isEmptySpace;
-            public int emptySpaceQuantity;
+            private Dictionary<string, GameObject> _mapObjects = new Dictionary<string, GameObject>();
 
-            public int emptySpaceMinHeightY;
-            public int emptySpaceMaxHeightY;
-            public int emptySpaceMinLengthX;
-
-            public int emptySpaceMaxLengthX;
-
-            //[Header("<ROOM> Objects")]
-            //<ROOM> GAME OBJECTS
-
-            private Dictionary<GameObject, string> _mapObjects = new Dictionary<GameObject, string>();
-
-            private Room[,] _roomsArray = new Room[5,5];
+            private Room[,] _roomsArray;
             private Room _room;
             private Location _location;
-
+            
             void Awake()
             {
+                AddTilesToDatabase();
                 #region Debug
                 //todo debug creates _roomsArray
                 _roomsArray = LocationLogic.CreateRoomMapByDefaultLogic(5, 5,
                     (typeof(Office), 5, 10, 5, 10, 20), 
-                                    (typeof(Gym), 5, 10, 5, 10, 3),
-                                    (typeof(GeneralRoom), 5,10,5,10,20));
+                    (typeof(Gym), 5, 10, 5, 10, 3), 
+                    (typeof(GeneralRoom), 5,10,5,10,20));
                 Office office = new Office();
-                //_location = new Location(_roomsArray, true, 2, 0);
+                _room = new Office(10,10); 
                 _location = new Location(office, _roomsArray, true, 0, 5, 0, 4);
-                //_location.Test();
                 #endregion
             }
 
             void Start()
             {
+                //Sets start position for generation
+                transform.position = new Vector3(.0f,.0f,.0f);
                 CreateMap(_location);
             }
+            
+            private void AddTilesToDatabase()
+            {
+                //Office tiles
+                _mapObjects.Add(nameof(OfficeFloor), OfficeFloor);
+                _mapObjects.Add(nameof(OfficeTopWallBrink), OfficeTopWallBrink);
+                _mapObjects.Add(nameof(OfficeWall), OfficeWall);
+                _mapObjects.Add(nameof(OfficeLeftWall), OfficeLeftWall);
+                _mapObjects.Add(nameof(OfficeRightWall), OfficeRightWall);
+                _mapObjects.Add(nameof(OfficeTable), OfficeTable);
+                _mapObjects.Add(nameof(OfficeComputer), OfficeComputer);
+                
+                //Gym tiles
+                _mapObjects.Add(nameof(GymFloor), GymFloor);
+                _mapObjects.Add(nameof(GymTopWallBrink), GymTopWallBrink);
+                _mapObjects.Add(nameof(GymWall), GymWall);
+                _mapObjects.Add(nameof(GymLeftWall), GymLeftWall);
+                _mapObjects.Add(nameof(GymRightWall), GymRightWall);
+                _mapObjects.Add(nameof(GymInnerObject), GymInnerObject);
+                
+                //GeneralRoom tile
+                _mapObjects.Add(nameof(GRFloor1),GRFloor1);
+                _mapObjects.Add(nameof(GRFloor2), GRFloor2);
+                _mapObjects.Add(nameof(GRFloor3), GRFloor3);
+                _mapObjects.Add(nameof(GRInnerObject), GRInnerObject);
+                _mapObjects.Add(nameof(GRTopWall), GRTopWall);
+                _mapObjects.Add(nameof(GRBottomWall), GRBottomWall);
+                _mapObjects.Add(nameof(GRLeftWall), GRLeftWall);
+                _mapObjects.Add(nameof(GRRightWall), GRRightWall);
+                _mapObjects.Add(nameof(GRTopWallBrink), GRTopWallBrink);
+            }
 
-            //ADD ROOM CONDITION 
-
-
+            //Tested
             private void CreateRoom(Room room)
             {
                 for (int layerNumber = 0; layerNumber < room.Layers.Count; layerNumber++)
@@ -117,87 +129,15 @@ namespace MapGenerator
                     {
                         for (int x = 0; x < room.Layers[layerNumber].LengthX; x++)
                         {
-                            switch (room.Layers[layerNumber].ObjectMap[y, x])
-                            {
-                                //-------------General Room-------------
-                                case "GRFloor1":
-                                    Instantiate(GRFloor1, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRFloor2":
-                                    Instantiate(GRFloor2, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRFloor3":
-                                    Instantiate(GRFloor3, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRTopWall":
-                                    Instantiate(GRTopWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRBottomWall":
-                                    Instantiate(GRBottomWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRLeftWall":
-                                    Instantiate(GRLeftWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRRightWall":
-                                    Instantiate(GRRightWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRTopWallBrink":
-                                    Instantiate(GRTopWallBrink, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRInnerObject":
-                                    Instantiate(GRInnerObject, new Vector2(x, y), Quaternion.identity);
-                                    break;
-
-                                //-------------Office-------------
-                                case "OfficeFloor":
-                                    Instantiate(OfficeFloor, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "OfficeWall":
-                                    Instantiate(OfficeWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "OfficeTopWallBrink":
-                                    Instantiate(OfficeTopWallBrink, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "OfficeLeftWall":
-                                    Instantiate(OfficeLeftWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "OfficeRightWall":
-                                    Instantiate(OfficeRightWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "OfficeTable":
-                                    Instantiate(OfficeTable, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "OfficeComputer":
-                                    Instantiate(OfficeComputer, new Vector2(x, y), Quaternion.identity);
-                                    break;
-
-                                //-------------Gym-------------
-                                case "GymFloor":
-                                    Instantiate(GymFloor, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GymWall":
-                                    Instantiate(GymWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GymLeftWall":
-                                    Instantiate(GymLeftWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GymRightWall":
-                                    Instantiate(GymRightWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GymTopWallBrink":
-                                    Instantiate(GymTopWallBrink, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GymInnerObject":
-                                    Instantiate(GymInnerObject, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                            }
+                            if (room.Layers[layerNumber].ObjectMap[y, x] != null)
+                                Instantiate(_mapObjects[room.Layers[layerNumber].ObjectMap[y, x]],
+                                    new Vector2(x, y), Quaternion.identity).transform.SetParent(transform);;
                         }
                     }
                 }
             }
-
-            //ADD ROOM CONDITION
-
+            
+            //Tested
             private void CreateMap(Location location)
             {
                 for (int z = 0; z < location.LocationObjectMap.GetLength(0); z++)
@@ -206,83 +146,10 @@ namespace MapGenerator
                     {
                         for (int x = 0; x < location.LocationObjectMap.GetLength(2); x++)
                         {
-                            switch (location.LocationObjectMap[z, y, x])
-                            {
-                                //-------------General Room-------------
-                                case "GRFloor1":
-                                    Instantiate(GRFloor1, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRFloor2":
-                                    Instantiate(GRFloor2, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRFloor3":
-                                    Instantiate(GRFloor3, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRTopWall":
-                                    Instantiate(GRTopWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRBottomWall":
-                                    Instantiate(GRBottomWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRLeftWall":
-                                    Instantiate(GRLeftWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRRightWall":
-                                    Instantiate(GRRightWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRTopWallBrink":
-                                    Instantiate(GRTopWallBrink, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GRInnerObject":
-                                    Instantiate(GRInnerObject, new Vector2(x, y), Quaternion.identity);
-                                    break;
-
-                                //-------------Office-------------
-                                case nameof(OfficeFloor):
-                                    Instantiate(OfficeFloor, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case nameof(OfficeWall):
-                                    Instantiate(OfficeWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case nameof(OfficeTopWallBrink):
-                                    Instantiate(OfficeTopWallBrink, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case nameof(OfficeLeftWall):
-                                    Instantiate(OfficeLeftWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case nameof(OfficeRightWall):
-                                    Instantiate(OfficeRightWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case nameof(OfficeTable):
-                                    Instantiate(OfficeTable, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case nameof(OfficeComputer):
-                                    Instantiate(OfficeComputer, new Vector2(x, y), Quaternion.identity);
-                                    break;
-
-                                //-------------Gym-------------
-                                case "GymFloor":
-                                    Instantiate(GymFloor, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GymWall":
-                                    Instantiate(GymWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GymLeftWall":
-                                    Instantiate(GymLeftWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GymRightWall":
-                                    Instantiate(GymRightWall, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GymTopWallBrink":
-                                    Instantiate(GymTopWallBrink, new Vector2(x, y), Quaternion.identity);
-                                    break;
-                                case "GymInnerObject":
-                                    Instantiate(GymInnerObject, new Vector2(x, y), Quaternion.identity);
-                                    break;
-
-                                //-------------<ROOM>-------------
-                                //<SWITCH OF <ROOM>>
-                            }
+  
+                            if(location.LocationObjectMap[z, y, x] != null)
+                                Instantiate(_mapObjects[location.LocationObjectMap[z, y, x]], 
+                                    new Vector2(x, y), Quaternion.identity).transform.SetParent(transform);
                         }
                     }
                 }

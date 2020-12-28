@@ -75,6 +75,15 @@ namespace Tests.EditMode
             Assert.AreEqual(MapGeneratorUtils.FindHighestRoomInARow(rooms, 1), 22);
         }
 
+        [Test]
+        public void FindUpperPositionBound()
+        {
+            (int y, int x)[] positions = {(5, 3), (6, 10), (13, 5), (23, 0)};
+            
+            Assert.AreEqual(23, MapGeneratorUtils.FindUpperPositionBound(positions).yBound);
+            Assert.AreEqual(10, MapGeneratorUtils.FindUpperPositionBound(positions).xBound);
+        }
+
         //Additional classes for testing
         #region AdditionalClasses
         class Office : Room

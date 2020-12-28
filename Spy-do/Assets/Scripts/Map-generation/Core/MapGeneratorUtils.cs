@@ -96,5 +96,23 @@ namespace MapGenerator.Core
             collection[firstIndex] = collection[secondIndex];
             collection[secondIndex] = intermediate;
         }
+        
+        //Tested
+        //Finds maximum X and Y for given coordinates
+        public static (int yBound, int xBound) FindUpperPositionBound((int y, int x)[] insertionPoints)
+        {
+            int yBound = 0, xBound = 0;
+
+            foreach (var insPoint in insertionPoints)
+            {
+                if (yBound < insPoint.y)
+                    yBound = insPoint.y;
+
+                if (xBound < insPoint.x)
+                    xBound = insPoint.x;
+            }
+
+            return (yBound, xBound);
+        }
     }
 }

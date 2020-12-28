@@ -324,32 +324,32 @@ PrefabInstance:
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.474345
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.0880623
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.0694492
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
@@ -391,10 +391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee189f6f01f3035428e010b5361bf805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minLocationHeightY: 3
-  maxLocationHeightY: 5
-  minLocationLengthX: 3
-  maxLocationLengthX: 8
   GRFloor1: {fileID: 820567288206653950, guid: fcadc39758d806442986f0c3a81ae26f, type: 3}
   GRFloor2: {fileID: 1302386885062709657, guid: d0a862ba45bf2984faee459c9c546bc5,
     type: 3}
@@ -411,12 +407,6 @@ MonoBehaviour:
     type: 3}
   GRTopWallBrink: {fileID: 4403886640598759880, guid: d3d3a0a1a503ac34fb211e32fa7f95c6,
     type: 3}
-  isOffice: 1
-  officeQuantity: 15
-  officeMinHeightY: 8
-  officeMaxHeightY: 8
-  officeMinLengthX: 5
-  officeMaxLengthX: 8
   OfficeFloor: {fileID: 15714967205702415, guid: f78ce6cc49f6f714cbab1e56805e7989,
     type: 3}
   OfficeTopWallBrink: {fileID: 7166004096363727309, guid: 7316db5e05e9467459e1429676012b59,
@@ -431,12 +421,6 @@ MonoBehaviour:
     type: 3}
   OfficeComputer: {fileID: 9138653914015650789, guid: 72b79ddaf3c73d54cbd8eb8e8f3634f0,
     type: 3}
-  isGym: 1
-  gymQuantity: 15
-  gymMinHeightY: 8
-  gymMaxHeightY: 8
-  gymMinLengthX: 5
-  gymMaxLengthX: 8
   GymFloor: {fileID: 6857191621299409194, guid: b4352db39f122344c93fb18e0bf3c10e,
     type: 3}
   GymTopWallBrink: {fileID: 7493096054928581635, guid: 7878373d9aac3bb448c06499a93662b4,
@@ -448,12 +432,6 @@ MonoBehaviour:
     type: 3}
   GymInnerObject: {fileID: 2125560403475918878, guid: e758880d4a5960a488b194007cb8fb16,
     type: 3}
-  isEmptySpace: 1
-  emptySpaceQuantity: 3
-  emptySpaceMinHeightY: 2
-  emptySpaceMaxHeightY: 2
-  emptySpaceMinLengthX: 2
-  emptySpaceMaxLengthX: 2
 --- !u!1 &3843422828890247147
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,8 +458,8 @@ Transform:
   m_PrefabInstance: {fileID: 2210910757796336237}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3843422828890247147}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.474345, y: 2.0880623, z: -3.0694492}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
