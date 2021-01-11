@@ -39,9 +39,11 @@ public class CameraMovement : MonoBehaviour
     private Vector3 _oldMousePosition;
     //Variable that is responsible for tracking if camera has to be fixed above the player
     private bool _isCameraFixedAbovePlayer = false;
-    
+    private Camera _mainCamera;
+
     private void Start()
     {
+        _mainCamera = Camera.main;
         transform.position = _player.transform.position;
         _oldMousePosition = Input.mousePosition;
         _playerMovement = FindObjectOfType<PlayerMovement>();
@@ -49,6 +51,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
+        //Holds camera on player
         if (Input.GetKeyUp(fixCameraAbovePlayerButton))
             _isCameraFixedAbovePlayer = !_isCameraFixedAbovePlayer;
         
@@ -72,12 +75,9 @@ public class CameraMovement : MonoBehaviour
             _oldMousePosition = Input.mousePosition;
             return;
         }
-
-        if (!Input.GetKey(dragButton)) return;
-
-        if (_oldMousePosition == Input.mousePosition)
-            return;
-        Vector2 pos = Camera.main.ScreenToViewportPoint(_oldMousePosition - Input.mousePosition);
+        if (!Input.GetKey(dragButton) && _oldMousePosition == Input.mousePosition) return;
+        
+        Vector2 pos = _mainCamera.ScreenToViewportPoint(_oldMousePosition - Input.mousePosition);
         Vector2 move = new Vector2(pos.x * dragSpeed, pos.y * dragSpeed);
 
         transform.Translate(move, Space.World);
@@ -104,13 +104,13 @@ public class CameraMovement : MonoBehaviour
         cameraPos.y = Mathf.Clamp(cameraPos.y, -_panLimit.y, _panLimit.y);
         
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        Camera.main.orthographicSize -= scroll * 50f * _scrollSpeed * Time.deltaTime;
-        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, _maxScale, _minScale);
+        _mainCamera.orthographicSize -= scroll * 50f * _scrollSpeed * Time.deltaTime;
+        _mainCamera.orthographicSize = Mathf.Clamp(_mainCamera.orthographicSize, _maxScale, _minScale);
         
         transform.position = cameraPos;
         
         //Sets camera on player
         if (Input.GetKeyDown(cameraResetButton))
-            Camera.main.transform.position = _player.transform.position;
+            _mainCamera.transform.position = _player.transform.position;
     }
 }
