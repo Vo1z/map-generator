@@ -30,7 +30,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float _maxScale = 0f;
 
     [Header("Drug control options")]
-    [SerializeField] private float dragSpeed = 10;
+    [SerializeField] private float dragSpeed = 15;
     //Variable that is responsible for holding button that moves camera during drag camera movement
     [SerializeField] private KeyCode dragButton = KeyCode.Mouse2;
 
