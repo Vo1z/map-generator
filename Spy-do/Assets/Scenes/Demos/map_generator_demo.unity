@@ -321,6 +321,11 @@ PrefabInstance:
       propertyPath: gymMinHeightY
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: TurnProbability
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -391,6 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee189f6f01f3035428e010b5361bf805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TurnProbability: 10
   GRFloor1: {fileID: 820567288206653950, guid: fcadc39758d806442986f0c3a81ae26f, type: 3}
   GRFloor2: {fileID: 1302386885062709657, guid: d0a862ba45bf2984faee459c9c546bc5,
     type: 3}

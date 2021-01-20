@@ -1,4 +1,13 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Sirex production code:
+ * Project: Spy-Do
+ * Author: Voiz (Viktor Lishchuk)
+ * Email: vitya.voody@gmail.com
+ * GitHub: Vo1z
+ * Twitter: @V0IZ_
+ */
+
+using System.Collections.Generic;
 using NUnit.Framework;
 using MapGenerator.Core;
 using MapGenerator.DataTypes;

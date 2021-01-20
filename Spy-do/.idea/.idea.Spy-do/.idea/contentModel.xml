@@ -38,16 +38,19 @@
             <e p="MovingPlayer.cs" t="Include" />
           </e>
           <e p="Map-generation" t="Include">
-            <e p="Controll" t="Include">
+            <e p="Control" t="Include">
               <e p="MapGenerationController.cs" t="Include" />
-              <e p="RoomsAndComplexObjects.cs" t="Include" />
+              <e p="VentilationEntrance.cs" t="Include" />
             </e>
             <e p="Core" t="Include">
               <e p="ComplexObject.cs" t="Include" />
+              <e p="DirectPathFinder.cs" t="Include" />
               <e p="Layer.cs" t="Include" />
               <e p="Location.cs" t="Include" />
+              <e p="LocationLogic.cs" t="Include" />
               <e p="MapGeneratorUtils.cs" t="Include" />
               <e p="Room.cs" t="Include" />
+              <e p="Ventilation.cs" t="Include" />
             </e>
             <e p="Exceptions" t="Include">
               <e p="AnyRoomsWereNotChosenException.cs" t="Include" />
@@ -61,15 +64,23 @@
               <e p="StartPointIsSmallerThenEndPointException.cs" t="Include" />
             </e>
             <e p="Structs-and-enums" t="Include">
-              <e p="EPosition.cs" t="Include" />
+              <e p="ExitPosition.cs" t="Include" />
               <e p="SConstants.cs" t="Include" />
               <e p="SExitInformation.cs" t="Include" />
             </e>
           </e>
         </e>
+        <e p="Tests" t="Include">
+          <e p="EditMode" t="Include">
+            <e p="MapGeneratorUtilsTest.cs" t="Include" />
+          </e>
+        </e>
       </e>
+      <e p="EditMode.csproj" t="IncludeRecursive" />
+      <e p="MaPGenerationAssemblyDef.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
+      <e p="ScriptsAsemlyDef.csproj" t="IncludeRecursive" />
       <e p="Spy-do.sln" t="IncludeFlat" />
       <e p="Temp\bin" t="ExcludeRecursive" />
     </e>

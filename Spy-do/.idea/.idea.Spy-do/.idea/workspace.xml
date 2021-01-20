@@ -21,10 +21,14 @@
   <component name="ChangeListManager">
     <list default="true" id="a1a8dfb7-ea8e-4e9d-b0a4-483e6d867115" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Spy-do/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Spy-do/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Spy-do/.idea/encodings.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Spy-do/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Spy-do/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/MapGenerationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/MapGenerationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Location.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Location.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Demos/map_generator_demo.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Demos/map_generator_demo.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/MapGenerationController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/MapGenerationController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Tests/EditMode/MapGeneratorUtilsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tests/EditMode/MapGeneratorUtilsTest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +38,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Map-generation/Control/VentilationEntrance.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -42,8 +49,16 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Structs-and-enums/SRoomInformation.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/RoomsAndComplexObjects.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Room.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/MapGenerationController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Location.cs" />
+        <option value="$PROJECT_DIR$/Assets/Tests/EditMode/MapGeneratorUtilsTest.cs" />
+        <option value="$PROJECT_DIR$/Assets/Tests/EditMode/TunnelTest.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Controll/MapGenerationController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Tunnel.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Control/MapGenerationController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/DataHolder.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/DirectPathFinder.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Control/VentilationEntrance.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Map-generation/Core/Ventilation.cs" />
       </list>
     </option>
   </component>
@@ -95,6 +110,8 @@
       <workItem from="1600781240875" duration="39000" />
       <workItem from="1606727117834" duration="3292000" />
       <workItem from="1606731354830" duration="4811000" />
+      <workItem from="1611146300068" duration="7788000" />
+      <workItem from="1611163518533" duration="2809000" />
     </task>
     <servers />
   </component>
@@ -119,15 +136,10 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="475" y="180" width="405" height="613" key="RiderGenerateDialog" timestamp="1600258714234">
-      <screen x="0" y="99" width="1366" height="768" />
-    </state>
-    <state x="475" y="180" width="405" height="613" key="RiderGenerateDialog/1366.0.1920.1080/0.99.1366.768@1366.0.1920.1080" timestamp="1600258714234" />
     <state x="1013" y="274" width="1022" height="737" key="SettingsEditor" timestamp="1606731225120">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1013" y="274" key="SettingsEditor/-1080.0.1080.1860/0.0.2560.1400@0.0.2560.1400" timestamp="1606731225120" />
-    <state x="2126" y="211" width="1022" height="737" key="SettingsEditor/1366.0.1920.1080/0.99.1366.768@1366.0.1920.1080" timestamp="1600692441742" />
     <state x="93" y="93" width="2375" height="1215" key="VCS.FileHistoryDialog" timestamp="1606728158950">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -136,11 +148,9 @@
       <screen x="-1080" y="0" width="1080" height="1860" />
     </state>
     <state x="-1320" y="-22" width="1096" height="1388" maximized="true" key="dock-window-1/-1080.0.1080.1860/0.0.2560.1400@0.0.2560.1400" timestamp="1606731681865" />
-    <state x="0" y="99" width="1366" height="768" key="dock-window-1/1366.0.1920.1080/0.99.1366.768@1366.0.1920.1080" timestamp="1600258515521" />
-    <state x="0" y="-5" width="864" height="1000" maximized="true" key="dock-window-1/864.230.1920.1080/0.0.864.1536@864.230.1920.1080" timestamp="1600781279900" />
-    <state x="0" y="99" width="1366" height="768" key="dock-window-2" timestamp="1600685699609">
-      <screen x="0" y="99" width="1366" height="768" />
+    <state x="937" y="331" key="run.anything.popup" timestamp="1611165497232">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="0" y="99" width="1366" height="768" key="dock-window-2/1366.0.1920.1080/0.99.1366.768@1366.0.1920.1080" timestamp="1600685699609" />
+    <state x="937" y="331" key="run.anything.popup/-1080.0.1080.1860/0.0.2560.1400@0.0.2560.1400" timestamp="1611165497232" />
   </component>
 </project>
