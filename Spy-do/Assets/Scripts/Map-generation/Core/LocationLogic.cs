@@ -8,6 +8,10 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.NetworkInformation;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace MapGenerator.Core
@@ -41,6 +45,29 @@ namespace MapGenerator.Core
             }
             
             return roomsArray;
+        }
+
+        public static (Vector2 startPos, Vector2 endPos, int turnProbability)[] CreatePairsForVentilation(
+            List<Vector2> entrances, int turnProbability, int maxNumberOfPaths)
+        {
+            if (turnProbability < 0 || maxNumberOfPaths < 0 || entrances == null)
+                throw new ArgumentException();
+            
+            var result = new (Vector2 startPos, Vector2 endPos, int turnProbability)[maxNumberOfPaths];
+
+            for (var i = 0; i < maxNumberOfPaths; i++)
+            {
+                Vector2 entrance1 = entrances[Random.Range(0, entrances.Count)];
+                Vector2 entrance2 = entrances[Random.Range(0, entrances.Count)];
+                var pathUnit = (entrance1, entrance2, turnProbability);
+                
+                if (entrance1 != entrance2 && !result.Contains(pathUnit))
+                    result[i] = pathUnit;
+                else
+                    i--;
+            }
+
+            return result;
         }
     }
 }

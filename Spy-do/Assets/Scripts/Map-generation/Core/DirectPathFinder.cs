@@ -17,14 +17,14 @@ namespace MapGenerator.Core
     //Class that is responsible for computing and holding path between two points 
     public class DirectPathFinder
     {
-        private readonly Vector2Int _startPoint;
-        private readonly Vector2Int _endPoint;
+        private readonly Vector2 _startPoint;
+        private readonly Vector2 _endPoint;
         //Variable that holds probability of generating turns in the path
         private readonly int _turnProbability;
         //List which holds coordinates of tiles that creates path
-        public List<Vector2Int> Path { get; private set; } = new List<Vector2Int>();
+        public List<Vector2> Path { get; private set; } = new List<Vector2>();
 
-        public DirectPathFinder(Vector2Int startPoint, Vector2Int endPoint, int turnProbability)
+        public DirectPathFinder(Vector2 startPoint, Vector2 endPoint, int turnProbability)
         {
             _startPoint = startPoint;
             _endPoint = endPoint;
@@ -37,8 +37,8 @@ namespace MapGenerator.Core
         //Generates Path between _startPoint and _endPoint
         private void FindPath()
         {
-            Vector2Int currentPos = new Vector2Int(_startPoint.x, _startPoint.y);
-            Path.Add(new Vector2Int(currentPos.x, currentPos.y));
+            Vector2 currentPos = new Vector2(_startPoint.x, _startPoint.y);
+            Path.Add(new Vector2(currentPos.x, currentPos.y));
 
             while (!currentPos.Equals(_endPoint))
             {
@@ -57,7 +57,7 @@ namespace MapGenerator.Core
                         currentPos.y--;
                 }
                 
-                Path.Add(new Vector2Int(currentPos.x, currentPos.y));
+                Path.Add(new Vector2(currentPos.x, currentPos.y));
             }
         }
     }

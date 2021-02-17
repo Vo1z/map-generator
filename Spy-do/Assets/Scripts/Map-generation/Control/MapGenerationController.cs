@@ -24,6 +24,7 @@ using System.Linq;
 using UnityEngine;
 using MapGenerator.Core;
 using MapGenerator.DataTypes;
+using UnityEditor.UIElements;
 using Random = UnityEngine.Random;
 
 namespace MapGenerator.Control
@@ -31,10 +32,14 @@ namespace MapGenerator.Control
     //Inner class that creates floor for room
     class MapGenerationController : MonoBehaviour
     {
-        [Header("Ventilation properties")] [Range(0, 60)]
+        [Header("Ventilation properties")] 
+        [Range(0, 60)]
         public int TurnProbability = 4;
+        public string VentilationEntranceTag = "VentilationEntrance";
+        public GameObject VentilationFloor;
 
-        [Header("General Room")] public GameObject GRFloor1;
+        [Header("General Room")] 
+        public GameObject GRFloor1;
         public GameObject GRFloor2;
         public GameObject GRFloor3;
         public GameObject GRInnerObject;
@@ -44,7 +49,8 @@ namespace MapGenerator.Control
         public GameObject GRRightWall;
         public GameObject GRTopWallBrink;
 
-        [Header("Office Objects")] public GameObject OfficeFloor;
+        [Header("Office Objects")] 
+        public GameObject OfficeFloor;
         public GameObject OfficeTopWallBrink;
         public GameObject OfficeWall;
         public GameObject OfficeLeftWall;
@@ -52,7 +58,8 @@ namespace MapGenerator.Control
         public GameObject OfficeTable;
         public GameObject OfficeComputer;
 
-        [Header("Gym Objects")] public GameObject GymFloor;
+        [Header("Gym Objects")]
+        public GameObject GymFloor;
         public GameObject GymTopWallBrink;
         public GameObject GymWall;
         public GameObject GymLeftWall;
@@ -60,40 +67,61 @@ namespace MapGenerator.Control
         public GameObject GymInnerObject;
         
         //Map that maps name of the variables to its game objects
-        private Dictionary<string, GameObject> _mapObjects = new Dictionary<string, GameObject>();
-
+        private readonly Dictionary<string, GameObject> _mapObjects = new Dictionary<string, GameObject>();
+        private readonly List<Vector2> _ventilationEntrances = new List<Vector2>();
+        
+        //Array that holds rooms of the location
         private Room[,] _roomsArray;
         private Location _location;
+        
+        //Game object for grouping ventilation tiles on scene
+        private GameObject _ventilationTab;
+        //Game object for grouping location tiles on scene
+        private GameObject _locationTab;
         
         void Awake()
         {
             AddTilesToDatabase();
+
+            #region TabsInstantiation
+
+            _ventilationTab = new GameObject("Ventilation");
+            _locationTab = new GameObject("Location");
+            _ventilationTab.transform.SetParent(transform);
+            _locationTab.transform.SetParent(transform);
             
+            #endregion
+
             #region Debug
+            
             //Random generated array of rooms
             _roomsArray = LocationLogic.CreateRoomMapByDefaultLogic(5, 5, 
                 (typeof(Office), 5, 10, 5, 10, 20),
             (typeof(Gym), 5, 10, 5, 10, 3),
             (typeof(GeneralRoom), 5, 10, 5, 10, 20));
-            // //Background room
-            Office office = new Office(); 
-            _location = new Location(office, _roomsArray, true,
+
+            _location = new Location(new Office(), _roomsArray, true,
                 0, 5,
                 0, 4);
-            #endregion
             
-            CreateVentilation(nameof(OfficeFloor), (new Vector2Int(20,20), new Vector2Int(30,30), 2));
+            #endregion
         }
 
         void Start()
         {
             //Sets start position for generation
             transform.position = new Vector3(.0f, .0f, .0f);
-            //CreateMap(_location);
+
+            CreateMap(_location);
+            
+            CreateVentilation(nameof(VentilationFloor), (new Vector2(20,20), new Vector2(30,30), 2));
         }
 
         private void AddTilesToDatabase()
         {
+            //Ventilation
+            _mapObjects.Add(nameof(VentilationFloor), VentilationFloor);
+            
             //Office tiles
             _mapObjects.Add(nameof(OfficeFloor), OfficeFloor);
             _mapObjects.Add(nameof(OfficeTopWallBrink), OfficeTopWallBrink);
@@ -134,7 +162,7 @@ namespace MapGenerator.Control
                     {
                         if (room.Layers[layerNumber].ObjectMap[y, x] != null)
                             Instantiate(_mapObjects[room.Layers[layerNumber].ObjectMap[y, x]],
-                                new Vector2(x, y), Quaternion.identity).transform.SetParent(transform);
+                                new Vector2(x, y), Quaternion.identity).transform.SetParent(_locationTab.transform);
                         ;
                     }
                 }
@@ -145,22 +173,26 @@ namespace MapGenerator.Control
         private void CreateMap(Location location)
         {
             for (int z = 0; z < location.LocationObjectMap.GetLength(0); z++)
-            {
                 for (int y = 0; y < location.LocationObjectMap.GetLength(1); y++)
-                {
                     for (int x = 0; x < location.LocationObjectMap.GetLength(2); x++)
                     {
                         if (location.LocationObjectMap[z, y, x] != null)
-                            Instantiate(_mapObjects[location.LocationObjectMap[z, y, x]],
-                                new Vector2(x, y), Quaternion.identity).transform.SetParent(transform);
+                        {
+                            GameObject objectToInstantiate = _mapObjects[location.LocationObjectMap[z, y, x]];
+        
+                            Instantiate(objectToInstantiate,
+                                new Vector2(x, y), Quaternion.identity).transform.SetParent(_locationTab.transform);
+        
+                            //Adds ventilation entrance coordinates to the collection for the future manipulations
+                            if (objectToInstantiate.tag.Equals(VentilationEntranceTag))
+                                _ventilationEntrances.Add(objectToInstantiate.transform.position);
+                        }
                     }
-                }
-            }
         }
 
-        //Not tested
+        //Tested
         //Instantiates tiles for ventilation
-        private void CreateVentilation(string tile, params (Vector2Int startPos, Vector2Int endPos, int turnProbability)[] edges)
+        private void CreateVentilation(string tile, params (Vector2 startPos, Vector2 endPos, int turnProbability)[] edges)
         {
             //Maps all given start and end position into List to generate all paths later
             List<DirectPathFinder> directPathFinders = edges
@@ -172,7 +204,8 @@ namespace MapGenerator.Control
             {
                 foreach (var tilePos in directPathFinder.Path)
                 {
-                    Instantiate(_mapObjects[tile], new Vector2(tilePos.x, tilePos.y), Quaternion.identity);
+                    Instantiate(_mapObjects[tile], new Vector2(tilePos.x, tilePos.y), Quaternion.identity)
+                        .transform.SetParent(_ventilationTab.transform);
                 }
             }
         }
@@ -188,13 +221,13 @@ namespace MapGenerator.Control
             {
                 //========================Layer 0=======================
                 AddRoomLayer();
-                Layers[0].FillWholeLayerMap("GRFloor2");
-                Layers[0].SetOnRandomLayerID("GRFloor2", 2);
-                Layers[0].SetOnRandomLayerID("GRFloor3", 2);
+                Layers[0].FillWholeLayerMap(nameof(GRFloor2));
+                Layers[0].SetOnRandomLayerID(nameof(GRFloor2), 2);
+                Layers[0].SetOnRandomLayerID(nameof(GRFloor3), 2);
 
                 //========================Layer 1=======================
                 AddRoomLayer();
-                Layers[1].SetOnRandomLayerID("GRInnerObject", 8);
+                Layers[1].SetOnRandomLayerID(nameof(GRInnerObject), 8);
 
                 AddRoomLayer();
                 AddRoomLayer();
@@ -212,28 +245,28 @@ namespace MapGenerator.Control
             {
                 //========================Layer 0=======================
                 AddRoomLayer();
-                Layers[0].FillWholeLayerMap("GymFloor");
+                Layers[0].FillWholeLayerMap(nameof(GymFloor));
 
                 //========================Layer 1=======================
                 AddRoomLayer();
-                Layers[1].SetOnRandomLayerID("GymInnerObject", 5);
+                Layers[1].SetOnRandomLayerID(nameof(GymInnerObject), 5);
 
                 //========================Layer 2=======================
                 AddRoomLayer();
-                Layers[2].SetHorizontalLayerLine(0, "GymWall");
-                Layers[2].SetHorizontalLayerLine(HeightY - 2, "GymWall");
+                Layers[2].SetHorizontalLayerLine(0, nameof(GymWall));
+                Layers[2].SetHorizontalLayerLine(HeightY - 2, nameof(GymWall));
 
                 //========================Layer 3=======================
                 AddRoomLayer();
-                Layers[3].SetVerticalLayerLine(0, "GymLeftWall");
-                Layers[3].SetVerticalLayerLine(LengthX - 1, "GymRightWall");
+                Layers[3].SetVerticalLayerLine(0, nameof(GymLeftWall));
+                Layers[3].SetVerticalLayerLine(LengthX - 1, nameof(GymRightWall));
                 Layers[3].SetHorizontalLayerLine(0, null);
                 Layers[3].SetHorizontalLayerLine(HeightY - 1, null);
 
                 //========================Layer 4=======================
                 AddRoomLayer();
-                Layers[4].SetHorizontalLayerLine(1, "GymTopWallBrink");
-                Layers[4].SetHorizontalLayerLine(HeightY - 1, "GymTopWallBrink");
+                Layers[4].SetHorizontalLayerLine(1, nameof(GymTopWallBrink));
+                Layers[4].SetHorizontalLayerLine(HeightY - 1, nameof(GymTopWallBrink));
 
                 SetDefaultExitAndLayerZ(new Test(), 2);
 
@@ -300,38 +333,38 @@ namespace MapGenerator.Control
             {
                 //========================Layer 0=======================
                 AddRoomLayer();
-                Layers[0].FillWholeLayerMap("GRFloor1");
-                Layers[0].SetOnRandomLayerID("GRFloor2", 2);
-                Layers[0].SetOnRandomLayerID("GRFloor3", 2);
+                Layers[0].FillWholeLayerMap(nameof(GRFloor1));
+                Layers[0].SetOnRandomLayerID(nameof(GRFloor2), 2);
+                Layers[0].SetOnRandomLayerID(nameof(GRFloor3), 2);
 
                 //========================Layer 1=======================
                 AddRoomLayer();
 
                 //========================Layer 2=======================
                 AddRoomLayer();
-                Layers[2].SetHorizontalLayerLine(HeightY - 2, "GRTopWall");
-                Layers[2].SetOnRandomLayerID("GRInnerObject", 8);
-                Layers[2].SetHorizontalLayerLine(HeightY - 2, "GRTopWall");
+                Layers[2].SetHorizontalLayerLine(HeightY - 2, nameof(GRTopWall));
+                Layers[2].SetOnRandomLayerID(nameof(GRInnerObject), 8);
+                Layers[2].SetHorizontalLayerLine(HeightY - 2, nameof(GRTopWall));
 
                 //========================Layer 3=======================
                 AddRoomLayer();
-                Layers[3].SetHorizontalLayerLine(0, "GRBottomWall");
-                Layers[3].SetHorizontalLayerLine(HeightY - 2, "GRTopWall");
+                Layers[3].SetHorizontalLayerLine(0, nameof(GRBottomWall));
+                Layers[3].SetHorizontalLayerLine(HeightY - 2, nameof(GRTopWall));
 
                 //========================Layer 4=======================
                 AddRoomLayer();
 
                 //========================Layer 5=======================
                 AddRoomLayer();
-                Layers[5].SetVerticalLayerLine(0, "GRLeftWall");
-                Layers[5].SetVerticalLayerLine(LengthX - 1, "GRRightWall");
+                Layers[5].SetVerticalLayerLine(0, nameof(GRLeftWall));
+                Layers[5].SetVerticalLayerLine(LengthX - 1, nameof(GRRightWall));
                 Layers[5].SetHorizontalLayerLine(0, null);
                 Layers[5].SetHorizontalLayerLine(HeightY - 1, null);
 
                 //========================Layer 6=======================
                 AddRoomLayer();
-                Layers[6].SetHorizontalLayerLine(1, "GRTopWallBrink");
-                Layers[6].SetHorizontalLayerLine(HeightY - 1, "GRTopWallBrink");
+                Layers[6].SetHorizontalLayerLine(1, nameof(GRTopWallBrink));
+                Layers[6].SetHorizontalLayerLine(HeightY - 1, nameof(GRTopWallBrink));
 
                 SetDefaultExitAndLayerZ(new Test(), 2);
             }
@@ -349,10 +382,10 @@ namespace MapGenerator.Control
             {
                 //========================Layer 0=======================
                 AddCOLayer();
-                COLayers[0].FillWholeLayerMap("GymFloor");
+                COLayers[0].FillWholeLayerMap(nameof(GymFloor));
                 //========================Layer 1=======================
                 AddCOLayer();
-                COLayers[1].FillWholeLayerMap("GymFloor");
+                COLayers[1].FillWholeLayerMap(nameof(GymFloor));
             }
         }
     }
