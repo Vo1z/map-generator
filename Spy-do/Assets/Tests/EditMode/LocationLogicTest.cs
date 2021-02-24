@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MapGenerator.Core;
 using NUnit.Framework;
 using UnityEngine;
@@ -19,8 +20,13 @@ namespace Tests.EditMode
                 new Vector2(-3, -5),
                 new Vector2(-3, 1)
             };
+            var copyList = listOfVectors.ToList();
+            
+            int numberOfPaths = Random.Range(0, listOfVectors.Count);
+            LocationLogic.CreatePairsForVentilation(listOfVectors, numberOfPaths, Random.Range(0, 20));
 
-            Assert.Fail();
+            Assert.AreEqual(listOfVectors.Count, copyList.Count);
+            Assert.IsFalse(copyList.Equals(listOfVectors));
         }
     }
 }

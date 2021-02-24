@@ -48,8 +48,7 @@ namespace MapGenerator.Core
         }
 
         
-        //Not tested
-        //todo test
+        //Tested
         public static (Vector2 startPos, Vector2 endPos, int turnProbability)[] CreatePairsForVentilation(
             List<Vector2> entrances, int maxNumberOfPaths, int turnProbability)
         {
