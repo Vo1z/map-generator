@@ -7,11 +7,12 @@
  * Twitter: @V0IZ_
  */
 
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using MapGenerator.Core;
 using MapGenerator.DataTypes;
-using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Tests.EditMode
 {
@@ -91,6 +92,27 @@ namespace Tests.EditMode
             
             Assert.AreEqual(23, MapGeneratorUtils.FindUpperPositionBound(positions).yBound);
             Assert.AreEqual(10, MapGeneratorUtils.FindUpperPositionBound(positions).xBound);
+        }
+        
+        [Test]
+        public void Randomize()
+        {
+            var array = new int[]
+            {
+                Random.Range(0, 200),
+                Random.Range(0, 200),
+                Random.Range(0, 200),
+                Random.Range(0, 200),
+                Random.Range(0, 200),
+                Random.Range(0, 200),
+                Random.Range(0, 200)
+            };
+            var arrayCopy = new int[array.Length];
+            
+            Array.Copy(array, arrayCopy, array.Length);
+            MapGeneratorUtils.Randomize(arrayCopy);
+            
+            Assert.IsFalse(array.Equals(arrayCopy));
         }
 
         //Additional classes for testing

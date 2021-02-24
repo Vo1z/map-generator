@@ -223,13 +223,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
-      propertyPath: officeMaxHeightY
-      value: 8
+      propertyPath: isOffice
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
-      propertyPath: officeMaxLengthX
-      value: 8
+      propertyPath: gymQuantity
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: isEmptySpace
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
@@ -243,53 +248,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
-      propertyPath: minLocationHeightY
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: maxLocationHeightY
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: minLocationLengthX
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: maxLocationLengthX
+      propertyPath: gymMinHeightY
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: isEmptySpace
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: emptySpaceQuantity
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: emptySpaceMinHeightY
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: emptySpaceMaxHeightY
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: emptySpaceMinLengthX
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: emptySpaceMaxLengthX
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
@@ -298,13 +258,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
-      propertyPath: gymQuantity
-      value: 15
+      propertyPath: TurnProbability
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
-      propertyPath: isOffice
-      value: 1
+      propertyPath: officeMaxHeightY
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: officeMaxLengthX
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
@@ -318,13 +283,58 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
-      propertyPath: gymMinHeightY
+      propertyPath: emptySpaceQuantity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: maxLocationHeightY
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: maxLocationLengthX
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
-      propertyPath: TurnProbability
-      value: 20
+      propertyPath: minLocationHeightY
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: minLocationLengthX
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: MaximumNumberOfPaths
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: emptySpaceMaxHeightY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: emptySpaceMaxLengthX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: emptySpaceMinHeightY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: emptySpaceMinLengthX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
@@ -343,6 +353,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -355,16 +370,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
@@ -397,8 +402,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TurnProbability: 20
+  MaximumNumberOfPaths: 2
   VentilationEntranceTag: VentilationEntrance
   VentilationFloor: {fileID: 75237172623086432, guid: 6840fef776a5fda44b4a8b8e59a44893,
+    type: 3}
+  VentilationEntrance: {fileID: 8101776940709543566, guid: 78cad237ee85a314f99227dcd9f798aa,
     type: 3}
   GRFloor1: {fileID: 820567288206653950, guid: fcadc39758d806442986f0c3a81ae26f, type: 3}
   GRFloor2: {fileID: 1302386885062709657, guid: d0a862ba45bf2984faee459c9c546bc5,

@@ -35,8 +35,11 @@ namespace MapGenerator.Control
         [Header("Ventilation properties")] 
         [Range(0, 60)]
         public int TurnProbability = 4;
+        [Range(0, 100)]
+        public int MaximumNumberOfPaths = 0;
         public string VentilationEntranceTag = "VentilationEntrance";
         public GameObject VentilationFloor;
+        public GameObject VentilationEntrance;
 
         [Header("General Room")] 
         public GameObject GRFloor1;
@@ -114,13 +117,16 @@ namespace MapGenerator.Control
 
             CreateMap(_location);
             
-            CreateVentilation(nameof(VentilationFloor), (new Vector2(20,20), new Vector2(30,30), 2));
+            //CreateVentilation(nameof(VentilationFloor), (new Vector2(20,20), new Vector2(30,30), 2));
+            CreateVentilation(nameof(VentilationFloor), 
+                LocationLogic.CreatePairsForVentilation(_ventilationEntrances, MaximumNumberOfPaths, TurnProbability));
         }
 
         private void AddTilesToDatabase()
         {
             //Ventilation
             _mapObjects.Add(nameof(VentilationFloor), VentilationFloor);
+            _mapObjects.Add(nameof(VentilationEntrance), VentilationEntrance);
             
             //Office tiles
             _mapObjects.Add(nameof(OfficeFloor), OfficeFloor);
@@ -179,32 +185,49 @@ namespace MapGenerator.Control
                         if (location.LocationObjectMap[z, y, x] != null)
                         {
                             GameObject objectToInstantiate = _mapObjects[location.LocationObjectMap[z, y, x]];
-        
-                            Instantiate(objectToInstantiate,
-                                new Vector2(x, y), Quaternion.identity).transform.SetParent(_locationTab.transform);
-        
-                            //Adds ventilation entrance coordinates to the collection for the future manipulations
+                            Renderer gameObjectRenderer = objectToInstantiate.GetComponent<Renderer>();
+                            gameObjectRenderer.sortingOrder = z;
+
                             if (objectToInstantiate.tag.Equals(VentilationEntranceTag))
-                                _ventilationEntrances.Add(objectToInstantiate.transform.position);
+                            {
+                                var ventilationEntrance = Instantiate(objectToInstantiate,
+                                        new Vector2(x, y), Quaternion.identity);
+                                ventilationEntrance.transform.SetParent(_ventilationTab.transform);
+                                
+                                _ventilationEntrances.Add(ventilationEntrance.transform.position);
+                            }
+                            else
+                            {
+                                Instantiate(objectToInstantiate,
+                                    new Vector2(x, y), Quaternion.identity).transform.SetParent(_locationTab.transform);
+                            }
                         }
                     }
         }
 
         //Tested
         //Instantiates tiles for ventilation
-        private void CreateVentilation(string tile, params (Vector2 startPos, Vector2 endPos, int turnProbability)[] edges)
+        private void CreateVentilation(string tile,
+            params (Vector2 startPos, Vector2 endPos, int turnProbability)[] edges)
         {
             //Maps all given start and end position into List to generate all paths later
             List<DirectPathFinder> directPathFinders = edges
-                .Select(edge => new DirectPathFinder(edge.startPos, edge.endPos, edge.turnProbability))
+                .Select(edge => new DirectPathFinder(edge.startPos, edge.endPos, TurnProbability))
                 .ToList();
             
+            //todo replace debug
+            Debug.Log(edges.Length);
+
             //Instantiates tiles according to paths
-            foreach(var directPathFinder in directPathFinders)
+            foreach (var directPathFinder in directPathFinders)
             {
                 foreach (var tilePos in directPathFinder.Path)
                 {
-                    Instantiate(_mapObjects[tile], new Vector2(tilePos.x, tilePos.y), Quaternion.identity)
+                    GameObject objectToInstantiate = _mapObjects[tile];
+                    Renderer gameObjectRenderer = objectToInstantiate.GetComponent<Renderer>();
+
+                    gameObjectRenderer.sortingOrder = 100; //todo handle this
+                    Instantiate(objectToInstantiate, new Vector2(tilePos.x, tilePos.y), Quaternion.identity)
                         .transform.SetParent(_ventilationTab.transform);
                 }
             }
@@ -315,7 +338,8 @@ namespace MapGenerator.Control
                 AddRoomLayer();
                 Layers[4].SetHorizontalLayerLine(1, nameof(OfficeTopWallBrink));
                 Layers[4].SetHorizontalLayerLine(HeightY - 1, nameof(OfficeTopWallBrink));
-
+                Layers[4].SetOnUniqueLayerID(4,4, nameof(VentilationEntrance));
+                
                 SetDefaultExitAndLayerZ(new Test(), 2);
 
                 SetExit(new Test(), 2, ExitPosition.LEFT, Random.Range(1, HeightY - 2));

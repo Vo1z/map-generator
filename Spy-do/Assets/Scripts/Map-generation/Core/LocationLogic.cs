@@ -47,25 +47,29 @@ namespace MapGenerator.Core
             return roomsArray;
         }
 
+        
+        //Not tested
+        //todo test
         public static (Vector2 startPos, Vector2 endPos, int turnProbability)[] CreatePairsForVentilation(
-            List<Vector2> entrances, int turnProbability, int maxNumberOfPaths)
+            List<Vector2> entrances, int maxNumberOfPaths, int turnProbability)
         {
-            if (turnProbability < 0 || maxNumberOfPaths < 0 || entrances == null)
-                throw new ArgumentException();
+            var pairs = new List<(Vector2, Vector2, int)>();
             
-            var result = new (Vector2 startPos, Vector2 endPos, int turnProbability)[maxNumberOfPaths];
 
-            for (var i = 0; i < maxNumberOfPaths; i++)
+            for (var pair1 = 0; pair1 < entrances.Count; pair1++)
             {
-                Vector2 entrance1 = entrances[Random.Range(0, entrances.Count)];
-                Vector2 entrance2 = entrances[Random.Range(0, entrances.Count)];
-                var pathUnit = (entrance1, entrance2, turnProbability);
-                
-                if (entrance1 != entrance2 && !result.Contains(pathUnit))
-                    result[i] = pathUnit;
-                else
-                    i--;
+                for(var pair2 = pair1 + 1; pair2 < entrances.Count; pair2++)
+                {
+                    if (!entrances[pair1].Equals(entrances[pair2]) && maxNumberOfPaths > 0)
+                    {
+                        pairs.Add((entrances[pair1], entrances[pair2], turnProbability));
+                        maxNumberOfPaths--;
+                    }
+                }
             }
+            
+            var result = pairs.ToArray();
+            MapGeneratorUtils.Randomize(result);
 
             return result;
         }

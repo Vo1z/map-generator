@@ -28,7 +28,7 @@ namespace MapGenerator.Core
         {
             _startPoint = startPoint;
             _endPoint = endPoint;
-            _turnProbability = turnProbability > 0? turnProbability : throw new ArgumentException("Probability can not be <= 0");
+            _turnProbability = turnProbability > 0? turnProbability : throw new ArgumentException("Probability can not be < 1");
 
             FindPath();
         }
