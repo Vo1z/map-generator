@@ -30,11 +30,28 @@ namespace MapGenerator.Control
     //Inner class that creates floor for room
     class MapGenerationController : MonoBehaviour
     {
+        [Header("Location generation properties")]
+        public uint numberOfRoomRows = 4;
+        public uint numberOfRoomColumns = 4;
+        [Space(10)]
+        public bool randomSpacingUsedInRows = true;
+        [Space(10)]
+        [Range(0, 100)]
+        public int randomSpacingFromY;
+        [Range(0, 100)]
+        public int randomSpacingToY;
+        [Space(10)]
+        [Range(0, 100)]
+        public int randomSpacingFromX;
+        [Range(0, 100)]
+        public int randomSpacingToX;
+        
         [Header("Ventilation properties")] 
         [Range(1, 100)]
         public int turnProbability;
         [Range(0, 100)]
         public int maximumNumberOfPaths;
+        public int sortingLayerForVentilationFloor = 100;
         public string ventilationEntranceTag = "VentilationEntrance";
         public GameObject ventilationFloor;
         public GameObject ventilationEntrance;
@@ -82,44 +99,39 @@ namespace MapGenerator.Control
         
         void Awake()
         {
-            AddTilesToDatabase();
-
-            #region TabsInstantiation
-
+            //Sets start position for generation
+            transform.position = new Vector3(.0f, .0f, .0f);
+            
+            //Sets tabs for game object to arrange them in inspector 
             _ventilationTab = new GameObject("Ventilation");
             _locationTab = new GameObject("Location");
             _ventilationTab.transform.SetParent(transform);
             _locationTab.transform.SetParent(transform);
             
-            #endregion
-
-            #region Debug
+            //Binds name of the tiles with their game objects 
+            AddTilesToDatabase();
             
             //Random generated array of rooms
-            _roomsArray = LocationLogic.CreateRoomMapByDefaultLogic(5, 5, 
+            _roomsArray = LocationLogic.CreateRoomMapByDefaultLogic(numberOfRoomRows, numberOfRoomColumns, 
                 (typeof(Office), 5, 10, 5, 10, 20),
             (typeof(Gym), 5, 10, 5, 10, 3),
             (typeof(GeneralRoom), 5, 10, 5, 10, 20));
-
-            _location = new Location(new Office(), _roomsArray, true,
-                0, 5,
-                0, 4);
             
-            #endregion
+            _location = new Location(new Office(), _roomsArray, randomSpacingUsedInRows,
+                randomSpacingFromY, randomSpacingToY,
+                randomSpacingFromX, randomSpacingToX);
         }
 
         void Start()
         {
-            //Sets start position for generation
-            transform.position = new Vector3(.0f, .0f, .0f);
-
+            //Creates tiles in scene
             CreateMap(_location);
-            
             //CreateVentilation(nameof(VentilationFloor), (new Vector2(20,20), new Vector2(30,30), 2));
             CreateVentilation(nameof(ventilationFloor), 
                 LocationLogic.CreatePairsForVentilation(_ventilationEntrances, maximumNumberOfPaths, turnProbability));
         }
 
+        //Method that store tiles and their name in map for future generation process 
         private void AddTilesToDatabase()
         {
             //Ventilation
@@ -208,9 +220,6 @@ namespace MapGenerator.Control
             List<DirectPathFinder> directPathFinders = edges
                 .Select(edge => new DirectPathFinder(edge.startPos, edge.endPos, turnProbability))
                 .ToList();
-            
-            //todo replace debug
-            Debug.Log(edges.Length);
 
             //Instantiates tiles according to paths
             foreach (var directPathFinder in directPathFinders)
@@ -220,14 +229,14 @@ namespace MapGenerator.Control
                     GameObject objectToInstantiate = _mapObjects[tile];
                     Renderer gameObjectRenderer = objectToInstantiate.GetComponent<Renderer>();
 
-                    gameObjectRenderer.sortingOrder = 100; //todo handle this
+                    gameObjectRenderer.sortingOrder = sortingLayerForVentilationFloor;
                     Instantiate(objectToInstantiate, new Vector2(tilePos.x, tilePos.y), Quaternion.identity)
                         .transform.SetParent(_ventilationTab.transform);
                 }
             }
         }
-
-        //Rooms
+        
+        #region Rooms
         class EmptySpace : Room
         {
             public EmptySpace(int heightY, int lengthX) : base(heightY, lengthX)
@@ -354,6 +363,7 @@ namespace MapGenerator.Control
                 Layers[0].FillWholeLayerMap(nameof(grFloor1));
                 Layers[0].SetOnRandomLayerID(nameof(grFloor2), 2);
                 Layers[0].SetOnRandomLayerID(nameof(grFloor3), 2);
+                Layers[0].SetHorizontalLayerLine(HeightY - 1, null);
 
                 //========================Layer 1=======================
                 AddRoomLayer();
@@ -362,6 +372,7 @@ namespace MapGenerator.Control
                 AddRoomLayer();
                 Layers[2].SetHorizontalLayerLine(HeightY - 2, nameof(grTopWall));
                 Layers[2].SetOnRandomLayerID(nameof(grInnerObject), 8);
+                Layers[0].SetHorizontalLayerLine(HeightY - 1, null);
                 Layers[2].SetHorizontalLayerLine(HeightY - 2, nameof(grTopWall));
 
                 //========================Layer 3=======================
@@ -406,5 +417,6 @@ namespace MapGenerator.Control
                 COLayers[1].FillWholeLayerMap(nameof(gymFloor));
             }
         }
+        #endregion
     }
 }

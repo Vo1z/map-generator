@@ -170,12 +170,9 @@ namespace MapGenerator.Core
                                         objectMap[z, locationY + y + randomYSpacing, locationX + x] =
                                             _locationRooms[roomNumY, roomNumX].Layers[z].ObjectMap[y, x];
                                     }
-                                    catch (Exception ex)
+                                    catch (Exception)
                                     {
-                                        Debug.Log($"Exception was thrown from Location.cs with such message\n" +
-                                                  $"{ex.Message}\n\n" +
-                                                  $"Location details:\n" +
-                                                  $"{ToString()}");
+                                        // ignored
                                     }
                                 }
                             }

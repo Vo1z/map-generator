@@ -263,6 +263,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
+      propertyPath: turnProbability
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: numberOfRoomRows
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
       propertyPath: officeMaxHeightY
       value: 8
       objectReference: {fileID: 0}
@@ -280,6 +290,16 @@ PrefabInstance:
         type: 3}
       propertyPath: officeMinLengthX
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: randomSpacingToX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: randomSpacingToY
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
@@ -305,6 +325,21 @@ PrefabInstance:
         type: 3}
       propertyPath: minLocationLengthX
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: randomSpacingFromX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: randomSpacingFromY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: numberOfRoomColumns
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
@@ -334,7 +369,12 @@ PrefabInstance:
     - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
       propertyPath: maximumNumberOfPaths
-      value: 2
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313551286393200933, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
+        type: 3}
+      propertyPath: randomSpacingUsedInRows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4785357699513997065, guid: 1862cc1ea3b6ced43ae670faffe8a74e,
         type: 3}
@@ -406,8 +446,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee189f6f01f3035428e010b5361bf805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnProbability: 4
-  maximumNumberOfPaths: 2
+  numberOfRoomRows: 4
+  numberOfRoomColumns: 4
+  randomSpacingUsedInRows: 1
+  randomSpacingFromY: 0
+  randomSpacingToY: 0
+  randomSpacingFromX: 0
+  randomSpacingToX: 1
+  turnProbability: 5
+  maximumNumberOfPaths: 4
+  sortingLayerForVentilationFloor: 100
   ventilationEntranceTag: VentilationEntrance
   ventilationFloor: {fileID: 75237172623086432, guid: 6840fef776a5fda44b4a8b8e59a44893,
     type: 3}
