@@ -9,8 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -54,23 +52,16 @@ namespace MapGenerator.Core
         {
             var pairs = new List<(Vector2, Vector2, int)>();
             
-
             for (var pair1 = 0; pair1 < entrances.Count; pair1++)
-            {
                 for(var pair2 = pair1 + 1; pair2 < entrances.Count; pair2++)
-                {
-                    if (!entrances[pair1].Equals(entrances[pair2]) && maxNumberOfPaths > 0)
-                    {
+                    if (!entrances[pair1].Equals(entrances[pair2]))
                         pairs.Add((entrances[pair1], entrances[pair2], turnProbability));
-                        maxNumberOfPaths--;
-                    }
-                }
-            }
             
-            var result = pairs.ToArray();
-            MapGeneratorUtils.Randomize(result);
+            MapGeneratorUtils.Randomize(pairs);
+            if(pairs.Count > maxNumberOfPaths && pairs.Count > 0)
+                pairs.RemoveRange(maxNumberOfPaths, pairs.Count - maxNumberOfPaths);
 
-            return result;
+            return pairs.ToArray();;
         }
     }
 }

@@ -127,19 +127,7 @@ namespace MapGenerator.Core
 
             LocationObjectMap = CreateObjectMap();
         }
-
-        //TODO remove debug
-        public void Test()
-        {
-            Debug.Log("Number of layers Z: " + _worstLocationLayersZ);
-            Debug.Log("Height Y: " + _worstLocationHeightY);
-            Debug.Log("Length X: " + _worstLocationLengthX);
-
-            Debug.Log("Actual number of layers Z: " + ActualLocationLayersZ);
-            Debug.Log("Actual height Y: " + ActualLocationHeightY);
-            Debug.Log("Actual length X: " + ActualLocationLengthX);
-        }
-
+        
         //Tested
         private string[,,] CreateObjectMap()
         {
@@ -184,8 +172,10 @@ namespace MapGenerator.Core
                                     }
                                     catch (Exception ex)
                                     {
-                                        //TODO remove debug
-                                        Debug.Log(ex.Message);
+                                        Debug.Log($"Exception was thrown from Location.cs with such message\n" +
+                                                  $"{ex.Message}\n\n" +
+                                                  $"Location details:\n" +
+                                                  $"{ToString()}");
                                     }
                                 }
                             }
@@ -322,5 +312,15 @@ namespace MapGenerator.Core
 
             return locationLengthX;
         }
+        
+        public override string ToString() =>
+            $"Number of layers Z: {_worstLocationLayersZ}\n" +
+            $"Height Y: {_worstLocationHeightY}\n" +
+            $"Length X: {_worstLocationLengthX}\n" +
+            $"\n" +
+            $"Actual number of layers Z: {ActualLocationLayersZ}\n" +
+            $"Actual height Y: {ActualLocationHeightY}\n" +
+            $"Actual length X: {ActualLocationLengthX}";
+
     }
 }
