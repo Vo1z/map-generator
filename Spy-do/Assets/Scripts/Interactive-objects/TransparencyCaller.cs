@@ -25,7 +25,6 @@ public class TransparencyCaller : MonoBehaviour
     
     private void Awake()
     {
-        Debug.Log("Awake");
         this.renderer_ = this.GetComponent<Renderer>();
         this.orignalColor_ = this.GetComponent<SpriteRenderer>().color;
         this.transparentColor_ = new Color(1.0f, 1.0f, 1.0f, transparencyIndex);
@@ -33,7 +32,6 @@ public class TransparencyCaller : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("OnTriggerEnter");
         if (this.renderer_.sortingOrder <= other.GetComponent<Renderer>().sortingOrder && other.gameObject.CompareTag("Environment"))
         {
             other.GetComponent<SpriteRenderer>().color = transparentColor_;
@@ -42,7 +40,6 @@ public class TransparencyCaller : MonoBehaviour
     
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("OnTriggerExit");
         if (this.renderer_.sortingOrder <= other.GetComponent<Renderer>().sortingOrder && other.gameObject.CompareTag("Environment"))
         {
             other.GetComponent<SpriteRenderer>().color = orignalColor_;
