@@ -126,12 +126,12 @@ namespace MapGenerator.Control
         {
             //Creates tiles in scene
             CreateMap(_location);
-            //CreateVentilation(nameof(VentilationFloor), (new Vector2(20,20), new Vector2(30,30), 2));
             CreateVentilation(nameof(ventilationFloor), 
                 LocationLogic.CreatePairsForVentilation(_ventilationEntrances, maximumNumberOfPaths, turnProbability));
         }
 
-        //Method that store tiles and their name in map for future generation process 
+        //Tested
+        ///<summary>Method that store tiles and their name in map for future generation process</summary>
         private void AddTilesToDatabase()
         {
             //Ventilation
@@ -168,29 +168,24 @@ namespace MapGenerator.Control
         }
 
         //Tested
+        ///<summary>Creates on the scene given room</summary>
         private void CreateRoom(Room room)
         {
             for (int layerNumber = 0; layerNumber < room.Layers.Count; layerNumber++)
-            {
                 for (int y = 0; y < room.Layers[layerNumber].HeightY; y++)
-                {
                     for (int x = 0; x < room.Layers[layerNumber].LengthX; x++)
-                    {
                         if (room.Layers[layerNumber].ObjectMap[y, x] != null)
-                            Instantiate(_mapObjects[room.Layers[layerNumber].ObjectMap[y, x]],
+                            Instantiate(_mapObjects[room.Layers[layerNumber].ObjectMap[y, x]], 
                                 new Vector2(x, y), Quaternion.identity).transform.SetParent(_locationTab.transform);
-                    }
-                }
-            }
         }
 
         //Tested
+        ///<summary>Creates on the scene given location</summary>
         private void CreateMap(Location location)
         {
             for (int z = 0; z < location.LocationObjectMap.GetLength(0); z++)
                 for (int y = 0; y < location.LocationObjectMap.GetLength(1); y++)
                     for (int x = 0; x < location.LocationObjectMap.GetLength(2); x++)
-                    {
                         if (location.LocationObjectMap[z, y, x] != null)
                         {
                             GameObject objectToInstantiate = _mapObjects[location.LocationObjectMap[z, y, x]];
@@ -198,21 +193,17 @@ namespace MapGenerator.Control
                             gameObjectRenderer.sortingOrder = z;
 
                             if (objectToInstantiate.tag.Equals(ventilationEntranceTag))
-                            {
                                 _ventilationEntrances.Add(Instantiate(objectToInstantiate,
-                                        new Vector2(x, y), Quaternion.identity, _ventilationTab.transform).transform.position);
-                            }
+                                        new Vector2(x, y), Quaternion.identity, _ventilationTab.transform).transform
+                                    .position);
                             else
-                            {
                                 Instantiate(objectToInstantiate,
                                     new Vector2(x, y), Quaternion.identity).transform.SetParent(_locationTab.transform);
-                            }
                         }
-                    }
         }
 
         //Tested
-        //Instantiates tiles for ventilation
+        ///<summary>Creates on the scene given ventilation</summary>
         private void CreateVentilation(string tile,
             params (Vector2 startPos, Vector2 endPos, int turnProbability)[] edges)
         {
@@ -239,21 +230,19 @@ namespace MapGenerator.Control
         #region Rooms
         class EmptySpace : Room
         {
-            public EmptySpace(int heightY, int lengthX) : base(heightY, lengthX)
-            {
-            }
+            public EmptySpace(int heightY, int lengthX) : base(heightY, lengthX) { }
 
             protected override void CreateRoomObjectMap()
             {
                 //========================Layer 0=======================
                 AddRoomLayer();
                 Layers[0].FillWholeLayerMap(nameof(grFloor2));
-                Layers[0].SetOnRandomLayerID(nameof(grFloor2), 2);
-                Layers[0].SetOnRandomLayerID(nameof(grFloor3), 2);
+                Layers[0].SetOnRandomLayerID(nameof(grFloor2), 50);
+                Layers[0].SetOnRandomLayerID(nameof(grFloor3), 50);
 
                 //========================Layer 1=======================
                 AddRoomLayer();
-                Layers[1].SetOnRandomLayerID(nameof(grInnerObject), 8);
+                Layers[1].SetOnRandomLayerID(nameof(grInnerObject), 50);
 
                 AddRoomLayer();
                 AddRoomLayer();
@@ -263,9 +252,7 @@ namespace MapGenerator.Control
 
         class Gym : Room
         {
-            public Gym(int heightY, int lengthX) : base(heightY, lengthX)
-            {
-            }
+            public Gym(int heightY, int lengthX) : base(heightY, lengthX) { }
 
             protected override void CreateRoomObjectMap()
             {
@@ -275,7 +262,7 @@ namespace MapGenerator.Control
 
                 //========================Layer 1=======================
                 AddRoomLayer();
-                Layers[1].SetOnRandomLayerID(nameof(gymInnerObject), 5);
+                Layers[1].SetOnRandomLayerID(nameof(gymInnerObject), 20);
 
                 //========================Layer 2=======================
                 AddRoomLayer();
@@ -303,13 +290,9 @@ namespace MapGenerator.Control
 
         class Office : Room
         {
-            public Office(int heightY, int lengthX) : base(heightY, lengthX)
-            {
-            }
+            public Office(int heightY, int lengthX) : base(heightY, lengthX) { }
 
-            public Office() : base()
-            {
-            }
+            public Office() : base() { }
 
             protected override void CreateRoomObjectMap()
             {
@@ -321,12 +304,12 @@ namespace MapGenerator.Control
 
                 //========================Layer 1=======================
                 AddRoomLayer();
-                Layers[1].SetOnRandomLayerID(nameof(officeTable), 5);
+                Layers[1].SetOnRandomLayerID(nameof(officeTable), 20);
                 Layers[1].SetHorizontalLayerLine(HeightY - 1, null);
 
                 //========================Layer 2=======================
                 AddRoomLayer();
-                Layers[2].SetOnUniqueObject(Layers[1].ObjectMap, nameof(officeTable), nameof(officeComputer), 4);
+                Layers[2].SetOnUniqueObject(Layers[1].ObjectMap, nameof(officeTable), nameof(officeComputer), 25);
                 Layers[2].SetHorizontalLayerLine(0, nameof(officeWall));
                 Layers[2].SetHorizontalLayerLine(HeightY - 2, nameof(officeWall));
 
@@ -352,17 +335,15 @@ namespace MapGenerator.Control
 
         class GeneralRoom : Room
         {
-            public GeneralRoom(int heightY, int lengthX) : base(heightY, lengthX)
-            {
-            }
+            public GeneralRoom(int heightY, int lengthX) : base(heightY, lengthX) { }
 
             protected override void CreateRoomObjectMap()
             {
                 //========================Layer 0=======================
                 AddRoomLayer();
                 Layers[0].FillWholeLayerMap(nameof(grFloor1));
-                Layers[0].SetOnRandomLayerID(nameof(grFloor2), 2);
-                Layers[0].SetOnRandomLayerID(nameof(grFloor3), 2);
+                Layers[0].SetOnRandomLayerID(nameof(grFloor2), 50);
+                Layers[0].SetOnRandomLayerID(nameof(grFloor3), 50);
                 Layers[0].SetHorizontalLayerLine(HeightY - 1, null);
 
                 //========================Layer 1=======================
@@ -371,7 +352,7 @@ namespace MapGenerator.Control
                 //========================Layer 2=======================
                 AddRoomLayer();
                 Layers[2].SetHorizontalLayerLine(HeightY - 2, nameof(grTopWall));
-                Layers[2].SetOnRandomLayerID(nameof(grInnerObject), 8);
+                Layers[2].SetOnRandomLayerID(nameof(grInnerObject), 12);
                 Layers[0].SetHorizontalLayerLine(HeightY - 1, null);
                 Layers[2].SetHorizontalLayerLine(HeightY - 2, nameof(grTopWall));
 
@@ -403,11 +384,9 @@ namespace MapGenerator.Control
         //ComplexObjects
         class Test : ComplexObject
         {
-            public Test() : base(1, 1)
-            {
-            }
-
-            protected override void instCO()
+            public Test() : base(1, 1) { }
+            
+            protected override void InstComplexObject()
             {
                 //========================Layer 0=======================
                 AddCOLayer();

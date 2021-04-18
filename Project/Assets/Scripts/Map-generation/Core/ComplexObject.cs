@@ -12,7 +12,10 @@ using MapGenerator.Exceptions;
 
 namespace MapGenerator.Core
 {
-    //Class that describes ComplexObjects(Is used in Room class)
+    ///<summary>
+    /// Class that describes logic behind small objects that requires complex logic in generation
+    /// (usually used in Room class)
+    /// </summary>
     public abstract class ComplexObject
     {
         public readonly int COHeightY;
@@ -22,39 +25,31 @@ namespace MapGenerator.Core
 
         public ComplexObject(int heightY, int lengthX)
         {
-            this.COLayers = new List<Layer>();
-            this.COHeightY = heightY;
-            this.COLengthX = lengthX;
-            instCO();
+            COLayers = new List<Layer>();
+            COHeightY = heightY;
+            COLengthX = lengthX;
+            InstComplexObject();
         }
 
-        protected void
-            AddCOLayer(int layerHeightY,
-                int layerLenghtX) // Creates new layer on a top of the previous (with higher Z-Index)
+        ///<summary>Creates new layer on a top of the previous (with higher Z-Index)</summary>
+        protected void AddComplexObjectLayer(int layerHeightY, int layerLenghtX)
         {
             if (layerHeightY > COHeightY)
-            {
-                throw new LayerIsBiggerThanRoomException(COHeightY); //Exceptions
-            }
-            else if (layerLenghtX > COLengthX)
-            {
+                throw new LayerIsBiggerThanRoomException(COHeightY);
+
+            if (layerLenghtX > COLengthX)
                 throw new LayerIsBiggerThanRoomException(COLengthX);
-            }
-            else if (layerHeightY > COHeightY || layerLenghtX > COLengthX)
-            {
+
+            if (layerHeightY > COHeightY || layerLenghtX > COLengthX)
                 throw new LayerIsBiggerThanRoomException(COLengthX, COHeightY);
-            }
-            else
-            {
-                COLayers.Add(new Layer(layerHeightY, layerLenghtX));
-            }
+            
+            COLayers.Add(new Layer(layerHeightY, layerLenghtX));
         }
 
-        protected void AddCOLayer()
-        {
-            AddCOLayer(COHeightY, COLengthX);
-        }
+        ///<summary>Adds new layer </summary>
+        protected void AddCOLayer() => AddComplexObjectLayer(COHeightY, COLengthX);
 
-        abstract protected void instCO();
+        ///<summary>Method that describes generation logic</summary>
+        protected abstract void InstComplexObject();
     }
 }

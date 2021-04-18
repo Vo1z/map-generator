@@ -152,7 +152,7 @@ namespace Tests.EditMode
             {
             }
 
-            protected override void instCO()
+            protected override void InstComplexObject()
             {
                 //========================Layer 0=======================
                 AddCOLayer();

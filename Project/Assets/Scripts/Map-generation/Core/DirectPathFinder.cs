@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 
 namespace MapGenerator.Core
 {
-    //Class that is responsible for computing and holding path between two points 
+    ///<summary>Class that is responsible for computing and holding path between two points</summary>
     public class DirectPathFinder
     {
         private readonly Vector2 _startPoint;
@@ -22,7 +22,7 @@ namespace MapGenerator.Core
         //Variable that holds probability of generating turns in the path
         private readonly int _turnProbability;
         //List which holds coordinates of tiles that creates path
-        public List<Vector2> Path { get; private set; } = new List<Vector2>();
+        public List<Vector2> Path { get; } = new List<Vector2>();
 
         public DirectPathFinder(Vector2 startPoint, Vector2 endPoint, int turnProbability)
         {
@@ -34,7 +34,7 @@ namespace MapGenerator.Core
         }
 
         //Tested
-        //Generates Path between _startPoint and _endPoint
+        ///<summary>Generates Path between start point and end point</summary>
         private void FindPath()
         {
             Vector2 currentPos = new Vector2(_startPoint.x, _startPoint.y);
