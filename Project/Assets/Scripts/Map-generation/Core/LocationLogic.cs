@@ -1,6 +1,6 @@
 ﻿/*
  * Sirex production code:
- * Project: Spy-Do
+ * Project: map-generator (Spy-Do asset)
  * Author: Voiz (Viktor Lishchuk)
  * Email: vitya.voody@gmail.com
  * GitHub: Vo1z
@@ -14,18 +14,19 @@ using Random = UnityEngine.Random;
 
 namespace MapGenerator.Core
 {
-    //Class that provides tools for creating particular sequence of rooms
+    ///<summary>Class that provides tools for creating particular sequences of instances for map generating process</summary>
     public abstract class LocationLogic
     {
         //Tested
+        ///<summary>Return a sequence of randomly generated rooms of a given type regarding input parameters</summary>
         public static Room[,] CreateRoomMapByDefaultLogic(uint numOfRowsY, uint numOfColumns,
             params (Type roomType, uint minY, uint maxY, uint minX, uint maxX, uint probability)[] roomsInfo)
         {
             Room[,] roomsArray = new Room[numOfRowsY, numOfColumns];
             string probabilityHolder = "";
             for (var roomTypeIter = 0; roomTypeIter < roomsInfo.Length; roomTypeIter++)
-            for (var probIter = 0; probIter < roomsInfo[roomTypeIter].probability; probIter++)
-                probabilityHolder += roomTypeIter + "";
+                for (var probIter = 0; probIter < roomsInfo[roomTypeIter].probability; probIter++)
+                    probabilityHolder += roomTypeIter + "";
 
             for (var roomIterY = 0; roomIterY < roomsArray.GetLength(0); roomIterY++)
             {
@@ -47,6 +48,7 @@ namespace MapGenerator.Core
 
         
         //Tested
+        ///<summary>Randomly generates pairs of ventilation entrances</summary>
         public static (Vector2 startPos, Vector2 endPos, int turnProbability)[] CreatePairsForVentilation(
             List<Vector2> entrances, int maxNumberOfPaths, int turnProbability)
         {

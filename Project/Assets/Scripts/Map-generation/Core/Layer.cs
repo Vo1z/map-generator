@@ -1,6 +1,6 @@
 /*
  * Sirex production code:
- * Project: Spy-Do
+ * Project: map-generator (Spy-Do asset)
  * Author: Voiz (Viktor Lishchuk)
  * Email: vitya.voody@gmail.com
  * GitHub: Vo1z

@@ -1,6 +1,6 @@
 ﻿/*
  * Sirex production code:
- * Project: Spy-Do
+ * Project: map-generator (Spy-Do asset)
  * Author: Voiz (Viktor Lishchuk)
  * Email: vitya.voody@gmail.com
  * GitHub: Vo1z
@@ -15,77 +15,63 @@ using Random = UnityEngine.Random;
 namespace MapGenerator.Core
 {
     // Class that is responsible for sorting all data about rooms on game level
+    ///<summary>Class that responsible for floor generation and for sorting all data about rooms on game level</summary>
     public sealed class Location
     {
         #region Fields
 
         #region VariablesThatAreResponsibleForHoldingInformationAboutGeneration
-
-        //Array that holds map of identifiers of particular tiles 
+        ///<summary>Array that holds map of identifiers of particular tiles</summary>
         public readonly string[,,] LocationObjectMap;
-
-        //Variable that responsible for holding
+        ///<summary>Variable that responsible for holding</summary>
         private readonly Room _backgroundRoom;
-
-        //Array that holds rooms that have to be spawned
+        ///<summary>Array that holds rooms that have to be spawned</summary>
         private readonly Room[,] _locationRooms;
-
         #endregion
 
         #region VariablesThatAreResponsibleForStoringInformationAboutSize
-
-        //Field that holds actual number of layers (not including areas with empty tiles)
+        ///<summary>Field that holds actual number of layers (not including areas with empty tiles)</summary>
         public int ActualLocationLayersZ { get; private set; }
-
-        //Field that holds actual height (not including areas with empty tiles)
+        ///<summary>Field that holds actual height (not including areas with empty tiles)</summary>
         public int ActualLocationHeightY { get; private set; }
-
-        //Field that holds actual length (not including areas with empty tiles)
+        ///<summary>Field that holds actual length (not including areas with empty tiles)</summary>
         public int ActualLocationLengthX { get; private set; }
-
-        //Field that holds worst number (Total size of object map including areas that does not contain any tiles)
-        //Of layers of an ObjectMap (in number of layers)
+        ///<summary>Field that holds worst number (Total size of object map including areas that does not contain any tiles)
+        ///Of layers of an ObjectMap (in number of layers)
+        ///</summary>
         private readonly int _worstLocationLayersZ;
-
-        //Field that holds worst height (Total size of object map including areas that does not contain any tiles) of an ObjectMap (in tiles)
+        ///<summary>
+        /// Field that holds worst height (Total size of object map including areas that does not contain any tiles) of an ObjectMap (in tiles)
+        ///</summary>
         private readonly int _worstLocationHeightY;
-
-        //Field that holds worst length (Total size of object map including areas that does not contain any tiles) of an ObjectMap (in tiles)
+        ///<summary>
+        /// Field that holds worst length (Total size of object map including areas that does not contain any tiles) of an ObjectMap (in tiles)
+        ///</summary>
         private readonly int _worstLocationLengthX;
-
         #endregion
 
         #region VariablesTahtAreResponsibleForSpacing
-
-        //Variables that are holding start value for randomizing X-spacing
+        ///<summary>Variables that are holding start value for randomizing X-spacing</summary>
         private readonly int _randomSpacingFromX;
-
-        //Variables that are holding end value for randomizing X-spacing
+        ///<summary>Variables that are holding end value for randomizing X-spacing</summary>
         private readonly int _randomSpacingToX;
-
-        //Variables that are holding start value for randomizing Y-spacing
+        ///<summary>Variables that are holding start value for randomizing Y-spacing</summary>
         private readonly int _randomSpacingFromY;
-
-        //Variables that are holding end value for randomizing Y-spacing
+        ///<summary>Variables that are holding end value for randomizing Y-spacing</summary>
         private readonly int _randomSpacingToY;
-
-        //Variable that is responsible for holding value of spacing between room rows
+        ///<summary>Variable that is responsible for holding value of spacing between room rows</summary>
         private readonly int _verticalRoomSpacingY;
-
-        //Variable that is responsible for holding value of spacing between rooms
+        ///<summary>Variable that is responsible for holding value of spacing between rooms</summary>
         private readonly int _horizontalRoomSpacingX;
-
-        //Variable that identifies if spacing between rooms is randomized
+        ///<summary>Variable that identifies if spacing between rooms is randomized</summary>
         private readonly bool _spacingIsRandom;
-
-        //Variable that identifies if Y-spacing is enabled in rows 
+        ///<summary>Variable that identifies if Y-spacing is enabled in rows </summary>
         private readonly bool _randomSpacingIsUsedInRows;
-
+        #endregion
+        
         #endregion
 
-        #endregion
-
-        //Constructor for non-randomized spacing
+        ///<summary>Constructor for non-randomized spacing</summary>
         public Location(Room backgroundRoom, Room[,] locationRooms,
             bool randomSpacingIsUsedInRows,
             int verticalRoomSpacingY, int horizontalRoomSpacingX)
@@ -105,7 +91,7 @@ namespace MapGenerator.Core
             LocationObjectMap = CreateObjectMap();
         }
 
-        //Constructor for randomized spacing
+        ///<summary>Constructor for randomized spacing</summary>
         public Location(Room backgroundRoom, Room[,] locationRooms,
             bool randomSpacingIsUsedInRows,
             int randomSpacingFromY, int randomSpacingToY,
@@ -129,6 +115,7 @@ namespace MapGenerator.Core
         }
         
         //Tested
+        ///<summary>Generates location based on given input values of the class</summary>
         private string[,,] CreateObjectMap()
         {
             string[,,] objectMap = new string[_worstLocationLayersZ, _worstLocationHeightY, _worstLocationLengthX];
@@ -212,6 +199,7 @@ namespace MapGenerator.Core
         }
 
         //Tested
+        ///<summary>Generates room that holds all other rooms</summary>
         private string[,,] CreateBackgroundRoom(in string[,,] objectMap)
         {
             //Creates background room
@@ -229,38 +217,29 @@ namespace MapGenerator.Core
 
             //Iterates through the map and sets proper objects from background roomLayers
             for (int z = 0; z < backgroundRoomLayers.Count; z++)
-            {
                 for (int y = 0; y < backgroundRoomLayers[z].HeightY; y++)
-                {
                     for (int x = 0; x < backgroundRoomLayers[z].LengthX; x++)
-                    {
-                        if (String.IsNullOrEmpty(objectMapWithBackGround[z, y, x]) ||
-                            objectMapWithBackGround[z, y, x].Equals("null"))
-                        {
+                        if (String.IsNullOrEmpty(objectMapWithBackGround[z, y, x]) || objectMapWithBackGround[z, y, x].Equals("null"))
                             objectMapWithBackGround[z, y, x] = backgroundRoomLayers[z].ObjectMap[y, x];
-                        }
-                    }
-                }
-            }
 
             return objectMapWithBackGround;
         }
 
         //Tested
+        ///<summary>Returns maximum number of layers</summary>
         private int GetLocationNumberOfLayersZ()
         {
             int numberOfLayers = 0;
 
             foreach (var room in _locationRooms)
-            {
                 if ((room.IsSpawned) && (numberOfLayers < room.Layers.Count))
                     numberOfLayers = room.Layers.Count;
-            }
 
             return numberOfLayers;
         }
 
         //Tested
+        ///<summary>Returns maximum location height</summary>
         private int GetLocationHeightY()
         {
             int locationHeightY = 0;
@@ -269,10 +248,8 @@ namespace MapGenerator.Core
             for (int y = 0; y < _locationRooms.GetLength(0); y++)
             {
                 for (int x = 0; x < _locationRooms.GetLength(1); x++)
-                {
                     if ((_locationRooms[y, x].IsSpawned) && (maxHeightInARow < _locationRooms[y, x].HeightY))
                         maxHeightInARow = _locationRooms[y, x].HeightY + _randomSpacingToY;
-                }
 
                 locationHeightY += maxHeightInARow + _verticalRoomSpacingY;
                 maxHeightInARow = 0;
@@ -285,6 +262,7 @@ namespace MapGenerator.Core
         }
 
         //Tested
+        ///<summary>Returns maximum location length</summary>
         private int GetLocationLengthX()
         {
             int locationLengthX = 0;
@@ -293,10 +271,8 @@ namespace MapGenerator.Core
             for (int y = 0; y < _locationRooms.GetLength(0); y++)
             {
                 for (int x = 0; x < _locationRooms.GetLength(1); x++)
-                {
                     if (_locationRooms[y, x].IsSpawned)
                         lengthInARow += _locationRooms[y, x].LengthX + _horizontalRoomSpacingX + _randomSpacingToX;
-                }
 
                 //Removes spacing after the last room in a row
                 lengthInARow -= _horizontalRoomSpacingX;

@@ -1,6 +1,6 @@
 /*
  * Sirex production code:
- * Project: Spy-Do
+ * Project: map-generator (Spy-Do asset)
  * Author: Voiz (Viktor Lishchuk)
  * Email: vitya.voody@gmail.com
  * GitHub: Vo1z
@@ -12,27 +12,28 @@ using System.Collections.Generic;
 
 namespace MapGenerator.Core
 {
+    ///<summary>Class that provides different tools for working with map generation structures</summary>
     public static class MapGeneratorUtils
     {
         //Tested
+        ///<summary>Finds highest room in a given row</summary>
         public static int FindHighestRoomInARow(in Room[,] roomRow, int rowIndex)
         {
             if (roomRow == null)
-                throw new NullReferenceException();
+                throw new NullReferenceException("roomRow can not be null");
 
             int maxHeightX = 0;
 
             for (int roomNumber = 0; roomNumber < roomRow.GetLength(1); roomNumber++)
-            {
                 if (maxHeightX < roomRow[rowIndex, roomNumber].HeightY)
                     maxHeightX = roomRow[rowIndex, roomNumber].HeightY;
-            }
 
             return maxHeightX;
         }
 
         //Tested
-        public static T[,,] Resize3DArray<T>(in T[,,] source, ref T[,,] destination)
+        ///<summary>Resizes 3d array</summary>
+        public static void Resize3DArray<T>(in T[,,] source, ref T[,,] destination)
         {
             //Checks if destination array is not null and sets proper sizes for destination if necessary
             if (destination != null)
@@ -54,15 +55,13 @@ namespace MapGenerator.Core
 
             //Copies elements from source to destination
             for (int iterZ = 0; iterZ < source.GetLength(0); iterZ++)
-            for (int iterY = 0; iterY < source.GetLength(1); iterY++)
-            for (int iterX = 0; iterX < source.GetLength(2); iterX++)
-                destination[iterZ, iterY, iterX] = source[iterZ, iterY, iterX];
-
-            return destination;
+                for (int iterY = 0; iterY < source.GetLength(1); iterY++)
+                    for (int iterX = 0; iterX < source.GetLength(2); iterX++)
+                        destination[iterZ, iterY, iterX] = source[iterZ, iterY, iterX];
         }
 
         //Tested
-        //Finds list with the biggest length in array
+        ///<summary>Finds list with the longest length in array</summary>
         public static int FindLongestListSize<T>(params List<T>[] lists)
         {
             if (lists == null)
@@ -77,7 +76,7 @@ namespace MapGenerator.Core
         }
 
         //Tested
-        //Swaps two elements between each other
+        ///<summary>Swaps two elements between each other</summary>
         public static void Swap<T>(ref T first, ref T second)
         {
             T intermediate = first;
@@ -86,7 +85,7 @@ namespace MapGenerator.Core
         }
 
         //Tested
-        //Swaps two elements in collections
+        ///<summary>Swaps two elements in collections</summary>
         public static void Swap<T>(IList<T> collection, int firstIndex, int secondIndex)
         {
             if (collection == null || firstIndex == secondIndex)
@@ -98,7 +97,7 @@ namespace MapGenerator.Core
         }
         
         //Tested
-        //Finds maximum X and Y for given coordinates
+        ///<summary>Finds maximum X and Y for given coordinates</summary>
         public static (int yBound, int xBound) FindUpperPositionBound((int y, int x)[] insertionPoints)
         {
             int yBound = 0, xBound = 0;
@@ -116,6 +115,7 @@ namespace MapGenerator.Core
         }
         
         //Tested
+        ///<summary>Mixes items in given list</summary>
         public static void Randomize<T>(IList<T> items)
         {
             Random rand = new Random();

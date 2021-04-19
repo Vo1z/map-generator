@@ -1,6 +1,6 @@
 /*
  * Sirex production code:
- * Project: Spy-Do
+ * Project: map-generator (Spy-Do asset)
  * Author: Voiz (Viktor Lishchuk)
  * Email: vitya.voody@gmail.com
  * GitHub: Vo1z
@@ -13,27 +13,31 @@ using MapGenerator.Exceptions;
 
 namespace MapGenerator.Core
 {
-    //Class which is responsible for collecting data for creating room 
+    ///<summary>Class which represents room and tools for creating it</summary>
     public abstract class Room
     {
         #region Fields
-
-        //Variable that stores width of the room of Y dimension
+        ///<summary>Variable that stores width of the room of Y dimension</summary>
         public int HeightY { get; private set; }
 
-        //Variable that stores width of the room of X dimension
+        ///<summary>Variable that stores width of the room of X dimension</summary>
         public int LengthX { get; private set; }
 
+        ///<summary>Layers of the room</summary>
         public readonly List<Layer> Layers;
+        ///<summary>Exits of the room</summary>
         public readonly List<SExitInformation> Exits;
 
+        ///<summary>Complex object that will considered as default exit in case there is no specified in generation logic</summary>
         public ComplexObject DefaultExitComplexObject { get; protected set; }
+        ///<summary>Number of layer where exit will be set</summary>
         public int DefaultLayerForExit { get; protected set; }
 
+        ///<summary>Variable that describes if room will be spawned</summary>
         public bool IsSpawned { get; set; } = true;
-
         #endregion
 
+        ///<summary>Creates instance of the room with given sizes</summary>
         protected Room(int heightY, int lengthX)
         {
             DefaultLayerForExit = SConstants.EXIT_IS_NOT_IMPLEMENTED;
@@ -50,8 +54,7 @@ namespace MapGenerator.Core
         }
 
         #region LazyGenerationConstructorAndMethod
-
-        //Constructor for rooms that is expected to generate object map after being initialized 
+        ///<summary>Constructor for rooms that is expected to generate object map after being initialized</summary>
         protected Room()
         {
             DefaultLayerForExit = SConstants.EXIT_IS_NOT_IMPLEMENTED;
@@ -61,7 +64,7 @@ namespace MapGenerator.Core
             Exits = new List<SExitInformation>();
         }
 
-        //Method that generates object map
+        ///<summary>Method that generates object map</summary>
         public List<Layer> GenerateRoom(int heightY, int lengthX)
         {
             HeightY = heightY;
@@ -70,95 +73,66 @@ namespace MapGenerator.Core
             CreateRoomObjectMap();
             CheckIfDefaultExitAndLayerExists();
 
-            return this.Layers;
+            return Layers;
         }
-
         #endregion
 
         //Tested
-        // Creates new layer on top of previous (with higher Z-Index)
-        protected void AddRoomLayer()
-        {
-            Layers.Add(new Layer(HeightY, LengthX));
-        }
+        ///<summary>Creates new layer on top of previous (with higher Z-Index)</summary>
+        protected void AddRoomLayer() => Layers.Add(new Layer(HeightY, LengthX));
 
         //Tested
-        //Removes given layer
-        protected void RemoveRoomLayer(int numberOfLayer)
-        {
-            Layers.RemoveAt(numberOfLayer);
-        }
+        ///<summary>Removes given layer</summary>
+        protected void RemoveRoomLayer(int numberOfLayer) => Layers.RemoveAt(numberOfLayer);
 
         //======ComplexObject======
 
         //Tested
+        ///<summary>Sets complex object on specific position</summary>
         protected void SetComplexObject(ComplexObject cObj, int layerZ, int posY, int posX)
         {
             if ((cObj.COLayers.Count + layerZ) > Layers.Count)
-            {
                 throw new NotEnoughLayersException(Layers.Count, cObj.COLayers.Count, this);
-            }
-            else if ((posX + cObj.COLengthX) > LengthX)
-            {
+            if ((posX + cObj.COLengthX) > LengthX)
                 throw new NotEnoughSpaceInRoomException("X", (posX + cObj.COLengthX + 1), LengthX);
-            }
-            else if ((posY + cObj.COHeightY) > HeightY)
-            {
+            if ((posY + cObj.COHeightY) > HeightY)
                 throw new NotEnoughSpaceInRoomException("Y", (posY + cObj.COHeightY + 1), HeightY);
-            }
-            else
-            {
-                for (int z = 0; z < cObj.COLayers.Count; z++)
-                {
-                    for (int y = 0; y < cObj.COLayers[z].HeightY; y++)
-                    {
-                        for (int x = 0; x < cObj.COLayers[z].LengthX; x++)
-                        {
-                            Layers[layerZ + z].ObjectMap[posY + y, posX + x] =
-                                cObj.COLayers[z].ObjectMap[y, x];
-                        }
-                    }
-                }
-            }
+
+            for (int z = 0; z < cObj.COLayers.Count; z++)
+                for (int y = 0; y < cObj.COLayers[z].HeightY; y++)
+                    for (int x = 0; x < cObj.COLayers[z].LengthX; x++)
+                        Layers[layerZ + z].ObjectMap[posY + y, posX + x] =
+                            cObj.COLayers[z].ObjectMap[y, x];
         }
 
         //======Methods relative to exits======
 
         //Tested
+        ///<summary>Adds exit on corresponded opposite wall</summary>
         public void AddNeighborExitsOnRightWall(Room room)
         {
             if (room != null)
-            {
                 foreach (SExitInformation sExit in room.Exits)
-                {
                     if (sExit.WallPosition == ExitPosition.LEFT && sExit.ExitIndexZ < HeightY)
-                    {
                         SetExit(DefaultExitComplexObject, DefaultLayerForExit, ExitPosition.RIGHT, sExit.ExitIndexZ);
-                    }
-                }
-            }
         }
 
         //Tested
+        ///<summary>Adds exit on corresponded opposite wall</summary>
         public void AddNeighborExitsOnLeftWall(Room room)
         {
             if (room != null)
-            {
                 foreach (SExitInformation sExit in room.Exits)
-                {
                     if (sExit.WallPosition == ExitPosition.RIGHT && sExit.ExitIndexZ < HeightY)
-                    {
                         SetExit(DefaultExitComplexObject, DefaultLayerForExit, ExitPosition.LEFT, sExit.ExitIndexZ);
-                    }
-                }
-            }
         }
 
         //Tested
+        ///<summary>Sets default exit(complex object) and default layer for it</summary>
         protected void SetDefaultExitAndLayerZ(ComplexObject cObj, int layerZ)
         {
-            this.DefaultExitComplexObject = cObj;
-            this.DefaultLayerForExit = layerZ;
+            DefaultExitComplexObject = cObj;
+            DefaultLayerForExit = layerZ;
         }
 
         //Tested
@@ -186,17 +160,16 @@ namespace MapGenerator.Core
         }
 
         //Tested
+        ///<summary>Checks if all conditions are satisfied for exits</summary>
         private void CheckIfDefaultExitAndLayerExists()
         {
             if (DefaultLayerForExit == SConstants.EXIT_IS_NOT_IMPLEMENTED || DefaultExitComplexObject == null)
-            {
                 throw new DefaultLayerZWasNotFoundException();
-            }
         }
 
         //======End of methods relative to exits======
 
-        //Abstract methods
+        ///<summary>Method that describes room generation logic</summary>
         protected abstract void CreateRoomObjectMap();
     }
 }
