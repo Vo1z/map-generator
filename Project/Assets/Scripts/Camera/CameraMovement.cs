@@ -1,6 +1,6 @@
 ﻿/*
  * Sirex production code:
- * Project: Spy-Do
+ * Project: map-generator (Spy-Do asset)
  * Author: ROB1N (Ivan Fomenko)
  * Email: iv_fomenko@bk.ru
  * Twitter: @ROB1N21806
